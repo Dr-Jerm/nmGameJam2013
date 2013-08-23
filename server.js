@@ -115,12 +115,9 @@ app.get("/game", function(req, res) {
     res.redirect("/session/new");
     return;
   }
-
-  var serverAddr = 'localhost';
-  if (process.env.PORT) {
-    serverAddr = '54.221.239.154';
-  }
-  res.render("game/index", {"title": "Game", "user": user, "server": serverAddr});
+  res.render("game/index", {"title": "Game", 
+                            "user": user, 
+                            "host": req.headers.host, });
 });
 
 // Websockets for the game here.

@@ -1,6 +1,6 @@
 function Game() {
   this.viewport = new Viewport();
-  this.client = new Client("localhost");
+  this.client = new Client(config.host);
   this.input = new Input();
   this.controller = new Controller();
 }
