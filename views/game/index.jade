@@ -13,6 +13,7 @@ block custom_scripts
     $(document).ready(function() {
       config.uid = "#{user.rememberToken}";
       config.email = "#{user.email}";
+      config.host = "#{host}";
       
       game = new Game();
       game.start();

@@ -112,7 +112,9 @@ app.get("/game", function(req, res) {
     res.redirect("/session/new");
     return;
   }
-  res.render("game/index", {"title": "Game", "user": user});
+  res.render("game/index", {"title": "Game", 
+                            "user": user, 
+                            "host": req.headers.host, });
 });
 
 // Websockets for the game here.
