@@ -15,6 +15,7 @@ block custom_scripts
       config.email = "#{user.email}";
       
       game = new Game();
+      game.client = new Client("#{server}");
       game.start();
 
       var tick = function() {

@@ -6,9 +6,8 @@ var express = require('express')
 var Model = require('./models/model');
 var User = require('./models/user.model');
 
-server.listen(80);
-
 app.configure(function() {
+  app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.bodyParser());
@@ -16,6 +15,10 @@ app.configure(function() {
   app.use(express.cookieParser());
   app.use(express.session({secret:'s0m3k1nd0fst00p1ds3cr3t'}));
   app.use(express.static(__dirname + '/public'));
+});
+
+server.listen(app.get('port'), function () {
+    console.log('Express server listening on port ' + app.get('port'));
 });
 
 app.get("/", function(req, res) {
@@ -112,7 +115,12 @@ app.get("/game", function(req, res) {
     res.redirect("/session/new");
     return;
   }
-  res.render("game/index", {"title": "Game", "user": user});
+
+  var serverAddr = 'localhost';
+  if (process.env.PORT) {
+    serverAddr = '54.221.239.154';
+  }
+  res.render("game/index", {"title": "Game", "user": user, "server": serverAddr});
 });
 
 // Websockets for the game here.
