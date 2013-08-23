@@ -1,0 +1,27 @@
+extends ../layout
+
+block css
+  include css
+
+block scripts
+  include scripts
+
+block custom_scripts
+  script.
+    var game = null;
+    var config = {};
+    $(document).ready(function() {
+      config.uid = "#{user.rememberToken}";
+      config.email = "#{user.email}";
+      
+      game = new Game();
+      game.start();
+
+      var tick = function() {
+        requestAnimationFrame(tick);
+        game.update();
+      }
+
+      tick();
+
+    });

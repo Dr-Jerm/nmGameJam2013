@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Web Sockets Test</title>
+<style>
+body {
+  margin: 0px;
+  background-color: #000000;
+  overflow: hidden;
+}
+</style>
+<script src="/three.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/game_math.js"></script>
+<script src="js/input.js"></script>
+<script src="js/view.js"></script>
+<script src="js/game.js"></script>
+<script>
+$(document).ready(function() {
+  // Need to start decoupling this from the HTML file in the future.
+  var camera, scene, renderer;
+  var usr = "";
+  var player;
+  var players = new Array();
+  var socket = io.connect("http://socket-game.aws.af.cm");
+  var currentlyPressedKeys = {};
+
+  document.onkeydown = handleKeyDown;
+  document.onkeyup   = handleKeyUp;
+
+  function handleKeyDown(event) {
+    currentlyPressedKeys[event.keyCode] = true;
+    console.log(event.keyCode);
+  }
+
+  function handleKeyUp(event) {
+    currentlyPressedKeys[event.keyCode] = false;
+  }
+
+  function updateLocalPlayer() {
+    // W and UPARROW
+    if (currentlyPressedKeys[38] || currentlyPressedKeys[87]) {
+      players[usr].setz(-1);
+    }
+    // A and LEFTARROW
+    if(currentlyPressedKeys[37] || currentlyPressedKeys[65]){
+      players[usr].setx(-1);
+    }
+    // S and DOWNARROW
+    if(currentlyPressedKeys[40] || currentlyPressedKeys[83]){
+      players[usr].setz(1);
+    }
+    // D and RIGHTARROW
+    if(currentlyPressedKeys[39] || currentlyPressedKeys[68]){
+      players[usr].setx(1);
+    }
+  }
+
+  var Player = function Player(username) {
+    this.material = new THREE.MeshBasicMaterial( { color: 0xCC000 } );
+    this.mesh     = new THREE.Mesh( new THREE.CubeGeometry( 100, 100, 10 ), this.material);
+    this.username = username;
+
+    this.x = function() {
+      return this.mesh.position.x;
+    }
+    this.y = function() {
+      return this.mesh.position.y;
+    }
+    this.z = function() {
+      return this.mesh.position.z;
+    }
+
+    this.setx = function(val) {
+      this.mesh.position.x += val;
+      socket.emit("updatex", { username: this.username, x: this.mesh.position.x });
+    }
+    this.sety = function(val) {
+      this.mesh.position.y += val;
+      socket.emit("updatey", { username: this.username, y: this.mesh.position.y });
+    }
+    this.setz = function(val) {
+      this.mesh.position.z += val;
+      socket.emit("updatez", { username: this.username, z: this.mesh.position.z });
+    }
+    
+    this.repx = function(val) {
+      this.mesh.position.x = val;
+    }
+    this.repy = function(val) {
+      this.mesh.position.y = val;
+    }
+    this.repz = function(val) {
+      this.mesh.position.z = val;
+    }
+  }
+
+  function init() {
+    camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 2000 );
+    camera.position.y = 800;
+    camera.rotation.x = -3.14159 / 2; 
+
+    scene = new THREE.Scene();
+
+    // renderer
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+
+    // events
+    window.addEventListener( 'resize', onWindowResize, false );
+  }
+
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+  }
+
+  function animate() {
+    requestAnimationFrame( animate );
+    updateLocalPlayer();
+    renderer.render( scene, camera );
+  } 
+
+  function makeScene() {
+    socket.emit("populate", {username: $("#uname").val()});
+    init();
+    animate();
+  }
+
+  $("#sub_uname").click(function() {
+    usr = $("#uname").val();
+    $("#username").hide();
+    makeScene();
+  });
+
+  socket.on("populate", function(data) {
+    alert("username: " + data.username + 
+          ", x: "      + data.x + 
+          ", y: "      + data.y + 
+          ", z: "      + data.z);
+
+      players[data.username] = new Player(data.username);
+      players[data.username].setx(data.x);
+      players[data.username].sety(data.y);
+      players[data.username].setz(data.z);
+      scene.add(players[data.username].mesh);
+  });
+
+  socket.on("update", function(data) {
+    if (players[data.username] == null) {
+      players[data.username] = new Player(data.username);
+      players[data.username].setx(data.x);
+      players[data.username].sety(data.y);
+      players[data.username].setz(data.z);
+      scene.add(players[data.username].mesh);
+    } else {
+
+      players[data.username].repx(data.x);
+      players[data.username].repy(data.y);
+      players[data.username].repz(data.z);
+    }
+  });
+});
+
+</script>
+</head>
+<body id="bod">
+<div id="username"><input type="text" id="uname" /><input type="submit" id="sub_uname" /></div>
+</body>
+</html>

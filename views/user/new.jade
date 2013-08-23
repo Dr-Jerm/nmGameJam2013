@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  div#new_user
+    form(method='post', action='/user')
+      label(for='email') Email:
+      input(type='text',name='email',id='email') 
+      label(for='password') Password:
+      input(type='password',name='password',id='password') 
+      label(for='verify_password') Verify Password:
+      input(type='password',name='verify',id='verify') 
+      input(type='submit',name='submit',value='Submit').submit-button
+
