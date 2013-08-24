@@ -81,6 +81,19 @@ io.sockets.on('connection', function (socket) {
 
   socket.on("newUser", network.newUser.bind(socket));
   socket.on("disconnect", network.disconnect.bind(socket));
+
+  socket.on("up", function(data) {
+    console.log("up: " + data);
+  });
+  socket.on("down", function(data) {
+    console.log("down: " + data);
+  });
+  socket.on("left", function(data) {
+    console.log("left: " + data);
+  });
+  socket.on("right", function(data) {
+    console.log("right: " + data);
+  });
 });
 
 gameServer.run(1000);

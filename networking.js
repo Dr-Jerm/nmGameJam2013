@@ -8,6 +8,8 @@ exports.newUser = function (data) {
     console.log(util.inspect(Player));
     var newPlayer = new Player(data.user, this);
     playerManager.addPlayer(newPlayer);
+
+    this.emit('acceptedUser', {id: newPlayer.id});
 }
 
 exports.disconnect = function (data) {

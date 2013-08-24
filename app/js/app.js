@@ -11,6 +11,11 @@
         }
     });
 
+    window.config = {};
+    socket.on('acceptedUser', function(data) {
+    	config.data.id;
+    })
+
     socket.on('poll', function(data) {
     	console.log(data);
     })

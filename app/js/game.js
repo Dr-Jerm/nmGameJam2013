@@ -20,7 +20,7 @@ container.appendChild( renderer.domElement );
 var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 );
 var scene = new THREE.Scene();
 	
-camera.position.z = -100;
+camera.position.z = 400;
 scene.add(camera);
 
 var ambientLight = new THREE.AmbientLight( 0xffffff);
@@ -55,6 +55,12 @@ function Game()
 {
 	this.init = function()
 	{
+
+		this.controller = new Controller();
+		this.input = new Input();
+		this.input.setController(this.controller);
+		this.input.start();
+
 	   //content loading here
 	   this.sperm = new Sperm();
 	   this.player = new Player(this.sperm);
@@ -68,9 +74,9 @@ function Game()
 	   this.testImage.src = "images/Grumpy-Cat.jpg";
 	   this.testImage.width = 256;
 	   this.testImage.height = 256;
-	   this.testImage.map = THREE.ImageUtils.loadTexture( this.testImage);
+	   this.testImage.map = THREE.ImageUtils.loadTexture( this.testImage.src);
 	   
-	   this.spriteTest = new Sprite(this.testImage, 0, 0, 78, scene);
+	   this.spriteTest = new Sprite(this.testImage, 0, 0, 10, scene);
 	   
 
 	   animate();
@@ -85,6 +91,7 @@ function Game()
 		//this.spriteTest.DrawSelf();
 
 		console.log("Update");
+		this.input.update();
 		this.player.update();
 	}
 }
