@@ -14,7 +14,7 @@ app.configure(function() {
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({secret:'s0m3k1nd0fst00p1ds3cr3t'}));
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/app'));
 });
 
 server.listen(app.get('port'), function () {
