@@ -6,7 +6,7 @@ function init()
 	
 
    console.log("Init");
-	animate();
+   animate();
 }
 
 function animate() 
