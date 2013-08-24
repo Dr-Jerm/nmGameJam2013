@@ -4,7 +4,7 @@ var context;
 
 var DEBUG = true; // Debug mode (show FPS)
 var EDITOR = false;
-var READY = true;
+var READY = false;
 
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
@@ -82,12 +82,13 @@ function Game()
 	   
 	   this.egg = new Egg();
 
-	   console.log("Init");
+	   
 	 
 
 	   this.sperm1 = new Sperm(0,0,80); 
 	   this.player = new Player(this.sperm1); 
 
+	   console.log("Game Initialized");
 	   animate();
 	}
 
@@ -96,7 +97,7 @@ function Game()
 	{
 
 		// loop through gameobjects update
-		console.log("Update");
+		console.log("Game Update");
 		this.input.update();
 		this.player.update();
 
@@ -107,10 +108,11 @@ function Game()
 
 function animate()
 {
+	
+	delta = clock.getDelta();
+	elapsedTime = clock.getElapsedTime();
 	if(READY)
 	{
-		delta = clock.getDelta();
-		elapsedTime = clock.getElapsedTime();
 		game.update();
 		renderer.render(scene, camera);
 		if(DEBUG){
