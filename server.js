@@ -11,6 +11,8 @@ var express = require('express'),
     http = require('http'),
     path = require('path');
 
+var util = require('util');
+
 var app = module.exports = express();
 
 /**
@@ -30,29 +32,30 @@ app.use(express.static(path.join(__dirname, 'app')));
 app.use(app.router);
 
 // development only
-if (app.get('env') === 'development') {
-    app.use(express.errorHandler());
+// if (app.get('env') === 'development') {
+//     app.use(express.errorHandler());
+// }
+
+
+var serverIp = '127.0.0.1';
+if (process.env.PORT) {
+  serverIp = '54.221.239.154';
 }
+app.get('/', function(req, res){
+    var options = {
+        serverIp: serverIp,
+        clientIp: req.connection.remoteAddress
+    }
 
-// production only
-if (app.get('env') === 'production') {
-    // TODO
-};
-
-
-/**
- * Routes
- */
-
-// serve index and view partials
-app.get('/', routes.index);
-// app.get('/partials/:name', routes.partials);
-
-// JSON API
-app.get('/api/name', api.name);
-
+    res.render('index', options);
+});
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
+
+// JSON API
+app.post('/user', function (req, res) {
+   console.log(util.inspect(req));
+});
 
 
 /**
@@ -65,8 +68,22 @@ server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
 
-// io.listen(server);
 
 io.sockets.on('connection', function (socket) {
-    socket.emit('hello', {welcome: "Hi, I'm text from a socket!"});
+  // socket.emit('hello', {welcome: "Hi, I'm text from a socket!"});
+
+  // socket.on("newUser", function(data))
+
+  socket.on("up", function(data) {
+    console.log("up: " + data);
+  });
+  socket.on("down", function(data) {
+    console.log("down: " + data);
+  });
+  socket.on("left", function(data) {
+    console.log("left: " + data);
+  });
+  socket.on("right", function(data) {
+    console.log("right: " + data);
+  });
 });
