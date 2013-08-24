@@ -1,0 +1,5 @@
+<% layout('layout') -%>
+
+<div>Your IP is <%= clientIp %> (injected on server)</div>
+<div>Hello there <span id="ajax-injected"></span>! (fetched by ajax)</div>
+<div><span id="socket-injected"></span> (sent through socket.io)</div>

@@ -11,7 +11,7 @@ var serverIp;
 exports.index = function(req, res){
     console.log(serverIp);
     var options = {
-        serverIp: '54.221.239.154',
+        serverIp: '127.0.0.1',
         clientIp: req.connection.remoteAddress
     }
 

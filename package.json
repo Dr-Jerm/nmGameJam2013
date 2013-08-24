@@ -1,26 +1,11 @@
 {
-  "name": "nmGameJam2013",
+  "name": "application-name",
   "version": "0.0.1",
-  "author": "Shem Nguyen <shemit@gmail.com>, Jeremy Bernstein<utilityjerm@gmail.com>, Eric Geusz<egeusz@gmail.com>",
-  "description": "Just a barebones MO game engine so far.",
-  "contributors": [
-    {
-      "name": "Shem Nguyen",
-      "email": "shemit@gmail.com"
-    },
-    {
-      "name": "Jeremy Bernstein",
-      "email": "utilityjerm@gmail.com"
-    },
-    {
-      "name": "Eric Geusz",
-      "email": "egeusz@gmail.com"
-    }
-  ],
+  "private": true,
   "dependencies": {
-    "express": "3.2.4",
-    "socket.io": "0.9.14",
-    "jade": "*",
-    "passport": "0.1.17"
+    "express": "~3.2.6",
+    "socket.io": "~0.9.16",
+    "ejs": "~0.8.4",
+    "ejs-locals": "~1.0.2"
   }
 }
