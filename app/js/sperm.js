@@ -14,7 +14,7 @@ function Sperm(_posX, _posY, _rot)
 	bodySprite = new Sprite(images["sperm.png"], posX, posY, rot);
 
   this.getPosition = function() {
-    return [posX, posY, posz];
+    return [posX, posY, posZ];
   }
 
   this.getRotation = function() {
