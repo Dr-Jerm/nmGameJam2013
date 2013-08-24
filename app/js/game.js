@@ -10,20 +10,31 @@ var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
 
 //-------THREE.js variables ---------//
+var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
 var delta;
 var elapsedTime;
 
+
+
 var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
 renderer.setSize( window.innerWidth, window.innerHeight );
 container.appendChild( renderer.domElement ); 
+
+// new camera
 var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 );
+
+// new scene
 var scene = new THREE.Scene();
 	
+
+camera.position.set(0,0,100);
+
 camera.position.z = 400;
 scene.add(camera);
 
 var ambientLight = new THREE.AmbientLight( 0xffffff);
+ambientLight.position.set(0,100,0);
 scene.add(ambientLight);
 
 //-------- animation frame
@@ -49,7 +60,11 @@ if(DEBUG){
 	container.appendChild( stats.domElement );
 }
 
-
+var testImage = new Image();
+testImage.width = 256;
+testImage.height = 200;
+testImage.src = "images/Grumpy-Cat.jpg";
+testImage.map = THREE.ImageUtils.loadTexture( this.testImage.src);
 
 function Game()
 {
@@ -69,15 +84,9 @@ function Game()
 
 	   console.log("Init");
 	 
-	   
-	   this.testImage = new Image();
-	   this.testImage.src = "images/Grumpy-Cat.jpg";
-	   this.testImage.width = 256;
-	   this.testImage.height = 256;
-	   this.testImage.map = THREE.ImageUtils.loadTexture( this.testImage.src);
-	   
-	   this.spriteTest = new Sprite(this.testImage, 0, 0, 10, scene);
-	   
+
+	   this.sperm1 = new Sperm(0,0,80); 
+	   this.player = new Player(this.sperm1); 
 
 	   animate();
 	}
@@ -87,12 +96,10 @@ function Game()
 	{
 
 		// loop through gameobjects update
-
-		//this.spriteTest.DrawSelf();
-
 		console.log("Update");
 		this.input.update();
 		this.player.update();
+
 	}
 }
 
@@ -129,3 +136,8 @@ function onWindowResize() {
 	renderer.setSize( WIDTH, HEIGHT );
 
 }
+
+
+
+
+	   
