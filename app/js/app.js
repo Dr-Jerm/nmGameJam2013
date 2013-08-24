@@ -12,19 +12,12 @@
     	config.uid = data.id;
     })
 
-    var fakeData = {
-        position: {
-            x: 0,
-            y: 0,
-            z: 0    
-        }
-    }
-
-    socket.on('poll', function(data) {
-    	socket.emit('response', fakeData)
-    })
     //INIT here
     game = new Game();
     game.init();
+
+    socket.on('poll', function(data) {
+      game.networkUpdate(data);
+    })
 
 })();

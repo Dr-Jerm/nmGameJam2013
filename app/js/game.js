@@ -88,6 +88,10 @@ function Game()
 	   animate();
 	}
 
+  this.networkUpdate = function(data) {
+    var fakeData = { hello: "world"};
+    socket.emit('response', fakeData);
+  }
 
 	this.update = function()
 	{
