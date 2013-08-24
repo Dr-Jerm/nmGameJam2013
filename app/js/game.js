@@ -23,7 +23,7 @@ function Game()
 
 		// loop through gameobjects update
 		console.log("Update");
-		this.player.update(); 
+		this.player.update();
 
 
 	}
