@@ -15,7 +15,8 @@ function Sperm(_posX, _posY, _rot)
 	
   	this.moveForward = function(y) {
     	//posY += y;
-    	velY += y;
+    	velY += Math.sin(rot);
+    	velX += Math.cos(rot);
   	}
   	//this.moveDown = function(y) {
   	//	velY += y;
