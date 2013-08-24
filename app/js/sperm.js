@@ -1,7 +1,5 @@
 function Sperm(_posX, _posY, _rot)
 {
-	
-
 	var posX = _posX;
 	var posY = _posY;
 
@@ -21,10 +19,9 @@ function Sperm(_posX, _posY, _rot)
 		posX += velX;
 		posY += velY;
 		rot += rotVel;
-
+		
 		rot++;
 
-		
 		bodySprite.updatePosition(posX, posY, rot);
 		//console.log("spermupdate");
 
