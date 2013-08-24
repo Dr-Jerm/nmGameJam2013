@@ -13,6 +13,10 @@ function Sperm(_posX, _posY, _rot)
 
 	bodySprite = new Sprite(testImage, posX, posY, rot);
 	
+  this.moveY = function(y) {
+    posY += y;
+  }
+
 	// input from player params here. 
 	this.update = function()
 	{
