@@ -6,27 +6,25 @@ var GameServer = function GameServer () {
 
     this.socketManager;
 
-
-    var tick = function () {
+    var tick = function() {
         if (process.env.DEBUG) {console.log("GameServer.tick"); }
         this.socketManager.emit('poll', {playerSnapshot:currentPlayerSnapshot()});
     }.bind(this);
 
-    this.run = function (clockSpeed) {
+    this.run = function(clockSpeed) {
         if (process.env.DEBUG) {console.log("GameServer.run"); }
         setInterval(tick, clockSpeed);
     }
 
-    this.reset = function () {
+    this.reset = function() {
         if (process.env.DEBUG) {console.log("GameServer.reset"); }
         this.socketManager.emit("reset");
     }
 
-    this.spawnPlayer = function (playerID, initialParams) {
-        
+    this.spawnPlayer = function(playerID, initialParams) {
     }
 
-    var currentPlayerSnapshot = function () {
+    var currentPlayerSnapshot = function() {
         var snapshot = []
         for (var key in playerManager.players) {
             var cleanPlayer = playerManager.players[key].clientPlayer();
@@ -36,27 +34,27 @@ var GameServer = function GameServer () {
     }
 
 
-    this.setSocketManager = function (socketManager) {
+    this.setSocketManager = function(socketManager) {
         this.socketManager = socketManager;
         socketManager.on('connection', function (socket) {
 
-            socket.on("newUser", function (data) {
+            socket.on("newUser", function(data) {
                 if (process.env.DEBUG) {console.log("Networking.newUser:"+this.id)}
                 console.log("Player name registered: " + data.user);
                 var newPlayer = playerManager.generatePlayer(data.user, this, {});
                 playerManager.addPlayer(newPlayer);
 
-                this.emit('acceptedUser', {id: newPlayer.id, newPlayer.gameteType});
+                this.emit('acceptedUser', 
+                  {id: newPlayer.id, gameteType: newPlayer.gameteType});
             });
 
-            socket.on("disconnect", function () {
+            socket.on("disconnect", function() {
                 if (process.env.DEBUG) {console.log("Networking.disconnect:"+this.id)}
                 playerManager.removePlayer(this.id);
                 socketManager.emit("playerDisconnect", {playerId: this.id});
             });
         });
     }
-    
 
 }
 
