@@ -13,9 +13,21 @@ function Sperm(_posX, _posY, _rot)
 
 	bodySprite = new Sprite(testImage, posX, posY, rot);
 	
-  this.moveY = function(y) {
-    posY += y;
-  }
+  	this.moveForward = function(y) {
+    	//posY += y;
+    	velY += y;
+  	}
+  	//this.moveDown = function(y) {
+  	//	velY += y;
+  	//}
+  	this.rotateLeft = function(y) {
+  		rotVel += y;
+  	}
+  	this.rotateRight = function(y) {
+  		rotVel -= y;
+  	}
+
+
 
 	// input from player params here. 
 	this.update = function()
@@ -24,14 +36,19 @@ function Sperm(_posX, _posY, _rot)
 		posY += velY;
 		rot += rotVel;
 
-		if (keyboard.pressed("r"))
-		{
-			rot++;
-		}
+		//if (keyboard.pressed("r"))
+		//{
+		//	rot++;
+		//}
 
 
 		bodySprite.updatePosition(posX, posY, rot);
 		//console.log("spermupdate");
+
+
+		posY *= .9;
+		posX *= .9;
+		rotVel *= .9;
 
 	}
 
