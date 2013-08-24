@@ -89,7 +89,10 @@ function Game()
 
   this.networkUpdate = function(data) {
     console.log(data);
-    socket.emit({blah: "fdjlsa"});
+    socket.emit("something", { id: this.player.id,
+                  position: this.player.sperm.getPosition(), 
+                  rotation: this.player.sperm.getRotation(),
+                });
   }
 
   this.setPlayer = function(id) {
