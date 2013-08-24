@@ -7,11 +7,12 @@ var express = require('express'),
     io = require('socket.io'),
     engine = require('ejs-locals'),
     network = require('./networking'),
-    // api = require('./routes/api'),
+    gameServer = require('./GameServer'),
     http = require('http'),
     path = require('path');
 
 var util = require('util');
+process.env.DEBUG = true;
 
 var app = module.exports = express();
 
@@ -78,18 +79,13 @@ server.listen(app.get('port'), function () {
 io.sockets.on('connection', function (socket) {
   // socket.emit('hello', {welcome: "Hi, I'm text from a socket!"});
 
+  socket.on("newUser", network.newUser.bind(socket));
   socket.on("disconnect", network.disconnect.bind(socket));
-
-  socket.on("up", function(data) {
-    console.log("up: " + data);
-  });
-  socket.on("down", function(data) {
-    console.log("down: " + data);
-  });
-  socket.on("left", function(data) {
-    console.log("left: " + data);
-  });
-  socket.on("right", function(data) {
-    console.log("right: " + data);
-  });
 });
+
+gameServer.run(1000);
+
+// var count = 0;
+// setInterval(function () {
+//   console.log("ping "+ count++);
+// },5000);
