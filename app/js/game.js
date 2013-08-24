@@ -63,15 +63,15 @@ function Game()
 
 	   console.log("Init");
 	 
-	   //XXXXXXX TEST XXXXXXXXXXXXXX
+	   
 	   this.testImage = new Image();
 	   this.testImage.src = "images/Grumpy-Cat.jpg";
-	   //this.testImage.width = 256;
-	   //this.testImage.height = 256;
+	   this.testImage.width = 256;
+	   this.testImage.height = 256;
 	   this.testImage.map = THREE.ImageUtils.loadTexture( this.testImage);
 	   
 	   this.spriteTest = new Sprite(this.testImage, 0, 0, 78, scene);
-	   //XXXXXXX TEST XXXXXXXXXXXXXX
+	   
 
 	   animate();
 	}
