@@ -6,7 +6,6 @@
 var express = require('express'),
     io = require('socket.io'),
     engine = require('ejs-locals'),
-    network = require('./networking'),
     gameServer = require('./GameServer'),
     http = require('http'),
     path = require('path');
@@ -76,25 +75,27 @@ server.listen(app.get('port'), function () {
 });
 
 
-io.sockets.on('connection', function (socket) {
-  // socket.emit('hello', {welcome: "Hi, I'm text from a socket!"});
+gameServer.setSocketManager(io.sockets);
 
-  socket.on("newUser", network.newUser.bind(socket));
-  socket.on("disconnect", network.disconnect.bind(socket));
+// io.sockets.on('connection', function (socket) {
+//   // socket.emit('hello', {welcome: "Hi, I'm text from a socket!"});
 
-  socket.on("up", function(data) {
-    console.log("up: " + data);
-  });
-  socket.on("down", function(data) {
-    console.log("down: " + data);
-  });
-  socket.on("left", function(data) {
-    console.log("left: " + data);
-  });
-  socket.on("right", function(data) {
-    console.log("right: " + data);
-  });
-});
+//   socket.on("newUser", network.newUser.bind(socket));
+//   socket.on("disconnect", network.disconnect.bind(socket));
+
+//   socket.on("up", function(data) {
+//     console.log("up: " + data);
+//   });
+//   socket.on("down", function(data) {
+//     console.log("down: " + data);
+//   });
+//   socket.on("left", function(data) {
+//     console.log("left: " + data);
+//   });
+//   socket.on("right", function(data) {
+//     console.log("right: " + data);
+//   });
+// });
 
 gameServer.run(1000);
 

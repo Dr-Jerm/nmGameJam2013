@@ -13,7 +13,7 @@
 
     window.config = {};
     socket.on('acceptedUser', function(data) {
-    	config.data.id;
+    	config.uid = data.id;
     })
 
     socket.on('poll', function(data) {
