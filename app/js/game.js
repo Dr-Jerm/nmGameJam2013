@@ -1,40 +1,124 @@
-function init()
-{
+//--------------ENGINE----------------------------
+var container = document.getElementById( 'container' );
+var context;
 
-   //content loading here
+var DEBUG = true; // Debug mode (show FPS)
+var EDITOR = false;
+var READY = true;
 
+var WIDTH = window.innerWidth;
+var HEIGHT = window.innerHeight;
+
+//-------THREE.js variables ---------//
+var clock = new THREE.Clock();
+var delta;
+var elapsedTime;
+
+var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
+renderer.setSize( window.innerWidth, window.innerHeight );
+container.appendChild( renderer.domElement ); 
+var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 );
+var scene = new THREE.Scene();
 	
+camera.position.z = -100;
+scene.add(camera);
 
-   console.log("Init");
-	animate();
+var ambientLight = new THREE.AmbientLight( 0xffffff);
+scene.add(ambientLight);
+
+//-------- animation frame
+window.requestAnimFrame = (function(callback){
+    return window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(callback){
+        window.setTimeout(callback, 1000 / 60);
+    };
+})();
+
+//window.addEventListener( 'resize', onWindowResize, false );
+
+//--------- Debug
+if(DEBUG){
+	container = document.getElementById( 'container' );
+	stats = new Stats();
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.top = '0px';
+	container.appendChild( stats.domElement );
 }
 
-function animate() 
+
+
+function Game()
 {
+	this.init = function()
+	{
+	   //content loading here
+	   this.sperm = new Sperm();
+	   this.player = new Player(this.sperm);
+	   
+	   this.egg = new Egg();
+
+	   console.log("Init");
+	 
+	   
+	   this.testImage = new Image();
+	   this.testImage.src = "images/Grumpy-Cat.jpg";
+	   this.testImage.width = 256;
+	   this.testImage.height = 256;
+	   this.testImage.map = THREE.ImageUtils.loadTexture( this.testImage);
+	   
+	   this.spriteTest = new Sprite(this.testImage, 0, 0, 78, scene);
+	   
+
+	   animate();
+	}
+
+
+	this.update = function()
+	{
+
+		// loop through gameobjects update
+
+		//this.spriteTest.DrawSelf();
+
+		console.log("Update");
+		this.player.update();
+	}
+}
+
+
+
+function animate()
+{
+	if(READY)
+	{
+		delta = clock.getDelta();
+		elapsedTime = clock.getElapsedTime();
+		game.update();
+		renderer.render(scene, camera);
+		if(DEBUG){
+			stats.update();
+		}
+		//console.log("Animate");
+	}
+	//playerInput.Update();
+
+
 	requestAnimationFrame( animate );
-	update();
-	draw();
-	console.log("Animate");
 }
 
 
-function update()
-{
+function onWindowResize() {
 
-	// loop through gameobjects update
-	console.log("Update");
+	WIDTH = window.innerWidth;
+	HEIGHT = window.innerHeight;
+	
+	camera.aspect = WIDTH / HEIGHT;
+	camera.updateProjectionMatrix();
 
-
-
-}
-
-
-function draw()
-{
-
-	// three.js draw 
-	console.log("Draw");
-
-
+	renderer.setSize( WIDTH, HEIGHT );
 
 }

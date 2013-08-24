@@ -15,6 +15,7 @@
     	console.log(data);
     })
     //INIT here
-    init();
+    game = new Game();
+    game.init();
 
 })();
