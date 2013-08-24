@@ -58,8 +58,16 @@ function Sperm(_posX, _posY, _rot)
 	this.update = function()
 	{
 
-		//if (posX > 400)
-		//	velX *= -1.5;
+		if (posX > window.WIDTH/5)
+			velX *= -1.5;
+		if (posX < -window.WIDTH/5)
+			velX *= -1.5;
+		if (posY > window.HEIGHT/5)
+			velY *= -1.5;
+		if (posY < -window.HEIGHT/5)
+			velY *= -1.5;
+
+		
 		posX += velX;
 		posY += velY;
 		rot += rotVel;
