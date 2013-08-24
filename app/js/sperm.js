@@ -37,7 +37,7 @@ function Sperm(_posX, _posY, _rot)
 	
 	scene.add(tailLine);
 
-<<<<<<< HEAD
+
 		// movement
 	this.moveForward = function(y) {
 		velY += Math.sin(rot) * y;
@@ -68,7 +68,7 @@ function Sperm(_posX, _posY, _rot)
       		z: 0,
     	};
   	}
-=======
+
 	
 
 
@@ -106,7 +106,7 @@ function Sperm(_posX, _posY, _rot)
   this.getRotVel = function(){
     return rotVel;
   }
->>>>>>> 6dbda38c1d15ea2dbf36fd56e471bfdfedee85ef
+
 
   	this.getRotation = function() {
     	return rot;
