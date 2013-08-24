@@ -17,9 +17,13 @@ function Player(_sperm)
 		//console.log("playerupdate");
 		this.sperm.update();
 
+		
+
 		posX += velX;
 		posY += velY;
 		rot += rotVel;
+
+
 
 	}
 }
