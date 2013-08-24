@@ -34,8 +34,8 @@ function Sperm(_posX, _posY, _rot)
 	this.update = function()
 	{
 
-		if (posX > 400)
-			velX *= -1.5;
+		//if (posX > 400)
+		//	velX *= -1.5;
 		posX += velX;
 		posY += velY;
 		rot += rotVel;
