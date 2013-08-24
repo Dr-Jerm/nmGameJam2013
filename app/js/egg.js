@@ -11,6 +11,8 @@ function Egg(_posX, _posY, _rot)
 	var velY = 0;
 	var rotVel = 0;
 
+	bodySprite = new Sprite(images["Egg.png"], posX, posY, rot);
+
 
 	// gets
 	this.getPosition = function() {
@@ -41,7 +43,7 @@ function Egg(_posX, _posY, _rot)
 		return posY;
 	}
 	this.getRotVel = function(){
-	return rotVel;
+		return rotVel;
 	}
 
 	this.update = function()
