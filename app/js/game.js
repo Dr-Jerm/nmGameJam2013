@@ -14,6 +14,8 @@ var clock = new THREE.Clock();
 var delta;
 var elapsedTime;
 
+
+
 var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
 renderer.setSize( window.innerWidth, window.innerHeight );
 container.appendChild( renderer.domElement ); 
@@ -25,12 +27,13 @@ var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 );
 var scene = new THREE.Scene();
 	
 
-camera.position.set(0,0,-100);
+camera.position.set(0,0,100);
 
 camera.position.z = 400;
 scene.add(camera);
 
 var ambientLight = new THREE.AmbientLight( 0xffffff);
+ambientLight.position.set(0,100,0);
 scene.add(ambientLight);
 
 //-------- animation frame
@@ -83,7 +86,7 @@ function Game()
 	   this.testImage.height = 256;
 	   this.testImage.map = THREE.ImageUtils.loadTexture( this.testImage.src);
 	   
-	   this.spriteTest = new Sprite(this.testImage, 0, 0, 10, scene);
+	   this.spriteTest = new Sprite(this.testImage, 0, 0, .5, scene);
 	   
 
 	   animate();
@@ -100,6 +103,7 @@ function Game()
 		console.log("Update");
 		this.input.update();
 		this.player.update();
+
 	}
 }
 
