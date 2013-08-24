@@ -3,13 +3,12 @@
 <html ng-app>
 	<head>
 		<meta charset="utf-8">
-		<title>NodeExpressEjsSeed</title>
+		<title>Spunk-Racer</title>
 		<link rel="stylesheet" type="text/css" href="css/app.css">
-		<script src="js/vendor/jquery.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
 
         <script>
-            var socket = io.connect('<%= serverIp %>');
+            window.socket = io.connect('<%= serverIp %>');
         </script>
 	</head>
 	<body>

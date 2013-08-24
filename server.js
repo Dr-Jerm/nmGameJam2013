@@ -6,10 +6,13 @@
 var express = require('express'),
     io = require('socket.io'),
     engine = require('ejs-locals'),
-    routes = require('./routes'),
-    api = require('./routes/api'),
+    network = require('./networking'),
+    gameServer = require('./GameServer'),
     http = require('http'),
     path = require('path');
+
+var util = require('util');
+process.env.DEBUG = true;
 
 var app = module.exports = express();
 
@@ -30,29 +33,36 @@ app.use(express.static(path.join(__dirname, 'app')));
 app.use(app.router);
 
 // development only
-if (app.get('env') === 'development') {
-    app.use(express.errorHandler());
+// if (app.get('env') === 'development') {
+//     app.use(express.errorHandler());
+// }
+
+
+var serverIp = '127.0.0.1';
+if (process.env.PORT) {
+  serverIp = '54.221.239.154';
 }
 
-// production only
-if (app.get('env') === 'production') {
-    // TODO
+var indexRoute = function(req, res){
+    var options = {
+        serverIp: serverIp,
+        clientIp: req.connection.remoteAddress
+    }
+
+    res.render('index', options);
 };
 
-
-/**
- * Routes
- */
-
-// serve index and view partials
-app.get('/', routes.index);
-// app.get('/partials/:name', routes.partials);
+app.get('/', indexRoute);
+// redirect all others to the index (HTML5 history)
+app.get('*', indexRoute);
 
 // JSON API
-app.get('/api/name', api.name);
-
-// redirect all others to the index (HTML5 history)
-app.get('*', routes.index);
+app.post('/user', function (req, res) {
+  var user = req.body.user; 
+  console.log(user);
+  res.write(user);
+  res.end();
+});
 
 
 /**
@@ -65,8 +75,30 @@ server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
 
-// io.listen(server);
 
 io.sockets.on('connection', function (socket) {
-    socket.emit('hello', {welcome: "Hi, I'm text from a socket!"});
+  // socket.emit('hello', {welcome: "Hi, I'm text from a socket!"});
+
+  socket.on("newUser", network.newUser.bind(socket));
+  socket.on("disconnect", network.disconnect.bind(socket));
+
+  socket.on("up", function(data) {
+    console.log("up: " + data);
+  });
+  socket.on("down", function(data) {
+    console.log("down: " + data);
+  });
+  socket.on("left", function(data) {
+    console.log("left: " + data);
+  });
+  socket.on("right", function(data) {
+    console.log("right: " + data);
+  });
 });
+
+gameServer.run(1000);
+
+// var count = 0;
+// setInterval(function () {
+//   console.log("ping "+ count++);
+// },5000);
