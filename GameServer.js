@@ -1,7 +1,6 @@
 var playerManager = require('./PlayerManager'),
-    network = require('./networking'),
     Player = require('./Player'),
-    HighScores = require('.HighScores');
+    HighScores = require('./HighScores');
 
 var GameServer = function GameServer () {
 
