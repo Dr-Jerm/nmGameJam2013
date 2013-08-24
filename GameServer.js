@@ -8,7 +8,7 @@ var GameServer = function GameServer () {
 
     var tick = function () {
         if (process.env.DEBUG) {console.log("GameServer.tick"); }
-        playerManager.poll();
+        this.socketManager.emit('poll', {playerSnapshot:currentPlayerSnapshot()});
     }.bind(this);
 
     this.run = function (clockSpeed) {
@@ -25,10 +25,19 @@ var GameServer = function GameServer () {
         
     }
 
+    var currentPlayerSnapshot = function () {
+        var snapshot = []
+        for (var key in playerManager.players) {
+            var cleanPlayer = playerManager.players[key].clientPlayer();
+            snapshot.push(cleanPlayer);
+        }
+        return snapshot;
+    }
+
 
     this.setSocketManager = function (socketManager) {
+        this.socketManager = socketManager;
         socketManager.on('connection', function (socket) {
-          this.socketManager = socketManager;
 
             socket.on("newUser", network.newUser.bind(socket));
             socket.on("disconnect", network.disconnect.bind(socket));
