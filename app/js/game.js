@@ -10,7 +10,6 @@ var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
 
 //-------THREE.js variables ---------//
-var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
 var delta;
 var elapsedTime;
