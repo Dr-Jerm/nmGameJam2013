@@ -55,28 +55,18 @@ module.exports = function Player (name, socket, startingAttrs) {
     }
 
     this.rotation = {
-        x: 0,
-        y: 0,
-        z: 0,
+        r: 0,
 
-        set: function(x, y, z) {
-            if (y) {
-                this.rotation.x = x;
-                this.rotation.y = y;
-                this.rotation.z = z;
-            } else {
-                this.rotation.x = x.x;
-                this.rotation.y = x.y;
-                this.rotation.z = x.z;
-            }
+        set: function(r) {
+            this.rotation.r = r
         }.bind(this)
     }
 
 
     this.scale = {
-        x: 0,
-        y: 0,
-        z: 0,
+        x: 1,
+        y: 1,
+        z: 1,
 
         set: function(x, y, z) {
             if (y) {
