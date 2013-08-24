@@ -6,8 +6,8 @@
 var express = require('express'),
     io = require('socket.io'),
     engine = require('ejs-locals'),
-    routes = require('./routes'),
-    api = require('./routes/api'),
+    network = require('./networking'),
+    // api = require('./routes/api'),
     http = require('http'),
     path = require('path');
 
@@ -41,20 +41,26 @@ var serverIp = '127.0.0.1';
 if (process.env.PORT) {
   serverIp = '54.221.239.154';
 }
-app.get('/', function(req, res){
+
+var indexRoute = function(req, res){
     var options = {
         serverIp: serverIp,
         clientIp: req.connection.remoteAddress
     }
 
     res.render('index', options);
-});
+};
+
+app.get('/', indexRoute);
 // redirect all others to the index (HTML5 history)
-app.get('*', routes.index);
+app.get('*', indexRoute);
 
 // JSON API
 app.post('/user', function (req, res) {
-   console.log(util.inspect(req));
+  var user = req.body.user; 
+  console.log(user);
+  res.write(user);
+  res.end();
 });
 
 
@@ -72,7 +78,7 @@ server.listen(app.get('port'), function () {
 io.sockets.on('connection', function (socket) {
   // socket.emit('hello', {welcome: "Hi, I'm text from a socket!"});
 
-  // socket.on("newUser", function(data))
+  socket.on("disconnect", network.disconnect.bind(socket));
 
   socket.on("up", function(data) {
     console.log("up: " + data);
