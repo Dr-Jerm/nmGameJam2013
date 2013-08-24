@@ -20,7 +20,15 @@ function Sprite(_img, _posX, _posY, _rot, _scene)
 	this.material.transparent = true;
 	this.mesh = new THREE.Mesh(this.geo, this.material);
 	this.mesh.sprite = this;
+	this.mesh.position.x = this.posX;	
+	this.mesh.position.y = this.posY;
+	this.mesh.position.z = 0;
+	this.mesh.rotation.z = this.rot;
+
+
 	_scene.add(this.mesh);
+
+
 
 	
 	//--------- Draw Self 
