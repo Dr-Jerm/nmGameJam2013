@@ -14,6 +14,7 @@ exports.newUser = function (data) {
 
 exports.disconnect = function (data) {
     console.log("Player has disconnected: " + this.id);
+    playerManager.removePlayer(this.id);
 }
 
 exports.playerUpdate = function (data) {

@@ -1,4 +1,5 @@
-var playerManager = require('./PlayerManager');
+var playerManager = require('./PlayerManager'),
+	network = require('./networking');
 
 var GameServer = function GameServer () {
 
@@ -11,6 +12,28 @@ var GameServer = function GameServer () {
 	this.run = function (clockSpeed) {
 		if (process.env.DEBUG) {console.log("GameServer.run"); }
     	setInterval(tick, clockSpeed);
+	}
+
+	this.setSocketManager = function (socketManager) {
+		socketManager.on('connection', function (socket) {
+		  // socket.emit('hello', {welcome: "Hi, I'm text from a socket!"});
+
+		  socket.on("newUser", network.newUser.bind(socket));
+		  socket.on("disconnect", network.disconnect.bind(socket));
+
+		  socket.on("up", function(data) {
+		    console.log("up: " + data);
+		  });
+		  socket.on("down", function(data) {
+		    console.log("down: " + data);
+		  });
+		  socket.on("left", function(data) {
+		    console.log("left: " + data);
+		  });
+		  socket.on("right", function(data) {
+		    console.log("right: " + data);
+		  });
+		});
 	}
 	
 

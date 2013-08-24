@@ -19,8 +19,12 @@ function Sperm(_posX, _posY, _rot)
 		posX += velX;
 		posY += velY;
 		rot += rotVel;
-		
-		rot++;
+
+		if (keyboard.pressed("r"))
+		{
+			rot++;
+		}
+
 
 		bodySprite.updatePosition(posX, posY, rot);
 		//console.log("spermupdate");
