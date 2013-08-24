@@ -69,11 +69,10 @@ function Game()
 {
 	this.init = function()
 	{
-
-		this.controller = new Controller();
-		this.input = new Input();
-		this.input.setController(this.controller);
-		this.input.start();
+     this.controller = new Controller();
+     this.input = new Input();
+     this.input.setController(this.controller);
+     this.input.start();
 
 	   //content loading here
 	   this.sperm = new Sperm();
@@ -89,8 +88,8 @@ function Game()
 	}
 
   this.networkUpdate = function(data) {
-    var fakeData = { hello: "world"};
-    socket.emit('response', fakeData);
+    console.log(data);
+    socket.emit({blah: "fdjlsa"});
   }
 
   this.setPlayer = function(id) {
@@ -98,11 +97,12 @@ function Game()
     this.player = new Player(id, this.sperm);
   }
 
-	this.update = function()
-	{
+  this.reset = function() {
 
+  }
+
+	this.update = function() {
 		// loop through gameobjects update
-		console.log("Game Update");
 		this.input.update();
 		this.player.update();
 

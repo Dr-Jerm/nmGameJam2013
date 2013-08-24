@@ -7,14 +7,11 @@
         }
     });
 
-    window.config = {};
-
     //INIT here
     game = new Game();
     game.init();
 
     socket.on('acceptedUser', function(data) {
-    	config.uid = data.id;
       game.reset();
       game.setPlayer(data.id);
     })
