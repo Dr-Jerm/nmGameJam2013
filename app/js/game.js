@@ -90,13 +90,14 @@ function Game()
                   position: this.player.sperm.getPosition(), 
                   rotation: this.player.sperm.getRotation(),
                 });
-    data.forEach(function (player) {
-        if (player.id in this.players) {
-            //this.players[player.id] set position of sperm here
+    data.forEach(function (netPlayer) {
+        if (netPlayer.id in this.players) {
+            //this.players[netPlayer.id] set position of sperm here
+            //netPlayer
         } else {
-            var netSperm = new Sperm(0, 0, 80);
-            var netPlayer = new Player(player.id, this.sperm);
-            this.players[player.id] = netPlayer;
+            var newSperm = new Sperm(0, 0, 80);
+            var newPlayer = new Player(newPlayer.id, newSperm);
+            this.players[netPlayer.id] = newPlayer;
         }
     });
   }
