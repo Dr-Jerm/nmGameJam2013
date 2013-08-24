@@ -14,8 +14,8 @@ function Sperm(_posX, _posY, _rot)
 	bodySprite = new Sprite(images["sperm.png"], posX, posY, rot);
 	
   	this.moveForward = function(y) {
-    	velY += Math.sin(rot);
-    	velX += Math.cos(rot);
+    	velY += Math.sin(rot) * y;
+    	velX += Math.cos(rot) * y;
   	}
   	this.rotateLeft = function(y) {
   		rotVel += y;
@@ -33,24 +33,24 @@ function Sperm(_posX, _posY, _rot)
 	// input from player params here. 
 	this.update = function()
 	{
+
+		if (posX > 400)
+			velX *= -1.5;
 		posX += velX;
 		posY += velY;
 		rot += rotVel;
-
-		//if (keyboard.pressed("r"))
-		//{
-		//	rot++;
-		//}
 
 
 		bodySprite.updatePosition(posX, posY, rot);
 		//console.log("spermupdate");
 
 
-		posY *= .9;
-		posX *= .9;
+		// movement resistance
+		velX *= .9;
+		velY *= .9;
 		rotVel *= .8;
 
+		
 	}
 
 }
