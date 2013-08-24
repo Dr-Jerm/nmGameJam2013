@@ -32,13 +32,8 @@ function Sprite(_img, _posX, _posY, _rot, _scene)
 
 	_scene.add(this.mesh);
 
-<<<<<<< HEAD
 	/*
-=======
 
-
-	
->>>>>>> e1df7a2fd665fd70e1b7449168ef2bc4f6c1281a
 	//--------- Draw Self 
 	this.Drawself = function()
 	{
