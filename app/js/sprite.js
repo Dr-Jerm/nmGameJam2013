@@ -21,7 +21,7 @@ function Sprite(_img, _posX, _posY, _rot)
 	// this.material = new THREE.MeshBasicMaterial({color: 0xCC0000});
 
 
-	//this.material.transparent = true;
+	this.material.transparent = true;
 	this.mesh = new THREE.Mesh(this.geo, this.material);
 	this.mesh.sprite = this;
 	this.mesh.position.x = this.posX;	

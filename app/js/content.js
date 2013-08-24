@@ -9,6 +9,7 @@ function LoadImage(_imageSrc)
 	console.log("loading "+_imageSrc);
 	img.onload = LoadImageCallBack(); 
 	img.src = "images/"+_imageSrc; 
+	img.map = THREE.ImageUtils.loadTexture(img.src);
 
 	images[_imageSrc] = img;
 }

@@ -11,7 +11,7 @@ function Sperm(_posX, _posY, _rot)
 	var velY = 0;
 	var rotVel = 0;
 
-	bodySprite = new Sprite(testImage, posX, posY, rot);
+	bodySprite = new Sprite(images["sperm.png"], posX, posY, rot);
 	
   	this.moveForward = function(y) {
     	//posY += y;
