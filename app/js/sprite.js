@@ -22,7 +22,7 @@ function Sprite(_img, _posX, _posY, _rot, _scene)
 	this.mesh.sprite = this;
 	_scene.add(this.mesh);
 
-	
+	/*
 	//--------- Draw Self 
 	this.Drawself = function()
 	{
@@ -36,7 +36,7 @@ function Sprite(_img, _posX, _posY, _rot, _scene)
 		this.mesh.rotation.z = this.rot;
 		
 	}
-
+	*/
 
 
 }

@@ -17,7 +17,7 @@ var elapsedTime;
 var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
 renderer.setSize( window.innerWidth, window.innerHeight );
 container.appendChild( renderer.domElement ); 
-var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 )
+var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 );
 var scene = new THREE.Scene();
 
 var ambientLight;
@@ -34,7 +34,7 @@ window.requestAnimFrame = (function(callback){
     };
 })();
 
-window.addEventListener( 'resize', onWindowResize, false );
+//window.addEventListener( 'resize', onWindowResize, false );
 
 //--------- Debug
 if(DEBUG){
