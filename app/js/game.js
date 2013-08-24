@@ -28,7 +28,7 @@ var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 );
 
 // new scene
 var scene = new THREE.Scene();
-	
+    
 
 camera.position.set(0,0,100);
 
@@ -57,35 +57,28 @@ window.requestAnimFrame = (function(callback){
 
 //--------- Debug
 if(DEBUG){
-	container = document.getElementById( 'container' );
-	stats = new Stats();
-	stats.domElement.style.position = 'absolute';
-	stats.domElement.style.top = '0px';
-	container.appendChild( stats.domElement );
+    container = document.getElementById( 'container' );
+    stats = new Stats();
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.top = '0px';
+    container.appendChild( stats.domElement );
 }
 
 
 function Game()
 {
-	this.init = function()
-	{
+    this.init = function()
+    {
      this.controller = new Controller();
      this.input = new Input();
      this.input.setController(this.controller);
      this.input.start();
 
-	   //content loading here
-	   this.sperm = new Sperm();
-	   this.player = new Player(this.sperm);
-	   
-	   this.egg = new Egg();
+     this.players = {};
 
-	   this.sperm1 = new Sperm(0,0,80); 
-	   this.player = new Player(0, this.sperm1); 
-
-	   console.log("Game Initialized");
-	   animate();
-	}
+       console.log("Game Initialized");
+       
+    }
 
   this.networkUpdate = function(data) {
     console.log(data);
@@ -94,67 +87,86 @@ function Game()
                   position: this.player.sperm.getPosition(), 
                   rotation: this.player.sperm.getRotation(),
                 });
+    data.forEach(function (player) {
+        if (player.id in this.players) {
+            //this.players[player.id] set position of sperm here
+        } else {
+            var netSperm = new Sperm(0, 0, 80);
+            var netPlayer = new Player(player.id, this.sperm);
+            this.players[player.id] = netPlayer;
+        }
+    });
   }
 
-	this.setPlayer = function(id) {
-		this.sperm = new Sperm(0, 0, 80);
-		this.player = new Player(id, this.sperm);
-	}
+    this.setPlayer = function(id) {
+        this.sperm = new Sperm(0, 0, 80);
+        this.player = new Player(id, this.sperm);
+        animate();
+    }
 
-	this.reset = function() {
+    this.reset = function() {
 
-	}
+    }
 
-	this.update = function() {
-		// loop through gameobjects update
-		this.input.update();
-		this.player.update();
+    this.update = function() {
+        // loop through gameobjects update
+        this.input.update();
+        this.player.update();
 
+<<<<<<< HEAD
 		// camera animation
 		camera.position.set(
 			((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
 			((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
 			500);
+=======
+        // camera animation
+        camera.position.set(
+            ((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
+            ((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
+            500);
+        console.log(gameWorldWidth);
+>>>>>>> 1c794e8f586afe0f28531377ec3ebcab8a2d2907
 
-	}
+    }
 }
 
 
 
 function animate()
 {
-	
-	delta = clock.getDelta();
-	elapsedTime = clock.getElapsedTime();
-	if(READY)
-	{
-		game.update();
-		renderer.render(scene, camera);
-		if(DEBUG){
-			stats.update();
-		}
-		//console.log("Animate");
-	}
-	//playerInput.Update();
+    
+    delta = clock.getDelta();
+    elapsedTime = clock.getElapsedTime();
+    if(READY)
+    {
+        game.update();
+        renderer.render(scene, camera);
+        if(DEBUG){
+            stats.update();
+        }
+        //console.log("Animate");
+    }
+    //playerInput.Update();
 
 
-	requestAnimationFrame( animate );
+    requestAnimationFrame( animate );
 }
 
 
 function onWindowResize() {
 
-	WIDTH = window.innerWidth;
-	HEIGHT = window.innerHeight;
-	
-	camera.aspect = WIDTH / HEIGHT;
-	camera.updateProjectionMatrix();
+    WIDTH = window.innerWidth;
+    HEIGHT = window.innerHeight;
+    
+    camera.aspect = WIDTH / HEIGHT;
+    camera.updateProjectionMatrix();
 
-	renderer.setSize( WIDTH, HEIGHT );
+    renderer.setSize( WIDTH, HEIGHT );
 
 }
 
 
 
 
-	   
+       

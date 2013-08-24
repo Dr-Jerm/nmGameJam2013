@@ -11,6 +11,8 @@ function Sperm(_posX, _posY, _rot)
 	var velY = 0;
 	var rotVel = 0;
 
+	var tailoffset = -18;
+
 	bodySprite = new Sprite(images["sperm.png"], posX, posY, rot);
 
 
@@ -30,7 +32,7 @@ function Sperm(_posX, _posY, _rot)
     tailGeometry.vertices.push(new THREE.Vector3());
     tailGeometry.vertices.push(new THREE.Vector3());
 
-	var tailMaterial = new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 0.25} );
+	var tailMaterial = new THREE.LineBasicMaterial( { color: 0xCC9C66, opacity: 0.25} );
 
 	var tailLine = new THREE.Line(tailGeometry, tailMaterial);
 	tailLine.geometry.dynamic = true;
@@ -108,10 +110,13 @@ function Sperm(_posX, _posY, _rot)
   }
 
 
-  	this.getRotation = function() {
-    	return rot;
-  	}
-
+  this.getTailPosition = function()
+  {
+    return {
+      x: Math.cos(rot) * tailoffset+posX,
+      y: Math.sin(rot) * tailoffset+posY,
+    };
+  }
 
 	// gets
 	this.getPosX = function(){
@@ -124,7 +129,6 @@ function Sperm(_posX, _posY, _rot)
 	return rotVel;
 	}
 
-	
 	// input from player params here. 
 	this.update = function()
 	{
@@ -157,15 +161,35 @@ function Sperm(_posX, _posY, _rot)
 
 	this.updateTail = function()
 	{
-		
+		var distX2;
+		var distY2;
+
 		for (var v3 = tailLine.geometry.vertices.length-1; v3 > 0; v3--)
 		{
+			distX2 = Math.pow((tailLine.geometry.vertices[v3].x - tailLine.geometry.vertices[v3-1].x), 2);
+			distY2 = Math.pow((tailLine.geometry.vertices[v3].y - tailLine.geometry.vertices[v3-1].y), 2);
 			
+
+
+
+
+			// if(distX2 > 100)
+			// {
+			// 	tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3-1].x);
+			// }
+			// if(distX2 < 25)
+			// {
+			// 	tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3-1].x);
+			// }
+			// if(distY2 < 100)
+			// {
+			// 	tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3-1].y);
+			// }
 			tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3-1].x);
 			tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3-1].y);
 		}
-
-		tailLine.geometry.vertices[0].set(posX,posY,0);
+		var tailpos = this.getTailPosition();
+		tailLine.geometry.vertices[0].set(tailpos.x,tailpos.y,0);
 		tailLine.geometry.verticesNeedUpdate = true;
 
 	}
