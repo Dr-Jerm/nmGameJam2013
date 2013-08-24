@@ -82,9 +82,6 @@ function Game()
 	   
 	   this.egg = new Egg();
 
-	   
-	 
-
 	   this.sperm1 = new Sperm(0,0,80); 
 	   this.player = new Player(this.sperm1); 
 
