@@ -8,13 +8,16 @@
     });
 
     window.config = {};
-    socket.on('acceptedUser', function(data) {
-    	config.uid = data.id;
-    })
 
     //INIT here
     game = new Game();
     game.init();
+
+    socket.on('acceptedUser', function(data) {
+    	config.uid = data.id;
+      game.reset();
+      game.setPlayer(data.id);
+    })
 
     socket.on('poll', function(data) {
       game.networkUpdate(data);

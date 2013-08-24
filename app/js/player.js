@@ -1,6 +1,6 @@
-function Player(_sperm)
+function Player(id, _sperm)
 {
-
+  this.id = id;
 	this.sperm = _sperm;
 
     this.moveForward = function() {
