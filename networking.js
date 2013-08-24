@@ -4,8 +4,8 @@ var playerManager = require('./PlayerManager');
 var Player = require('./Player');
 
 exports.newUser = function (data) {
+    if (process.env.DEBUG) {console.log("Networking.newUser:"+this.id)}
     console.log("Player name registered: " + data.user);
-    console.log(util.inspect(Player));
     var newPlayer = new Player(data.user, this);
     playerManager.addPlayer(newPlayer);
 
@@ -13,10 +13,6 @@ exports.newUser = function (data) {
 }
 
 exports.disconnect = function (data) {
-    console.log("Player has disconnected: " + this.id);
+    if (process.env.DEBUG) {console.log("Networking.disconnect:"+this.id)}
     playerManager.removePlayer(this.id);
-}
-
-exports.playerUpdate = function (data) {
-    console.log("playerUpdate");
 }

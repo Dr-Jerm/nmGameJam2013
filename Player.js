@@ -7,7 +7,15 @@ module.exports = function Player (name, socket, startingAttrs) {
     this.socket = socket;
 
     this.clientPlayer = function () {
-        return JSON.parse(JSON.stringify(this));
+        var clean = {
+            name: this.name,
+            id: this.id,
+            position: this.position,
+            velocity: this.velocity,
+            rotation: this.rotation,
+            scale: this.scale
+        }
+        return clean;
     }
 
     this.position = {
@@ -103,6 +111,7 @@ module.exports = function Player (name, socket, startingAttrs) {
     }
 
     this.socket.on('response', function (data) {
+        if (process.env.DEBUG) {console.log('Player.'+this.id+'.response')}
         setAttrs(data);
     });
 

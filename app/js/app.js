@@ -7,24 +7,17 @@
         }
     });
 
-    window.config = {};
-    socket.on('acceptedUser', function(data) {
-    	config.uid = data.id;
-    })
-
-    var fakeData = {
-        position: {
-            x: 0,
-            y: 0,
-            z: 0    
-        }
-    }
-
-    socket.on('poll', function(data) {
-    	socket.emit('response', fakeData)
-    })
     //INIT here
     game = new Game();
     game.init();
+
+    socket.on('acceptedUser', function(data) {
+      game.reset();
+      game.setPlayer(data.id);
+    })
+
+    socket.on('poll', function(data) {
+      game.networkUpdate(data);
+    })
 
 })();
