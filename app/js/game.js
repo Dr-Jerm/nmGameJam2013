@@ -82,12 +82,21 @@ function Game()
 	   this.egg = new Egg();
 
 	   this.sperm1 = new Sperm(0,0,80); 
-	   this.player = new Player(this.sperm1); 
+	   this.player = new Player(0, this.sperm1); 
 
 	   console.log("Game Initialized");
 	   animate();
 	}
 
+  this.networkUpdate = function(data) {
+    var fakeData = { hello: "world"};
+    socket.emit('response', fakeData);
+  }
+
+  this.setPlayer = function(id) {
+    this.sperm = new Sperm(0, 0, 80);
+    this.player = new Player(id, this.sperm);
+  }
 
 	this.update = function()
 	{
