@@ -51,8 +51,6 @@ window.requestAnimFrame = (function(callback){
     };
 })();
 
-
-
 //window.addEventListener( 'resize', onWindowResize, false );
 
 //--------- Debug
@@ -64,6 +62,11 @@ if(DEBUG){
     container.appendChild( stats.domElement );
 }
 
+var testImage = new Image();
+testImage.width = 256;
+testImage.height = 200;
+testImage.src = "images/Grumpy-Cat.jpg";
+testImage.map = THREE.ImageUtils.loadTexture( this.testImage.src);
 
 function Game()
 {
@@ -83,20 +86,23 @@ function Game()
   this.networkUpdate = function(data) {
     console.log(data);
     socket.emit("response", { id: this.player.id,
-                  velocity: this.player.sperm.getVelocity(),
-                  position: this.player.sperm.getPosition(), 
-                  rotation: this.player.sperm.getRotation(),
+                  velocity: this.player.gamete.getVelocity(),
+                  position: this.player.gamete.getPosition(), 
+                  rotation: this.player.gamete.getRotation(),
                 });
-    data.forEach(function (netPlayer) {
+    data.playerSnapshot.forEach(function (netPlayer) {
         if (netPlayer.id in this.players) {
-            //this.players[netPlayer.id] set position of sperm here
-            //netPlayer
+            this.players[netPlayer.id].gamete.posX = netPlayer.position.x;
+            this.players[netPlayer.id].gamete.posY = netPlayer.position.y;
+            //netPlayer.position
+            //netPlayer.rotation
+            //netPlayer.velocity
         } else {
             var newSperm = new Sperm(0, 0, 80);
-            var newPlayer = new Player(newPlayer.id, newSperm);
+            var newPlayer = new Player(netPlayer.id, newSperm);
             this.players[netPlayer.id] = newPlayer;
         }
-    });
+    }.bind(this));
   }
 
     this.setPlayer = function(id) {
@@ -113,13 +119,6 @@ function Game()
         // loop through gameobjects update
         this.input.update();
         this.player.update();
-
-
-		// camera animation
-		camera.position.set(
-			((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
-			((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
-			500);
 
         // camera animation
         camera.position.set(
