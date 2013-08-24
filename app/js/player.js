@@ -1,6 +1,7 @@
-function Player()
+function Player(_sperm)
 {
 
+	this.sperm = _sperm; 
 
 	this.update = function()
 	{
