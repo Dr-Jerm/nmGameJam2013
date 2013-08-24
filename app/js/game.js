@@ -22,8 +22,7 @@ var scene = new THREE.Scene();
 
 var ambientLight;
 
-renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
-
+//-------- animation frame
 window.requestAnimFrame = (function(callback){
     return window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
@@ -37,6 +36,7 @@ window.requestAnimFrame = (function(callback){
 
 window.addEventListener( 'resize', onWindowResize, false );
 
+//--------- Debug
 if(DEBUG){
 	container = document.getElementById( 'container' );
 	stats = new Stats();
