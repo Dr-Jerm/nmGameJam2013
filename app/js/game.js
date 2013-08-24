@@ -9,6 +9,9 @@ var READY = false;
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
 
+gameWorldWidth = 1000;
+gameWorldHeight = 1000;
+
 //-------THREE.js variables ---------//
 var clock = new THREE.Clock();
 var delta;
@@ -96,19 +99,26 @@ function Game()
                 });
   }
 
-  this.setPlayer = function(id) {
-    this.sperm = new Sperm(0, 0, 80);
-    this.player = new Player(id, this.sperm);
-  }
+	this.setPlayer = function(id) {
+		this.sperm = new Sperm(0, 0, 80);
+		this.player = new Player(id, this.sperm);
+	}
 
-  this.reset = function() {
+	this.reset = function() {
 
-  }
+	}
 
 	this.update = function() {
 		// loop through gameobjects update
 		this.input.update();
 		this.player.update();
+
+		// camera animation
+		camera.position.set(
+			((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
+			((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
+			500);
+		console.log(gameWorldWidth);
 
 	}
 }

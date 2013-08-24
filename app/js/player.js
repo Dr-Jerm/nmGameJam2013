@@ -1,24 +1,37 @@
-function Player(id, _sperm)
+function Player(id, _gamete)
 {
   this.id = id;
-	this.sperm = _sperm;
+	this.gamete = _gamete;
 
 
+	// movement
     this.moveForward = function() {
-    	this.sperm.moveForward(1);
+    	this.gamete.moveForward(1);
     }
     this.rotateLeft = function() {
-    	this.sperm.rotateLeft(.01 + (this.sperm.getRotVel()/3));
+    	this.gamete.rotateLeft(.01 + (this.gamete.getRotVel()*.25));
     }
     this.rotateRight = function() {
-    	this.sperm.rotateRight(.01 - (this.sperm.getRotVel()/3));
+    	this.gamete.rotateRight(.01 - (this.gamete.getRotVel()*.25));
     }
+
+
+    // gets
+	this.getPosX = function() {
+		return this.gamete.getPosX();
+	}
+	this.getPosY = function() {
+		return this.gamete.getPosY();
+	}
+  	this.getRotation = function() {
+    	return this.gamete.getRotation();
+  	}
 
 
 	this.update = function()
 	{
 
-		this.sperm.update();
+		this.gamete.update();
 
 	}
 }
