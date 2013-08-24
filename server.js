@@ -25,7 +25,7 @@ app.engine('ejs', engine);
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(express.logger('dev'));
+// app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'app')));
@@ -65,6 +65,7 @@ server.listen(app.get('port'), function () {
     console.log('Game server listening on port ' + app.get('port'));
 });
 
+io.set('log level', 1);
 
 gameServer.setSocketManager(io.sockets);
 gameServer.run(1000);

@@ -3,8 +3,9 @@ function Player(id, _sperm)
   this.id = id;
 	this.sperm = _sperm;
 
+
     this.moveForward = function() {
-    	this.sperm.moveForward(2);
+    	this.sperm.moveForward(1);
     }
     this.rotateLeft = function() {
     	this.sperm.rotateLeft(.01 + (this.sperm.getRotVel()/3));
@@ -16,7 +17,7 @@ function Player(id, _sperm)
 
 	this.update = function()
 	{
-		
+
 		this.sperm.update();
 
 	}

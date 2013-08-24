@@ -19,14 +19,15 @@ var PlayerManager = function PlayerManager () {
         }    
     } 
 
-    this.poll = function () {
-        if (process.env.DEBUG) {console.log("PlayerManager.poll"); }
-        for (var key in self.players) {
-            var player = self.players[key];
-            player.socket.emit('poll', {fake:"data"});
-            console.log("poking player: " + player.name);
-        }
-    }
+    
+
+    // this.poll = function () {
+    //     if (process.env.DEBUG) {console.log("PlayerManager.poll"); }
+    //     for (var key in self.players) {
+    //         var player = self.players[key];
+            
+    //     }
+    // }
 
 }
 
