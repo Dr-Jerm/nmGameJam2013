@@ -56,7 +56,11 @@ if(DEBUG){
 	container.appendChild( stats.domElement );
 }
 
-
+var testImage = new Image();
+testImage.width = 256;
+testImage.height = 200;
+testImage.src = "images/Grumpy-Cat.jpg";
+testImage.map = THREE.ImageUtils.loadTexture( this.testImage.src);
 
 function Game()
 {
@@ -77,14 +81,8 @@ function Game()
 	   console.log("Init");
 	 
 	   
-	   this.testImage = new Image();
-	   this.testImage.src = "images/Grumpy-Cat.jpg";
-	   this.testImage.width = 256;
-	   this.testImage.height = 256;
-	   this.testImage.map = THREE.ImageUtils.loadTexture( this.testImage.src);
-	   
-	   this.spriteTest = new Sprite(this.testImage, 0, 0, 10, scene);
-	   
+	   this.sperm1 = new Sperm(0,0,60); 
+	   this.player = new Player(this.sperm1); 
 
 	   animate();
 	}
@@ -94,9 +92,6 @@ function Game()
 	{
 
 		// loop through gameobjects update
-
-		//this.spriteTest.DrawSelf();
-
 		console.log("Update");
 		this.input.update();
 		this.player.update();
@@ -136,3 +131,8 @@ function onWindowResize() {
 	renderer.setSize( WIDTH, HEIGHT );
 
 }
+
+
+
+
+	   
