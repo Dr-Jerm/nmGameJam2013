@@ -1,37 +1,37 @@
 function Player(id, _gamete)
 {
   this.id = id;
-	this.gamete = _gamete;
+    this.gamete = _gamete;
 
 
-	// movement
+    // movement
     this.moveForward = function() {
-    	this.gamete.moveForward(1);
+        this.gamete.moveForward(1);
     }
     this.rotateLeft = function() {
-    	this.gamete.rotateLeft(.01 + (this.gamete.getRotVel()*.25));
+        this.gamete.rotateLeft(.01 + (this.gamete.getRotVel()*.25));
     }
     this.rotateRight = function() {
-    	this.gamete.rotateRight(.01 - (this.gamete.getRotVel()*.25));
+        this.gamete.rotateRight(.01 - (this.gamete.getRotVel()*.25));
     }
 
 
     // gets
-	this.getPosX = function() {
-		return this.gamete.getPosX();
-	}
-	this.getPosY = function() {
-		return this.gamete.getPosY();
-	}
-  	this.getRotation = function() {
-    	return this.gamete.getRotation();
-  	}
+    this.getPosX = function() {
+        return this.gamete.getPosX();
+    }
+    this.getPosY = function() {
+        return this.gamete.getPosY();
+    }
+      this.getRotation = function() {
+        return this.gamete.getRotation();
+      }
 
 
-	this.update = function()
-	{
+    this.update = function()
+    {
 
-		this.gamete.update();
+        this.gamete.update();
 
-	}
+    }
 }
