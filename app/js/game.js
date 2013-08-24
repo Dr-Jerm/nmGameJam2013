@@ -19,8 +19,12 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 container.appendChild( renderer.domElement ); 
 var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 );
 var scene = new THREE.Scene();
+	
+camera.position.z = -100;
+scene.add(camera);
 
-var ambientLight;
+var ambientLight = new THREE.AmbientLight( 0xffffff);
+scene.add(ambientLight);
 
 //-------- animation frame
 window.requestAnimFrame = (function(callback){
@@ -59,20 +63,17 @@ function Game()
 
 	   console.log("Init");
 	 
-
+	   //XXXXXXX TEST XXXXXXXXXXXXXX
 	   this.testImage = new Image();
 	   this.testImage.src = "images/Grumpy-Cat.jpg";
-	   this.testImage.width = 256;
-	   this.testImage.height = 256;
+	   //this.testImage.width = 256;
+	   //this.testImage.height = 256;
 	   this.testImage.map = THREE.ImageUtils.loadTexture( this.testImage);
 	   
 	   this.spriteTest = new Sprite(this.testImage, 0, 0, 78, scene);
+	   //XXXXXXX TEST XXXXXXXXXXXXXX
 
-
-
-
-
-	    animate();
+	   animate();
 	}
 
 
@@ -85,8 +86,6 @@ function Game()
 
 		console.log("Update");
 		this.player.update();
-
-
 	}
 }
 
@@ -100,12 +99,10 @@ function animate()
 		elapsedTime = clock.getElapsedTime();
 		game.update();
 		renderer.render(scene, camera);
-
 		if(DEBUG){
 			stats.update();
 		}
-
-		console.log("Animate");
+		//console.log("Animate");
 	}
 	//playerInput.Update();
 

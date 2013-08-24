@@ -16,13 +16,29 @@ function Sprite(_img, _posX, _posY, _rot, _scene)
 
 	this.map = this.img.map;
 	this.geo = new THREE.PlaneGeometry(this.width, this.height);
-	this.material = new THREE.MeshLambertMaterial({map: this.map});
-	this.material.transparent = true;
+	
+	//this.material = new THREE.MeshLambertMaterial({map: this.map});
+	this.material = new THREE.MeshBasicMaterial({color: 0xCC0000});
+
+
+	//this.material.transparent = true;
 	this.mesh = new THREE.Mesh(this.geo, this.material);
 	this.mesh.sprite = this;
+	this.mesh.position.x = this.posX;	
+	this.mesh.position.y = this.posY;
+	this.mesh.position.z = 0;
+	this.mesh.rotation.z = this.rot;
+
+
 	_scene.add(this.mesh);
 
+<<<<<<< HEAD
 	/*
+=======
+
+
+	
+>>>>>>> e1df7a2fd665fd70e1b7449168ef2bc4f6c1281a
 	//--------- Draw Self 
 	this.Drawself = function()
 	{
