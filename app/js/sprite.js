@@ -1,4 +1,4 @@
-function Sprite(_img, _posX, _posY, _rot, _scene)
+function Sprite(_img, _posX, _posY, _rot)
 {
 	
 	this.posX = _posX; 
@@ -30,24 +30,14 @@ function Sprite(_img, _posX, _posY, _rot, _scene)
 	this.mesh.rotation.z = this.rot;
 
 
-	_scene.add(this.mesh);
+	scene.add(this.mesh);
 
-	/*
 
-	//--------- Draw Self 
-	this.Drawself = function()
+	this.updatePosition = function(_posX, _posY, _rot)
 	{
-		if(this.animated)
-			{
-				this.animation.update(delta*1000);
-			
-			}
-		this.mesh.position.x = this.pos.x;	
-		this.mesh.position.y = this.pos.y;
-		this.mesh.rotation.z = this.rot;
-		
-	}
-	*/
 
+
+
+	}
 
 }
