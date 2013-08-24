@@ -52,8 +52,10 @@ function Game()
 	this.init = function()
 	{
 	   //content loading here
-
-	   this.player = new Player();
+	   this.sperm = new Sperm();
+	   this.player = new Player(this.sperm);
+	   
+	   this.egg = new Egg();
 
 	   console.log("Init");
 	 
@@ -78,10 +80,12 @@ function Game()
 	{
 
 		// loop through gameobjects update
-		//console.log("Update");
-		this.player.update(); 
 
 		//this.spriteTest.DrawSelf();
+
+		console.log("Update");
+		this.player.update();
+
 
 	}
 }
