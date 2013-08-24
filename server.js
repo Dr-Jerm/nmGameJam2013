@@ -55,15 +55,6 @@ app.get('/', indexRoute);
 // redirect all others to the index (HTML5 history)
 app.get('*', indexRoute);
 
-// JSON API
-app.post('/user', function (req, res) {
-  var user = req.body.user; 
-  console.log(user);
-  res.write(user);
-  res.end();
-});
-
-
 /**
  * Start Server
  */
@@ -71,35 +62,9 @@ app.post('/user', function (req, res) {
 var server = http.createServer(app);
 io = io.listen(server);
 server.listen(app.get('port'), function () {
-    console.log('Express server listening on port ' + app.get('port'));
+    console.log('Game server listening on port ' + app.get('port'));
 });
 
 
 gameServer.setSocketManager(io.sockets);
-
-// io.sockets.on('connection', function (socket) {
-//   // socket.emit('hello', {welcome: "Hi, I'm text from a socket!"});
-
-//   socket.on("newUser", network.newUser.bind(socket));
-//   socket.on("disconnect", network.disconnect.bind(socket));
-
-//   socket.on("up", function(data) {
-//     console.log("up: " + data);
-//   });
-//   socket.on("down", function(data) {
-//     console.log("down: " + data);
-//   });
-//   socket.on("left", function(data) {
-//     console.log("left: " + data);
-//   });
-//   socket.on("right", function(data) {
-//     console.log("right: " + data);
-//   });
-// });
-
 gameServer.run(1000);
-
-// var count = 0;
-// setInterval(function () {
-//   console.log("ping "+ count++);
-// },5000);
