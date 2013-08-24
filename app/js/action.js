@@ -30,7 +30,6 @@ Down.prototype.constructor = Down;
 
 Down.prototype.execute = function() {
   //socket.emit("down", {"uid": config.uid});
-  //game.player.moveDown();
 }
 
 function Right() { Action.call(this); }

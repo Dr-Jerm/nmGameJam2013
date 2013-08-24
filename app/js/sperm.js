@@ -14,18 +14,18 @@ function Sperm(_posX, _posY, _rot)
 	bodySprite = new Sprite(images["sperm.png"], posX, posY, rot);
 	
   	this.moveForward = function(y) {
-    	//posY += y;
     	velY += Math.sin(rot);
     	velX += Math.cos(rot);
   	}
-  	//this.moveDown = function(y) {
-  	//	velY += y;
-  	//}
   	this.rotateLeft = function(y) {
   		rotVel += y;
   	}
   	this.rotateRight = function(y) {
   		rotVel -= y;
+  	}
+
+  	this.getRotVel = function(){
+  		return rotVel;
   	}
 
 
@@ -49,7 +49,7 @@ function Sperm(_posX, _posY, _rot)
 
 		posY *= .9;
 		posX *= .9;
-		rotVel *= .9;
+		rotVel *= .8;
 
 	}
 
