@@ -14,7 +14,7 @@ function Player(_sperm)
 	this.update = function()
 	{
 
-		console.log("playerupdate");
+		//console.log("playerupdate");
 		this.sperm.update();
 
 		posX += velX;
