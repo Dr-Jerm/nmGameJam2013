@@ -43,10 +43,10 @@ var GameServer = function GameServer () {
             socket.on("newUser", function (data) {
                 if (process.env.DEBUG) {console.log("Networking.newUser:"+this.id)}
                 console.log("Player name registered: " + data.user);
-                var newPlayer = new Player(data.user, this);
+                var newPlayer = playerManager.generatePlayer(data.user, this, {});
                 playerManager.addPlayer(newPlayer);
 
-                this.emit('acceptedUser', {id: newPlayer.id});
+                this.emit('acceptedUser', {id: newPlayer.id, newPlayer.gameteType});
             });
 
             socket.on("disconnect", function () {
