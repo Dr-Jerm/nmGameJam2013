@@ -4,11 +4,11 @@ function Player()
 
 	this.update = function()
 	{
-		console.log("playerupdate");
+		//console.log("playerupdate");
 
 
 	}
 
-	
+
 
 }

@@ -1,18 +1,76 @@
+//--------------ENGINE----------------------------
+var container = document.getElementById( 'container' );
+var context;
+
+var DEBUG = true; // Debug mode (show FPS)
+var EDITOR = false;
+var READY = true;
+
+var WIDTH = window.innerWidth;
+var HEIGHT = window.innerHeight;
+
+//-------THREE.js variables ---------//
+var clock = new THREE.Clock();
+var delta;
+var elapsedTime;
+
+var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
+renderer.setSize( window.innerWidth, window.innerHeight );
+container.appendChild( renderer.domElement ); 
+var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 )
+var scene = new THREE.Scene();
+
+var ambientLight;
+
+renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
+
+window.requestAnimFrame = (function(callback){
+    return window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(callback){
+        window.setTimeout(callback, 1000 / 60);
+    };
+})();
+
+window.addEventListener( 'resize', onWindowResize, false );
+
+if(DEBUG){
+	container = document.getElementById( 'container' );
+	stats = new Stats();
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.top = '0px';
+	container.appendChild( stats.domElement );
+}
+
+
+
 function Game()
 {
-
-	
-
-
 	this.init = function()
 	{
-
 	   //content loading here
 
 	   this.player = new Player();
 
 	   console.log("Init");
-	   animate();
+	 
+
+	   this.testImage = new Image();
+	   this.testImage.src = "images/Grumpy-Cat.jpg";
+	   this.testImage.width = 256;
+	   this.testImage.height = 256;
+	   this.testImage.map = THREE.ImageUtils.loadTexture( this.testImage);
+	   
+	   this.spriteTest = new Sprite(this.testImage, 0, 0, 78, scene);
+
+
+
+
+
+	    animate();
 	}
 
 
@@ -20,29 +78,46 @@ function Game()
 	{
 
 		// loop through gameobjects update
-		console.log("Update");
+		//console.log("Update");
 		this.player.update(); 
 
-
-
-	}
-
-
-	this.draw = function()
-	{
-
-		// three.js draw 
-		console.log("Draw");
-
-
+		//this.spriteTest.DrawSelf();
 
 	}
 }
 
+
+
 function animate()
 {
+	if(READY)
+	{
+		delta = clock.getDelta();
+		elapsedTime = clock.getElapsedTime();
+		game.update();
+		renderer.render(scene, camera);
+
+		if(DEBUG){
+			stats.update();
+		}
+
+		console.log("Animate");
+	}
+	//playerInput.Update();
+
+
 	requestAnimationFrame( animate );
-	game.update();
-	game.draw();
-	console.log("Animate");
+}
+
+
+function onWindowResize() {
+
+	WIDTH = window.innerWidth;
+	HEIGHT = window.innerHeight;
+	
+	camera.aspect = WIDTH / HEIGHT;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( WIDTH, HEIGHT );
+
 }
