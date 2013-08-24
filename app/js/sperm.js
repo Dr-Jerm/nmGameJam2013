@@ -12,7 +12,24 @@ function Sperm(_posX, _posY, _rot)
 	var rotVel = 0;
 
 	bodySprite = new Sprite(images["sperm.png"], posX, posY, rot);
+
+
+	var tailGeometry = new THREE.Geometry();
+	tailGeometry.vertices.push(new THREE.Vector3(posX, posY, 0));
+	tailGeometry.vertices.push(new THREE.Vector3(-10, 0, 0));
+    tailGeometry.vertices.push(new THREE.Vector3(60, 10, 0));
+    tailGeometry.vertices.push(new THREE.Vector3(10, 23, 0));
+    tailGeometry.vertices.push(new THREE.Vector3(16, 79, 0));
+    tailGeometry.vertices.push(new THREE.Vector3(12, -68, 0));
+    tailGeometry.vertices.push(new THREE.Vector3(18, -45, 0));
+
+	var tailMaterial = new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 0.5} );
+
+	var tailLine = new THREE.Line(tailGeometry, tailMaterial);
+	tailLine.geometry.dynamic = true;
 	
+	scene.add(tailLine);
+
   	this.moveForward = function(y) {
     	velY += Math.sin(rot);
     	velX += Math.cos(rot);
@@ -36,7 +53,8 @@ function Sperm(_posX, _posY, _rot)
 		posX += velX;
 		posY += velY;
 		rot += rotVel;
-
+		tailLine.geometry.vertices[0].set(posX,posY,0);
+		tailLine.geometry.verticesNeedUpdate = true;
 		//if (keyboard.pressed("r"))
 		//{
 		//	rot++;
