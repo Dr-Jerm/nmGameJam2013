@@ -10,6 +10,7 @@
     });
 
     //INIT here
-    init();
+    game = new Game();
+    game.init();
 
 })();

@@ -1,40 +1,48 @@
-function init()
+function Game()
 {
-
-   //content loading here
 
 	
 
-   console.log("Init");
-   animate();
+
+	this.init = function()
+	{
+
+	   //content loading here
+
+	   this.player = new Player();
+
+	   console.log("Init");
+	   animate();
+	}
+
+
+	this.update = function()
+	{
+
+		// loop through gameobjects update
+		console.log("Update");
+		this.player.update(); 
+
+
+
+	}
+
+
+	this.draw = function()
+	{
+
+		// three.js draw 
+		console.log("Draw");
+
+
+
+	}
 }
 
-function animate() 
+function animate()
 {
 	requestAnimationFrame( animate );
-	update();
-	draw();
+	game.update();
+	game.draw();
 	console.log("Animate");
-}
-
-
-function update()
-{
-
-	// loop through gameobjects update
-	console.log("Update");
-
-
-
-}
-
-
-function draw()
-{
-
-	// three.js draw 
-	console.log("Draw");
-
-
-
 }
