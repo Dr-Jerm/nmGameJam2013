@@ -51,6 +51,8 @@ window.requestAnimFrame = (function(callback){
     };
 })();
 
+
+
 //window.addEventListener( 'resize', onWindowResize, false );
 
 //--------- Debug
@@ -62,11 +64,6 @@ if(DEBUG){
     container.appendChild( stats.domElement );
 }
 
-var testImage = new Image();
-testImage.width = 256;
-testImage.height = 200;
-testImage.src = "images/Grumpy-Cat.jpg";
-testImage.map = THREE.ImageUtils.loadTexture( this.testImage.src);
 
 function Game()
 {
@@ -116,6 +113,13 @@ function Game()
         // loop through gameobjects update
         this.input.update();
         this.player.update();
+
+
+		// camera animation
+		camera.position.set(
+			((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
+			((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
+			500);
 
         // camera animation
         camera.position.set(
