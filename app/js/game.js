@@ -10,9 +10,12 @@ var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
 
 //-------THREE.js variables ---------//
+var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
 var delta;
 var elapsedTime;
+
+
 
 var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -25,12 +28,13 @@ var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 );
 var scene = new THREE.Scene();
 	
 
-camera.position.set(0,0,-100);
+camera.position.set(0,0,100);
 
 camera.position.z = 400;
 scene.add(camera);
 
 var ambientLight = new THREE.AmbientLight( 0xffffff);
+ambientLight.position.set(0,100,0);
 scene.add(ambientLight);
 
 //-------- animation frame
@@ -80,7 +84,7 @@ function Game()
 
 	   console.log("Init");
 	 
-	   
+
 	   this.sperm1 = new Sperm(0,0,60); 
 	   this.player = new Player(this.sperm1); 
 
@@ -95,6 +99,7 @@ function Game()
 		console.log("Update");
 		this.input.update();
 		this.player.update();
+
 	}
 }
 
