@@ -14,4 +14,7 @@
     socket.on('poll', function(data) {
     	console.log(data);
     })
+    //INIT here
+    init();
+
 })();
