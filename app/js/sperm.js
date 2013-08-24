@@ -15,14 +15,17 @@ function Sperm(_posX, _posY, _rot)
 
 	bodySprite = new Sprite(testImage, posX, posY, rot);
 	
-
+	// input from player params here. 
 	this.update = function()
 	{
 		posX += velX;
 		posY += velY;
 		rot += rotVel;
 
-		bodySprite.updatePosition(_posX, _posY, _rot);
+		rot++;
+
+		
+		bodySprite.updatePosition(posX, posY, rot);
 		//console.log("spermupdate");
 
 	}

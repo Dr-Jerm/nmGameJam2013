@@ -35,9 +35,13 @@ function Sprite(_img, _posX, _posY, _rot)
 
 	this.updatePosition = function(_posX, _posY, _rot)
 	{
+		this.posX = _posX; 
+		this.posY = _posY; 
+		this.rot = _rot;
 
-
-
+		this.mesh.position.x = this.posX;	
+		this.mesh.position.y = this.posY;
+		this.mesh.rotation.z = this.rot;
 	}
 
 }

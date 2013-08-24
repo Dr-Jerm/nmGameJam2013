@@ -85,7 +85,7 @@ function Game()
 	   console.log("Init");
 	 
 
-	   this.sperm1 = new Sperm(0,0,60); 
+	   this.sperm1 = new Sperm(0,0,80); 
 	   this.player = new Player(this.sperm1); 
 
 	   animate();

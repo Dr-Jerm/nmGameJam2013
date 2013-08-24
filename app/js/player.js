@@ -7,7 +7,7 @@ function Player(_sperm)
 	this.update = function()
 	{
 		//console.log("playerupdate");
-		this.sperm.rot++; 
+		
 		this.sperm.update();
 
 	}
