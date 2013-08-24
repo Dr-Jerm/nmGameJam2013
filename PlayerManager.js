@@ -19,17 +19,7 @@ var PlayerManager = function PlayerManager () {
         }    
     } 
 
-    
-
-    // this.poll = function () {
-    //     if (process.env.DEBUG) {console.log("PlayerManager.poll"); }
-    //     for (var key in self.players) {
-    //         var player = self.players[key];
-            
-    //     }
-    // }
-
 }
 
 
-module.exports = new PlayerManager();
+module.exports = new PlayerManager(); // singleton player manager

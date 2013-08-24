@@ -1,5 +1,7 @@
 var playerManager = require('./PlayerManager'),
-    network = require('./networking');
+    network = require('./networking'),
+    Player = require('./Player'),
+    HighScores = require('.HighScores');
 
 var GameServer = function GameServer () {
 
@@ -39,26 +41,24 @@ var GameServer = function GameServer () {
         this.socketManager = socketManager;
         socketManager.on('connection', function (socket) {
 
-            socket.on("newUser", network.newUser.bind(socket));
-            socket.on("disconnect", network.disconnect.bind(socket));
+            socket.on("newUser", function (data) {
+                if (process.env.DEBUG) {console.log("Networking.newUser:"+this.id)}
+                console.log("Player name registered: " + data.user);
+                var newPlayer = new Player(data.user, this);
+                playerManager.addPlayer(newPlayer);
 
-          socket.on("up", function(data) {
-            console.log("up: " + data);
-          });
-          socket.on("down", function(data) {
-            console.log("down: " + data);
-          });
-          socket.on("left", function(data) {
-            console.log("left: " + data);
-          });
-          socket.on("right", function(data) {
-            console.log("right: " + data);
-          });
+                this.emit('acceptedUser', {id: newPlayer.id});
+            });
+
+            socket.on("disconnect", function () {
+                if (process.env.DEBUG) {console.log("Networking.disconnect:"+this.id)}
+                playerManager.removePlayer(this.id);
+                socketManager.emit("playerDisconnect", {playerId: this.id});
+            });
         });
     }
     
 
 }
 
-
-module.exports = new GameServer();
+module.exports = new GameServer(); // singleton game server
