@@ -8,4 +8,8 @@
         $('#socket-injected').html(data.welcome);
         // socket.emit('my other event', { my: 'data' });
     });
+
+    //INIT here
+    init();
+
 })();

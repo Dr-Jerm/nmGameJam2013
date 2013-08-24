@@ -1,5 +1,24 @@
 <% layout('layout') -%>
 
-<div>Your IP is <%= clientIp %> (injected on server)</div>
-<div>Hello there <span id="ajax-injected"></span>! (fetched by ajax)</div>
-<div><span id="socket-injected"></span> (sent through socket.io)</div>
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>SimSperm</title> 
+		<style>
+			html, body {
+				height: 100%;
+			}
+			canvas {
+				position: absolute;
+				top:  0px;
+				left:  0px;
+				width:  100%;
+				height: 100%;
+				background-color: black;
+			}
+		</style>
+
+</head>
+<body>
+		<canvas id="Canvas" width="2518" height="1255" ></canvas>
+</body></html>
+
