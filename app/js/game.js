@@ -89,7 +89,8 @@ function Game()
 
   this.networkUpdate = function(data) {
     console.log(data);
-    socket.emit("something", { id: this.player.id,
+    socket.emit("response", { id: this.player.id,
+                  velocity: this.player.sperm.getVelocity(),
                   position: this.player.sperm.getPosition(), 
                   rotation: this.player.sperm.getRotation(),
                 });
