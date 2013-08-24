@@ -12,7 +12,7 @@ Up.prototype = new Action();
 Up.prototype.constructor = Up;
 
 Up.prototype.execute = function() {
-  socket.emit("up", {"uid": config.uid})
+  game.player.moveUp();
 }
 
 function Left() { Action.call(this); }
