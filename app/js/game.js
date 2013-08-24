@@ -17,10 +17,14 @@ var elapsedTime;
 var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
 renderer.setSize( window.innerWidth, window.innerHeight );
 container.appendChild( renderer.domElement ); 
+
+// new camera
 var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 );
+
+// new scene
 var scene = new THREE.Scene();
 	
-camera.position.z = -100;
+camera.position.set(0,0,-100);
 scene.add(camera);
 
 var ambientLight = new THREE.AmbientLight( 0xffffff);
