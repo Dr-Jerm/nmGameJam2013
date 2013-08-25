@@ -58,7 +58,21 @@ function Sperm(_posX, _posY, _rot)
     tailVertexVelocities.push(new THREE.Vector3(0,0,0));
   }
 
+    // movement
+  // this.moveForward = function(y) {
+  //   this.velY += Math.sin(this.rot) * y;
+  //   this.velX += Math.cos(this.rot) * y;
 
+  //   swim.play();
+  //   if (swim.volume < .9)
+	 //    swim.volume += .1;
+  // }
+  // this.rotateLeft = function(y) {
+  //   this.rotVel += y;
+  // }
+  // this.rotateRight = function(y) {
+  //   this.rotVel -= y;
+  // }
 
 
 
@@ -103,7 +117,6 @@ function Sperm(_posX, _posY, _rot)
     return this.rot;
   }
   
-  // movement
   this.moveForward = function(y) {
     this.velY += Math.sin(this.rot+tailRot) * y;
     this.velX += Math.cos(this.rot+tailRot) * y;
@@ -174,7 +187,7 @@ function Sperm(_posX, _posY, _rot)
 	    }
 
 
-	    //sound
+	    
     	if (swim.volume > .05)
 			swim.volume -= .05;
 			
@@ -232,13 +245,12 @@ function Sperm(_posX, _posY, _rot)
 	  			this.velY += Math.sin(collisionAngle)*15;
 	  			this.posX += Math.cos(collisionAngle)*15;
 	  			this.posY += Math.sin(collisionAngle)*15;
-	  			document.getElementById("bump1").cloneNode(true).play();
 	  		}
   			//console.log("collision "+collisionAngle); 
   		}
   		if(game.netPlayers[p].gamete.type == "egg")
   		{
-  			//document.getElementById("bump1").cloneNode(true).play();
+
 
 
   		}
