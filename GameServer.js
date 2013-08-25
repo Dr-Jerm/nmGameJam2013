@@ -108,6 +108,11 @@ var GameServer = function GameServer () {
                 if (process.env.DEBUG) {console.log("Networking.disconnect:"+this.id)}
                 playerManager.removePlayer(this.id);
                 socketManager.emit("playerDisconnect", {playerId: this.id});
+
+                if (playerManager.egg && this.id == playerManager.egg.id) {
+                    shuffleEgg()
+                    self.reset();
+                }
             });
         });
     }

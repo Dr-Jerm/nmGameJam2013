@@ -133,9 +133,9 @@ function Game()
 		camera.position.z = 400;
 		scene.add(camera);
 
-		ambientLight = new THREE.AmbientLight( 0xffffff);
-		ambientLight.position.set(0,100,0);
-		scene.add(ambientLight);
+		// ambientLight = new THREE.AmbientLight( 0xffffff);
+		// ambientLight.position.set(0,100,10);
+		// scene.add(ambientLight);
     }
 
 
@@ -184,7 +184,7 @@ function Game()
     this.updatePlayers = function(data) {
       data.playerSnapshot.forEach(function (netPlayer) {
           if (netPlayer.id == this.player.id) { return }
-          else if (netPlayer.id in this.netPlayers) {
+          if (netPlayer.id in this.netPlayers) {
               netUpdateLocalPlayer(this.netPlayers[netPlayer.id], netPlayer);
               this.netPlayers[netPlayer.id].gamete.posX = netPlayer.position.x;
               this.netPlayers[netPlayer.id].gamete.posY = netPlayer.position.y;
