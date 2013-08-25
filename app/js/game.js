@@ -85,15 +85,12 @@ function Game()
      this.buildWorldGeo(); 
 
 
-<<<<<<< HEAD
     	//var snd = new Audio("sound/soundTest.wav");
 		//snd.play();
 		//document.getElementById("underwater").cloneNode(true).play()
 		underwater.play();
 
      renderer.sortObjects = true;
-=======
->>>>>>> dea11891d54b31acdf4b50f46ecf14463d79fb4e
      this.controller = new Controller();
      this.input = new Input();
      this.input.setController(this.controller);
