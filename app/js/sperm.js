@@ -187,8 +187,6 @@ function Sperm(_posX, _posY, _rot)
     	if (swim.volume > .05)
 			swim.volume -= .05;
 			
-	    
-	    console.log(this.velX);
 
   }
 
