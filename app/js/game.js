@@ -136,8 +136,8 @@ function Game()
         } else {
             gamete = new Sperm(0, 0, 80);
         }
-        egg = new Egg(0,0,0);
-        this.player = new Player(id, egg);
+        //egg = new Egg(0,0,0);
+        this.player = new Player(id, gamete);
         animate();
     }
 
@@ -149,7 +149,7 @@ function Game()
         // loop through gameobjects update
         this.input.update();
         this.player.update();
-        console.log(this.player.gamete);
+        //console.log(this.player.gamete);
 
         for (var key in this.netPlayers) {
             var netPlayer = this.netPlayers[key];

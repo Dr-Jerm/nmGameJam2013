@@ -11,6 +11,8 @@ function Sperm(_posX, _posY, _rot)
   this.velY = 0;
   this.rotVel = 0;
 
+  var headRadius = 15; 
+
   var tailoffset = -18;
   var tailRot = 0; 
   var tailcycle = 0;
@@ -148,15 +150,8 @@ function Sperm(_posX, _posY, _rot)
   this.update = function()
   {
 
-    if (this.posX > gameWorldWidth)
-      this.velX *= -1.5;
-    if (this.posX < -gameWorldWidth)
-      this.velX *= -1.5;
-    if (this.posY > gameWorldHeight)
-      this.velY *= -1.5;
-    if (this.posY < -gameWorldHeight)
-      this.velY *= -1.5;
-
+  
+  	
     
     this.posX += this.velX;
     this.posY += this.velY;
@@ -171,11 +166,54 @@ function Sperm(_posX, _posY, _rot)
     if(!this.netPlayer) {
       this.velX *= .9;
       this.velY *= .9;
-      this.rotVel *= .8;      
+      this.rotVel *= .8;
+
+      this.checkCollision();
+
     }
 
     
   }
+
+  this.checkCollision = function()
+  {
+  	  if (this.posX > gameWorldWidth)
+      this.velX *= -1.5;
+    if (this.posX < -gameWorldWidth)
+      this.velX *= -1.5;
+    if (this.posY > gameWorldHeight)
+      this.velY *= -1.5;
+    if (this.posY < -gameWorldHeight)
+      this.velY *= -1.5;
+
+
+  	for(p in game.netPlayers)
+  	{
+  		var xdist = game.netPlayers[p].getPosX()-this.posX;
+  		var ydist = game.netPlayers[p].getPosY()-this.posY;
+
+  		var dist =  Math.sqrt(Math.pow(ydist, 2) + Math.pow(xdist, 2))
+  		if(dist < 15)
+  		{
+  			var collisionAngle = Math.atan2(xdist,ydist);
+  			this.velX += Math.cos(collisionAngle)*15;
+  			this.velY += Math.sin(collisionAngle)*15;
+  			this.posX += Math.cos(collisionAngle)*15;
+  			this.posY += Math.sin(collisionAngle)*15;
+
+
+  			
+  			console.log("collision "+collisionAngle); 
+  		}
+  		
+
+  	}
+
+
+
+  }
+
+
 
   this.updateTail = function()
   {
