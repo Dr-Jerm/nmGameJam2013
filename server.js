@@ -48,8 +48,7 @@ var indexRoute = function(req, res){
         serverIp: serverIp,
         clientIp: req.connection.remoteAddress,
         page_length: highscores.PAGE_LENGTH,
-        scores: highscores.scores,
-        players: highscores.players,
+        all_scores: highscores.all_scores,
         ranks: highscores.ranks,
     }
 

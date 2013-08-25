@@ -20,7 +20,7 @@ function Sprite(_img, _posX, _posY, _rot, _zDepth)
 	this.map = this.img.map;
 	this.geo = new THREE.PlaneGeometry(this.width, this.height);
 	
-	this.material = new THREE.MeshLambertMaterial({map: this.map});
+	this.material = new THREE.MeshBasicMaterial({map: this.map});
 	// this.material = new THREE.MeshBasicMaterial({color: 0xCC0000});
 
 	this.material.transparent = true;

@@ -11,13 +11,13 @@ var HEIGHT = window.innerHeight;
 
 
 
-gameWorldWidth = 2500;
-gameWorldHeight = 2500;
+gameWorldWidth = 1500;
+gameWorldHeight = 1500;
 
-var eggSpawnX = 2000;
-var eggSpawnY = 0;
-var spermSpawnX = 0; 
-var spermSpawnY = 0; 
+var eggSpawnX = 900;
+var eggSpawnY = 900;
+var spermSpawnX = -900; 
+var spermSpawnY = -900; 
 
 var spriteZDepth = -10; 
 
@@ -148,9 +148,9 @@ function Game()
 		camera.position.z = 400;
 		scene.add(camera);
 
-		ambientLight = new THREE.AmbientLight( 0xffffff);
-		ambientLight.position.set(0,100,0);
-		scene.add(ambientLight);
+		// ambientLight = new THREE.AmbientLight( 0xffffff);
+		// ambientLight.position.set(0,100,10);
+		// scene.add(ambientLight);
     }
 
 
@@ -199,7 +199,7 @@ function Game()
     this.updatePlayers = function(data) {
       data.playerSnapshot.forEach(function (netPlayer) {
           if (netPlayer.id == this.player.id) { return }
-          else if (netPlayer.id in this.netPlayers) {
+          if (netPlayer.id in this.netPlayers) {
               netUpdateLocalPlayer(this.netPlayers[netPlayer.id], netPlayer);
               this.netPlayers[netPlayer.id].gamete.posX = netPlayer.position.x;
               this.netPlayers[netPlayer.id].gamete.posY = netPlayer.position.y;
@@ -309,6 +309,7 @@ function Game()
         this.endscreen.html("You failed to fertilize the egg!");
       }
       this.endscreen.show();
+      //document.getElementById("bump1").cloneNode(true).play();
     }
 
     this.update = function() {

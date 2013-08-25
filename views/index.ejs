@@ -3,7 +3,6 @@
 <div class="user-new">
     <input id="user" name="user[name]" type="text" placeholder="Enter your name!"/>
 
-
 <style>
 @import url(http://fonts.googleapis.com/css?family=Rosario);
 body {
@@ -15,7 +14,8 @@ body {
   position: absolute;
   left: 32%;
   top: 40px;
-  text-align: center;
+  text-align: left;
+  text-indent:8px;
   color: rgba(255, 255, 255, 0.87);
   border-radius: 8px;
   display: inline-block;
@@ -44,9 +44,11 @@ body {
   border-radius:8px 8px 0 0;
   border: 2px solid rgba(255, 255, 255, 0.56);
   bordertop: 2px solid rgba(0, 0, 0, 0.56);
+  text-align: center;
 }
 #leaderboard-display {
   background:rgba(0,0,0,0.45);
+  text-align: center;
   letter-spacing: 2px;
   padding:12px 0;
   border-left: 2px solid rgba(255, 255, 255, 0.6);
@@ -61,7 +63,7 @@ body {
   list-style:none;
   display:inline-block;
   padding:2px;
-  width:140px;
+  width:150px;
   user-select:none;
   padding:2px 1px;
 }
@@ -135,15 +137,15 @@ body {
       </ul>
       <!-- REPEAT -->
         <ul class="score-block current_player">
-          <li>#0</li>
+          <li># 0</li>
           <li>11568</li>
           <li>You</li>
         </ul>
-      <% for(var i=0; i<scores.length; i++) {%>
+      <% for(player in all_scores) {%>
         <ul class="score-block">
-          <li># <%= ranks[i] %></li>
-          <li><%= scores[i] %></li>
-          <li><%= players[i] %></li>
+          <li># 0</li>
+          <li><%- all_scores[player] %></li>
+          <li><%- player %></li>
         </ul>
       <% } %>
       <!-- /REPEAT -->
@@ -183,5 +185,3 @@ body {
 	<source src="sounds/soundTest.wav" />  
 </audio>
 -->
-
-

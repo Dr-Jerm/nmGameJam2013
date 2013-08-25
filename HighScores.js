@@ -2,41 +2,68 @@
 var HighScores = function () {
 
   // Some Mock Data:
-  //  scores = {
-  //    "player_uid" : 123,
-  //    "player_uid" : 123,
-  //    "player_uid" : 123,
-  //    "player_uid" : 123,
-  //    "player_uid" : 123,
-  //  }
-  this.ranks = [1, 2, 3, 4, 5]
-  this.scores = [1148, 512, 112, 12, 2];
-  this.players = ["swimmer" , "turtle", "hair" , "blue", "runner"]
   this.PAGE_LENGTH = 15; // Amount of scores displayed on a page.
-  this.pages = {} // contains data above, wrapped in here.
-  this.current_player = {
-    rank : 4,
-    score : 2334,
-    name : "",
-  }
+  this.ranks = [1, 2, 3, 4, 5]
+  this.all_scores = {} // Stores Score information for Users
+  // if username > 14_chars : username = username[0:11] + '...'
 
-  this.insertScore = function(scores) { /* Insert Score into the db & update this.ranks. */ }
-  this.getScorePage = function() {
-    /* Grab the current page and return the results. */
-    // This could be done nicely with a redis db.
-    // Quick ex.: http://dickeyxxx.com/the-great-redis-misapprehension
-    // page = range(s-e) # With PAGE_LENGTH steps.
-    // return page
-  }
+  // For simplicity, only show highest scores...
+  // Highest Scores:
 
-  this.drawLeaderboard = function() {
-    // On Win: Can just should trigger $('#leaderboard').show();
-    this.ranks = this.insertScore(this.scores); // this probably shouldn't be in draw..
-    var page = 1;
-    var pages = this.getScorePage(page);  
-    //  var rank_counter = 1; // Set to Page #
-    //  return items_to_draw
+  // @TODO:
+  //  - Need current player from player obj.
+  //  - Insert Latest Scores & Compare
+  //  - Find Top Scores & Sort to rank.
+  //  - ...
+
+  this.insertScores = function(players) {
+    /* This takes a list of players and
+       adds them to all_scores to display. */
+    for (i in players) {
+      this.all_scores[players[i].name] = players[i].score;
+    }
   }
+  this.insertScores([
+    {name:'testy', score:45345},
+    {name:'sdf', score:1},
+    {name:'billy', score:82448},
+    {name:'spermicide', score:7287},
+    {name:'swimmer', score:92313218},
+    {name:'runner', score:4},
+    {name:'leonard', score:831},
+    {name:'steve', score:23092},
+  ]);
+
+  this.findHighestScores = function() {
+    var scores = [];
+    for (score in this.all_scores) { 
+      scores.push(this.all_scores[score]);
+    }
+
+    // Sorting and taking Top Scores:
+    scores.sort(function(a,b){return a<b})
+    scores = scores.slice(0, this.PAGE_LENGTH);
+    console.log(scores);
+
+    // Need to re-reference the player objects...
+    new_highscores = [];
+    console.log("New Highscores", new_highscores);
+  };
+  this.findHighestScores();
+
+
+//  this.getScorePage = function() {
+//    /* Grab the current page and return the results. */
+//    // This could be done nicely with a redis db.
+//    // Quick ex.: http://dickeyxxx.com/the-great-redis-misapprehension
+//    // page = range(s-e) # With PAGE_LENGTH steps.
+//    // return page
+//  }
+
+//  this.drawLeaderboard = function() {
+//    // On Win: Can just should trigger $('#leaderboard').show();
+//    // Add Play Again ?
+//  }
 
 }
 module.exports = new HighScores();

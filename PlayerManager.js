@@ -32,7 +32,10 @@ var PlayerManager = function PlayerManager () {
         if (process.env.DEBUG) {console.log("PlayerManager.removePlayer"); }
         if (playerID in self.players) {
             delete self.players[playerID];
-        }    
+        }
+        if (Object.keys(self.players).length == 0) {
+            self.egg == null;
+        }
     } 
 
     this.pointInCircle = function() {
