@@ -36,6 +36,7 @@ underwater.play();
 swim = document.getElementById("swim"); 
 swim.volume = .5;
 win = document.getElementById("win"); 
+win.volume = .5;
 squish = document.getElementById("squish"); 
 
 var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
