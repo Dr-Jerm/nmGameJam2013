@@ -192,18 +192,25 @@ function Sperm(_posX, _posY, _rot)
     tailVertexVelocities[0].setY(tailDeltaY);
     tailLine.geometry.vertices[0].set(tailpos.x,tailpos.y,0);
 
-    var scalerVector3 = new THREE.Vector3(1,1,1);
+    var tempDotVector3 = new THREE.Vector3(0,0,0);
+    var tempDistenceVector = new THREE.Vector3(0,0,0);
 
     for (var v3 = tailLine.geometry.vertices.length-1; v3 > 0; v3--)
     {
 
+      
+      tempDistenceVector.setX(tailLine.geometry.vertices[v3-1].x - tailLine.geometry.vertices[v3].x);
+      tempDistenceVector.setY(tailLine.geometry.vertices[v3-1].y - tailLine.geometry.vertices[v3].y);
+
+      tempDotVector3 = tempDistenceVector.dot(tailVertexVelocities[v3]);
+
       tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3].x+tailVertexVelocities[v3].x);
       tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3].y+tailVertexVelocities[v3].y);
-      tailVertexVelocities[v3].setX(tailVertexVelocities[v3-1].x);
-      tailVertexVelocities[v3].setY(tailVertexVelocities[v3-1].y);
+      tailVertexVelocities[v3].setX(tailVertexVelocities[v3-1].x-tempDotVector3.x);
+      tailVertexVelocities[v3].setY(tailVertexVelocities[v3-1].y-tempDotVector3.y);
 
     }
-    //console.log("PVX:"+velX+" PVY"+velY+"  dx:"+tailDeltaX+"  dy:"+tailDeltaY+"  tx:"+tailVertexVelocities[3].y+"  tx:"+tailVertexVelocities[3].y)
+    console.log("DX"+tempDistenceVector.x+" DY"+tempDistenceVector.y+"  dotx:"+tempDotVector3.x+"  doty:"+tempDotVector3.y+"  tx:"+tailVertexVelocities[3].x+"  tx:"+tailVertexVelocities[3].y)
     tailLine.geometry.verticesNeedUpdate = true;
 
   }
