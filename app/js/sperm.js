@@ -5,11 +5,11 @@ function Sperm(_posX, _posY, _rot)
 
   var posZ = 0
 
-  var rot = _rot;
+  this.rot = _rot;
 
-  var velX = 0;
-  var velY = 0;
-  var rotVel = 0;
+  this.velX = 0;
+  this.velY = 0;
+  this.rotVel = 0;
 
   var tailoffset = -18;
   var tailRot = 0; 
@@ -18,7 +18,7 @@ function Sperm(_posX, _posY, _rot)
   var tailcycleAmplitude = 0.25; 
   var tailsegmentdistence = 5;
 
-  var bodySprite = new Sprite(images["sperm.png"], this.posX, this.posY, rot);
+  var bodySprite = new Sprite(images["sperm.png"], this.posX, this.posY, this.rot);
 
 
 
@@ -53,14 +53,14 @@ function Sperm(_posX, _posY, _rot)
 
     // movement
   this.moveForward = function(y) {
-    velY += Math.sin(rot) * y;
-    velX += Math.cos(rot) * y;
+    this.velY += Math.sin(this.rot) * y;
+    this.velX += Math.cos(this.rot) * y;
   }
   this.rotateLeft = function(y) {
-    rotVel += y;
+    this.rotVel += y;
   }
   this.rotateRight = function(y) {
-    rotVel -= y;
+    this.rotVel -= y;
   }
 
 
@@ -76,8 +76,8 @@ function Sperm(_posX, _posY, _rot)
 
     this.getVelocity = function() {
       return {
-          x: velX,
-          y: velY,
+          x: this.velX,
+          y: this.velY,
           z: 0,
       };
     }
@@ -95,38 +95,38 @@ function Sperm(_posX, _posY, _rot)
 
   this.getVelocity = function() {
     return {
-      x: velX,
-      y: velY,
+      x: this.velX,
+      y: this.velY,
       z: 0,
-      r: rotVel
+      r: this.rotVel
     };
   }
 
   this.getRotation = function() {
-    return rot;
+    return this.rot;
   }
   
   this.moveForward = function(y) {
-    velY += Math.sin(rot+tailRot) * y;
-    velX += Math.cos(rot+tailRot) * y;
+    this.velY += Math.sin(this.rot+tailRot) * y;
+    this.velX += Math.cos(this.rot+tailRot) * y;
   }
   this.rotateLeft = function(y) {
-    rotVel += y;
+    this.rotVel += y;
   }
   this.rotateRight = function(y) {
-    rotVel -= y;
+    this.rotVel -= y;
   }
 
   this.getRotVel = function(){
-    return rotVel;
+    return this.rotVel;
   }
 
 
   this.getTailPosition = function()
   {
     return {
-      x: Math.cos(rot+tailRot) * tailoffset+this.posX,
-      y: Math.sin(rot+tailRot) * tailoffset+this.posY,
+      x: Math.cos(this.rot+tailRot) * tailoffset+this.posX,
+      y: Math.sin(this.rot+tailRot) * tailoffset+this.posY,
     };
   }
 
@@ -137,37 +137,34 @@ function Sperm(_posX, _posY, _rot)
   this.getPosY = function(){
     return this.posY;
   }
-  this.getRotVel = function(){
-  return rotVel;
-  }
 
   // input from player params here. 
   this.update = function()
   {
 
     if (this.posX > gameWorldWidth)
-      velX *= -1.5;
+      this.velX *= -1.5;
     if (this.posX < -gameWorldWidth)
-      velX *= -1.5;
+      this.velX *= -1.5;
     if (this.posY > gameWorldHeight)
-      velY *= -1.5;
+      this.velY *= -1.5;
     if (this.posY < -gameWorldHeight)
-      velY *= -1.5;
+      this.velY *= -1.5;
 
     
-    this.posX += velX;
-    this.posY += velY;
-    rot += rotVel;
+    this.posX += this.velX;
+    this.posY += this.velY;
+    this.rot += this.rotVel;
 
     
 
-    bodySprite.updatePosition(this.posX, this.posY, rot+tailRot);
+    bodySprite.updatePosition(this.posX, this.posY, this.rot+tailRot);
     //console.log("spermupdate");
     this.updateTail();
     // movement resistance
-    velX *= .9;
-    velY *= .9;
-    rotVel *= .8;
+    this.velX *= .9;
+    this.velY *= .9;
+    this.rotVel *= .8;
     
   }
 
@@ -178,8 +175,8 @@ function Sperm(_posX, _posY, _rot)
     var distX2;
     var distY2;
     
-    tailcycleSpeed  = 0.2 + (Math.pow(velX,2)+Math.pow(velY,2))/100;
-    tailcycleAmplitude = 0.1 + (Math.pow(velX,2)+Math.pow(velY,2))/200;
+    tailcycleSpeed  = 0.2 + (Math.pow(this.velX,2)+Math.pow(this.velY,2))/100;
+    tailcycleAmplitude = 0.1 + (Math.pow(this.velX,2)+Math.pow(this.velY,2))/200;
     tailcycle = tailcycle + tailcycleSpeed; 
     tailRot = Math.sin(tailcycle)*tailcycleAmplitude; 
     
@@ -192,25 +189,18 @@ function Sperm(_posX, _posY, _rot)
     tailVertexVelocities[0].setY(tailDeltaY);
     tailLine.geometry.vertices[0].set(tailpos.x,tailpos.y,0);
 
-    var tempDotVector3 = new THREE.Vector3(0,0,0);
-    var tempDistenceVector = new THREE.Vector3(0,0,0);
+    var scalerVector3 = new THREE.Vector3(1,1,1);
 
     for (var v3 = tailLine.geometry.vertices.length-1; v3 > 0; v3--)
     {
 
-      
-      tempDistenceVector.setX(tailLine.geometry.vertices[v3-1].x - tailLine.geometry.vertices[v3].x);
-      tempDistenceVector.setY(tailLine.geometry.vertices[v3-1].y - tailLine.geometry.vertices[v3].y);
-
-      tempDotVector3 = tempDistenceVector.dot(tailVertexVelocities[v3]);
-
       tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3].x+tailVertexVelocities[v3].x);
       tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3].y+tailVertexVelocities[v3].y);
-      tailVertexVelocities[v3].setX(tailVertexVelocities[v3-1].x-tempDotVector3.x);
-      tailVertexVelocities[v3].setY(tailVertexVelocities[v3-1].y-tempDotVector3.y);
+      tailVertexVelocities[v3].setX(tailVertexVelocities[v3-1].x);
+      tailVertexVelocities[v3].setY(tailVertexVelocities[v3-1].y);
 
     }
-    console.log("DX"+tempDistenceVector.x+" DY"+tempDistenceVector.y+"  dotx:"+tempDotVector3.x+"  doty:"+tempDotVector3.y+"  tx:"+tailVertexVelocities[3].x+"  tx:"+tailVertexVelocities[3].y)
+    //console.log("PVX:"+this.velX+" PVY"+this.velY+"  dx:"+tailDeltaX+"  dy:"+tailDeltaY+"  tx:"+tailVertexVelocities[3].y+"  tx:"+tailVertexVelocities[3].y)
     tailLine.geometry.verticesNeedUpdate = true;
 
   }
