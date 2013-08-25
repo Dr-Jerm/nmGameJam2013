@@ -139,6 +139,11 @@ function Sperm(_posX, _posY, _rot)
     return this.posY;
   }
 
+  this.remove = function() {
+    bodySprite.removeFromScene();
+    scene.remove(tailLine);
+  }
+
   // input from player params here. 
   this.update = function()
   {

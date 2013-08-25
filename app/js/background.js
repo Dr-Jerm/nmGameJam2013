@@ -8,9 +8,9 @@ function Background (_img, _posX, _posY, _rot, _width, _height, _zDepth) {
 
 	var rot = _rot;
 
-	var img = images["BGfull001.png"];
-	img.width = _width;
-	img.height = _height;
+	//var img = images["BGfull001.png"];
+	this.img.width = _width;
+	this.img.height = _height;
 	backgroundSprite = new Sprite(this.img, 0, 0, 0, this.zDepth);
 
 

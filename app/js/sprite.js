@@ -47,4 +47,8 @@ function Sprite(_img, _posX, _posY, _rot, _zDepth)
 		this.mesh.rotation.z = this.rot;
 	}
 
+	this.removeFromScene = function () {
+		scene.remove(this.mesh);
+	}
+
 }

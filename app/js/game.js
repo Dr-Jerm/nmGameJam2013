@@ -76,8 +76,15 @@ function Game()
      this.netPlayers = {};
 
        console.log("Game Initialized");
-       this.newBackground = new Background(images["BGfull001.png"],0,0,0,12800,7200,-1000);
-       this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,2903,2007,100);
+
+       socket.on('playerDisconnect', function (data) {
+           var playerId = data.playerId;
+           this.netPlayers[playerId].gamete.remove();
+           delete this.netPlayers[playerId];
+       }.bind(this));
+       
+       this.newBackground = new Background(images["BGfull001.png"],0,0,0,12800,7200,-1200);
+       this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
     }
 
   var netUpdateLocalPlayer = function (localPlayer, netPlayer) {
@@ -152,8 +159,8 @@ function Game()
 
         // camera animation
         camera.position.set(
-            ((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
-            ((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
+            ((this.player.getPosX()-camera.position.x) / 25) + camera.position.x, 
+            ((this.player.getPosY()-camera.position.y) / 25) + camera.position.y, 
             500);
     }
 }
