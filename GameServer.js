@@ -53,6 +53,7 @@ var GameServer = function GameServer () {
     var gameWin = function (player) {
         console.log("GameServer.gameWin."+player.id);
         self.socketManager.emit("gameWin", {playerId: player.id});
+        HighScores.insertScores(currentPlayerSnapshot());
 
         resetPending = true;
 
