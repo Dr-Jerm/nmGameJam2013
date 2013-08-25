@@ -37,7 +37,9 @@ var GameServer = function GameServer () {
 
     var gameWin = function (player) {
         console.log("GameServer.gameWin."+player.id);
-        this.socketManager.emit("gameWin");
+        this.socketManager.emit("gameWin", {playerId: player.id});
+        HighScores.insertScore(player);
+
         resetPending = true;
 
         setTimeout(function () {
@@ -88,8 +90,8 @@ var GameServer = function GameServer () {
                 var newPlayer = playerManager.generatePlayer(data.user, this, {});
                 playerManager.addPlayer(newPlayer);
 
-                this.emit('acceptedUser', 
-                  {id: newPlayer.id, gameteType: newPlayer.gameteType});
+                this.emit('acceptedUser', {id: newPlayer.id, gameteType: newPlayer.gameteType});
+                self.reset();
             });
 
             socket.on("disconnect", function() {
