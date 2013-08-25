@@ -15,9 +15,9 @@ var HighScores = function () {
   this.PAGE_LENGTH = 15; // Amount of scores displayed on a page.
   this.pages = {} // contains data above, wrapped in here.
   this.current_player = {
-    rank = 4,
-    score = 2334,
-    name = "",
+    rank : 4,
+    score : 2334,
+    name : "",
   }
 
   this.insertScore = function(scores) { /* Insert Score into the db & update this.ranks. */ }
