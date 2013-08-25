@@ -233,6 +233,8 @@ function Game()
 
     this.reset = function(data) 
     {
+      $('body .label').remove();
+
     	this.setUpRenderer();
     	this.buildWorldGeo(); 
  		var myPlayerID = this.player.id;

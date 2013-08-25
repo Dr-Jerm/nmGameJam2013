@@ -11,7 +11,7 @@ function Player(id, name, _gamete)
     this.gamete = _gamete;
     this.name = name;
 
-    this.label = $("<div></div>", {class: "user_" + this.id, });
+    this.label = $("<div></div>", {class: "user_" + this.id + " label", });
     this.label.css(
       { width: "auto", 
         position: "fixed", 
@@ -28,6 +28,10 @@ function Player(id, name, _gamete)
 
     this.killLabel = function() {
       this.label.remove();
+    }
+
+    this.hideLabel = function() {
+      this.label.hide();
     }
 
     // movement
