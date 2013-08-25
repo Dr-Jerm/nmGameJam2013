@@ -84,6 +84,25 @@ function Game()
     {
      this.setUpRenderer();
      this.buildWorldGeo(); 
+     this.endscreen = $("<div></div>", { class: "end_screen" });
+     $('body').append(this.endscreen);
+     this.endscreen.css({
+       padding: "20px", 
+       color: "#fff",
+       position: "fixed",
+       width: "600px",
+       height: "50px",
+       left: "50%",
+       top: "50%",
+       marginTop: "-25px",
+       marginLeft: "-300px",
+       zIndex: "1000",
+       fontSize: "40px",
+       textAlign: "center",
+       fontFamily: "'Flavors', cursive",
+       border: "solid 1px #ffe",
+     });
+     this.endscreen.hide();
 		
 
      renderer.sortObjects = true;
@@ -201,8 +220,6 @@ function Game()
       }.bind(this));
     }
 
-
-
     this.networkUpdate = function(data) {
       socket.emit("response", { id: this.player.id,
                     velocity: this.player.gamete.getVelocity(),
@@ -230,6 +247,7 @@ function Game()
     this.reset = function(data) 
     {
       $('body .label').remove();
+      this.endscreen.hide();
 
     	this.setUpRenderer();
     	this.buildWorldGeo(); 
@@ -285,6 +303,12 @@ function Game()
 
     this.end = function(data) {
       // Display a "you suck" to everyone except winner
+      if (data.playerId === this.player.id) {
+        this.endscreen.html("You fertilized the egg!");
+      } else {
+        this.endscreen.html("You failed to fertilize the egg!");
+      }
+      this.endscreen.show();
     }
 
     this.update = function() {
