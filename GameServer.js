@@ -65,8 +65,10 @@ var GameServer = function GameServer () {
 
     }
 
+    var collisionBuffer = false;
+
     this.checkCollide = function() {
-      if (playerManager.egg == null || resetPending) return false;
+      if (playerManager.egg == null || collisionBuffer || resetPending) return false;
       for (var key in playerManager.players) {
         var player = playerManager.players[key];
         if (player.gameteType != "egg"){
@@ -79,6 +81,10 @@ var GameServer = function GameServer () {
               if (eggHealth > 0) {
                 self.socketManager.emit('score', {score: ++player.score, id:player.id , angle: angle});
                 console.log(eggHealth);
+                collisionBuffer = true
+                setTimeout(function () {
+                    collisionBuffer = false;
+                }, 500);
               } else {
                     self.socketManager.emit('score', {score: ++player.score, id:player.id , angle: angle});
                   gameWin(player);
