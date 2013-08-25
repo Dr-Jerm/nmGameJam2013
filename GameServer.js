@@ -35,7 +35,7 @@ var GameServer = function GameServer () {
         resetPending = false;
     }
 
-    var gameWin = function (player) {
+    this.gameWin = function (player) {
         console.log("GameServer.gameWin."+player.id);
         this.socketManager.emit("gameWin", {playerId: player.id});
         HighScores.insertScore(player);
@@ -61,7 +61,7 @@ var GameServer = function GameServer () {
                 player.socket.emit('score', {score: ++player.score});
                 console.log(eggHealth);
               } else {
-                  gameWin(player);
+                  this.gameWin(player);
               }
 
             

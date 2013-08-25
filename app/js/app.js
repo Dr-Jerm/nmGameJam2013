@@ -11,9 +11,20 @@
     game = new Game();
     game.init();
 
+    socket.on('gameWin', function(data) {
+        game.end(data);
+    });
+
+    socket.on('youWon', function(data) {
+      game.end();
+    });
+
     socket.on('acceptedUser', function(data) {
-      game.reset();
       game.setPlayer(data.id, data.name, data.gameteType);
+    });
+
+    socket.on('reset', function(data) {
+        game.reset(data);
     });
 
     socket.on('poll', function(data) {

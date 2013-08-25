@@ -91,47 +91,49 @@ function Game()
        this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
     }
 
-  var netUpdateLocalPlayer = function (localPlayer, netPlayer) {
-      localPlayer.gamete.posX = netPlayer.position.x;
-      localPlayer.gamete.posY = netPlayer.position.y;
+    var netUpdateLocalPlayer = function (localPlayer, netPlayer) {
+        localPlayer.gamete.posX = netPlayer.position.x;
+        localPlayer.gamete.posY = netPlayer.position.y;
 
-      localPlayer.gamete.rot = netPlayer.rotation.r;
+        localPlayer.gamete.rot = netPlayer.rotation.r;
 
-      localPlayer.gamete.velX = netPlayer.velocity.x;
-      localPlayer.gamete.velY = netPlayer.velocity.y;
-  }
+        localPlayer.gamete.velX = netPlayer.velocity.x;
+        localPlayer.gamete.velY = netPlayer.velocity.y;
+    }
 
-  this.networkUpdate = function(data) {
-    socket.emit("response", { id: this.player.id,
-                  velocity: this.player.gamete.getVelocity(),
-                  position: this.player.gamete.getPosition(), 
-                  rotation: this.player.gamete.getRotation(),
-                });
+    this.updatePlayers = function(data) {
+      data.playerSnapshot.forEach(function (netPlayer) {
+          if (netPlayer.id == this.player.id) { return }
+          if (netPlayer.id in this.netPlayers) {
+              netUpdateLocalPlayer(this.netPlayers[netPlayer.id], netPlayer);
+              this.netPlayers[netPlayer.id].gamete.posX = netPlayer.position.x;
+              this.netPlayers[netPlayer.id].gamete.posY = netPlayer.position.y;
+          } else {
+              var gamete = null;
+              var newPlayer = null;
+              if (netPlayer.gameteType === "egg") {
+                gamete = new Egg(0, 0, 80);
+                var newPlayer = new Player(netPlayer.id, netPlayer.name, gamete);
+                newPlayer.gameteType = "egg";
+              } else {
+                gamete = new Sperm(0, 0, 80);
+                var newPlayer = new Player(netPlayer.id, netPlayer.name, gamete);
+              }
 
-    data.playerSnapshot.forEach(function (netPlayer) {
-        if (netPlayer.id == this.player.id) { return }
-        if (netPlayer.id in this.netPlayers) {
-            netUpdateLocalPlayer(this.netPlayers[netPlayer.id], netPlayer);
-            this.netPlayers[netPlayer.id].gamete.posX = netPlayer.position.x;
-            this.netPlayers[netPlayer.id].gamete.posY = netPlayer.position.y;
-        } else {
-            var gamete = null;
-            var newPlayer = null;
-            console.log(netPlayer.gameteType);
-            if (netPlayer.gameteType === "egg") {
-              gamete = new Egg(0, 0, 80);
-              var newPlayer = new Player(netPlayer.id, netPlayer.name, gamete);
-              newPlayer.gameteType = "egg";
-            } else {
-              gamete = new Sperm(0, 0, 80);
-              var newPlayer = new Player(netPlayer.id, netPlayer.name, gamete);
-            }
+              newPlayer.gamete.netPlayer = true;
+              this.netPlayers[netPlayer.id] = newPlayer;
+          }
+      }.bind(this));
+    }
 
-            newPlayer.gamete.netPlayer = true;
-            this.netPlayers[netPlayer.id] = newPlayer;
-        }
-    }.bind(this));
-  }
+    this.networkUpdate = function(data) {
+      socket.emit("response", { id: this.player.id,
+                    velocity: this.player.gamete.getVelocity(),
+                    position: this.player.gamete.getPosition(), 
+                    rotation: this.player.gamete.getRotation(),
+                  });
+      this.updatePlayers(data);
+    }
 
     this.setPlayer = function(id, name, gameteType) {
         var gamete;
@@ -148,8 +150,15 @@ function Game()
         animate();
     }
 
-    this.reset = function() {
+    this.reset = function(data) {
+      this.updatePlayers(data);
+    }
 
+    this.end = function(data) {
+      // Display a "you suck" to everyone except winner
+      if (this.player.id === data.playerId) {
+        this.player.gamete = new Egg(0, 0, 80);
+      }
     }
 
     this.update = function() {
