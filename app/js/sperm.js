@@ -18,11 +18,8 @@ function Sperm(_posX, _posY, _rot)
   var tailcycleAmplitude = 0.25; 
   var tailsegmentdistence = 5;
 
-<<<<<<< HEAD
-  var bodySprite = new Sprite(images["sperm.png"], this.posX, this.posY, rot, 0);
-=======
-  var bodySprite = new Sprite(images["sperm.png"], this.posX, this.posY, this.rot);
->>>>>>> 8f0d1e4ba9cf1aad76d284326a2d9d964f3cb7bf
+
+  var bodySprite = new Sprite(images["sperm.png"], this.posX, this.posY, this.rot, 0);
 
 
 
