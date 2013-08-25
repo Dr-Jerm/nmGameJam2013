@@ -4,6 +4,7 @@ var util = require('util');
 module.exports = function Player (name, socket, startingAttrs) {
     this.name = name;
     this.id = socket.id;
+    this.score = 0;
     this.socket = socket;
     this.gameteType = "sperm";
 

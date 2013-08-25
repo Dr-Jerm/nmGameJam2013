@@ -6,23 +6,60 @@ var GameServer = function GameServer () {
 
     this.socketManager;
 
+    var eggHealth = 0;
+
     var tick = function() {
         if (process.env.DEBUG) {console.log("GameServer.tick"); }
-        var isWin = playerManager.checkWin();
+        var isWin = this.checkCollide();
+        var playerSnapshot = currentPlayerSnapshot();
+        for (var key in playerManager.players) {
+            playerManager.players[key].socket.emit('poll', {playerSnapshot:playerSnapshot});
+        }
+
         this.socketManager.emit('poll', {playerSnapshot:currentPlayerSnapshot()});
     }.bind(this);
 
     this.run = function(clockSpeed) {
+        this.reset();
         if (process.env.DEBUG) {console.log("GameServer.run"); }
         setInterval(tick, clockSpeed);
     }
 
     this.reset = function() {
         if (process.env.DEBUG) {console.log("GameServer.reset"); }
+        eggHealth = 10 * Object.keys(playerManager.players).length;
+        
         this.socketManager.emit("reset");
     }
 
-    this.spawnPlayer = function(playerID, initialParams) {
+    var gameWin = function (player) {
+
+
+        setTimeout(function () {
+            this.reset();
+        }.bind(this), 5000);
+
+    }
+
+    this.checkCollide = function() {
+      if (playerManager.egg == null) return false;
+      for (var key in playerManager.players) {
+        var player = playerManager.players[key];
+        if (player.gameteType != "egg"){
+          var dx = Math.pow(playerManager.egg.position.x - player.position.x, 2);
+          var dy = Math.pow(playerManager.egg.position.y - player.position.y, 2);
+          if (Math.sqrt(dx + dy) < 100) {
+              egghealth--;
+              if (eggHealth > 0) {
+                player.socket.emit('score', {score: ++player.score});      
+              } else {
+                  gameWin(player);
+              }
+
+            
+          }
+        }
+      }
     }
 
     var currentPlayerSnapshot = function() {
