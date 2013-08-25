@@ -58,7 +58,7 @@ if(DEBUG){
     container = document.getElementById( 'container' );
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
+    stats.domElement.style.top = '25px';
     container.appendChild( stats.domElement );
 }
 
