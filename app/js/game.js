@@ -157,7 +157,10 @@ function Game()
     this.end = function(data) {
       // Display a "you suck" to everyone except winner
       if (this.player.id === data.playerId) {
-        this.player.gamete = new Egg(0, 0, 80);
+        this.player.gamete.remove();
+        var gamete = new Egg(0, 0, 80);
+        this.player.gamete = gamete;
+        console.log("You are now a freacking egg");
       }
     }
 

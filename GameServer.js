@@ -37,7 +37,7 @@ var GameServer = function GameServer () {
 
     this.gameWin = function (player) {
         console.log("GameServer.gameWin."+player.id);
-        this.socketManager.emit("gameWin");
+        this.socketManager.emit("gameWin", {playerId: player.id});
         resetPending = true;
 
         setTimeout(function () {
@@ -61,8 +61,6 @@ var GameServer = function GameServer () {
               } else {
                   this.gameWin(player);
               }
-
-            
           }
         }
       }
@@ -89,7 +87,9 @@ var GameServer = function GameServer () {
                 playerManager.addPlayer(newPlayer);
 
                 this.emit('acceptedUser', 
-                  {id: newPlayer.id, gameteType: newPlayer.gameteType});
+                  {id: newPlayer.id, 
+                   name: newPlayer.name, 
+                   gameteType: newPlayer.gameteType});
             });
 
             socket.on("disconnect", function() {
