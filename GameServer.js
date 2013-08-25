@@ -8,6 +8,7 @@ var GameServer = function GameServer () {
 
     var tick = function() {
         if (process.env.DEBUG) {console.log("GameServer.tick"); }
+        var isWin = playerManager.checkWin();
         this.socketManager.emit('poll', {playerSnapshot:currentPlayerSnapshot()});
     }.bind(this);
 
