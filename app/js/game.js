@@ -84,13 +84,9 @@ function Game()
     {
      this.setUpRenderer();
      this.buildWorldGeo(); 
-
-
-		//document.getElementById("underwater").cloneNode(true).play()
 		
 
      renderer.sortObjects = true;
-
      this.controller = new Controller();
      this.input = new Input();
      this.input.setController(this.controller);
