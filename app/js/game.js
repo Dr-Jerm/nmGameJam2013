@@ -120,22 +120,11 @@ function Game()
         this.input.update();
         this.player.update();
 
-<<<<<<< HEAD
-
 		// camera animation
 		camera.position.set(
 			((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
 			((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
 			500);
-=======
-        // camera animation
-        camera.position.set(
-            ((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
-            ((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
-            500);
-        console.log(gameWorldWidth);
->>>>>>> 9bad0c976baad7dcb9c495a168d3db3d65451c1f
-
     }
 }
 
