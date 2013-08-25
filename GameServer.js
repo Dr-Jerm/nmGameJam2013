@@ -66,8 +66,6 @@ var GameServer = function GameServer () {
               } else {
                   gameWin(player);
               }
-
-            
           }
         }
       }
@@ -93,17 +91,10 @@ var GameServer = function GameServer () {
                 var newPlayer = playerManager.generatePlayer(data.user, this, {});
                 playerManager.addPlayer(newPlayer);
 
-                this.emit('acceptedUser', {id: newPlayer.id, gameteType: newPlayer.gameteType});
+                this.emit('acceptedUser', 
+                  {id: newPlayer.id, 
+                   name: newPlayer.name, 
+                   gameteType: newPlayer.gameteType});
             });
 
-            socket.on("disconnect", function() {
-                if (process.env.DEBUG) {console.log("Networking.disconnect:"+this.id)}
-                playerManager.removePlayer(this.id);
-                socketManager.emit("playerDisconnect", {playerId: this.id});
-            });
-        });
-    }
-
-}
-
-module.exports = new GameServer(); // singleton game server
+ 
