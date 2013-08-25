@@ -16,16 +16,14 @@ function Egg(_posX, _posY, _rot)
 
 	// movement
 	this.moveForward = function(y) {
-		this.velY += Math.sin(this.rot) * (y*.4);
-		this.velX += Math.cos(this.rot) * (y*.4);
+		this.velY += Math.sin(this.rot) * (y*.2);
+		this.velX += Math.cos(this.rot) * (y*.2);
 	}
 	this.rotateLeft = function(y) {
-		//if (this.rotVel < .1)
-		this.rotVel = this.rotVel + (y*.2);
+		this.rotVel += (y*.1);
 	}
 	this.rotateRight = function(y) {
-		//if (this.rotVel > -.1)
-		this.rotVel = this.rotVel - (y*.2);
+		this.rotVel -= (y*.1);
 	}
 
 
@@ -64,32 +62,35 @@ function Egg(_posX, _posY, _rot)
 	this.update = function()
 	{
 		//console.log("eggupdate");
-		if (this.posX > gameWorldWidth)
+		if (this.posX+(images["Egg.png"].width/2) > gameWorldWidth)
       		this.velX *= -.75;
-    	if (this.posX < -gameWorldWidth)
+
+    	if (this.posX-(images["Egg.png"].width/2) < -gameWorldWidth)
       		this.velX *= -.75;
-    	if (this.posY > gameWorldHeight)
+
+    	if (this.posY-(images["Egg.png"].height/2) > gameWorldHeight)
       		this.velY *= -.75;
-    	if (this.posY < -gameWorldHeight)
+
+    	if (this.posY+(images["Egg.png"].height/2) < -gameWorldHeight)
       		this.velY *= -.75;
 
     
     	this.posX += this.velX;
     	this.posY += this.velY;
     	
-    	//if (this.rotVel > .1)
-    	//	this.rotVel = .1;
-    	//if (this.rotVel < -.1)
-    	//	this.rotVel = -.1;
+    	if (this.rotVel > .1)
+    		this.rotVel = .1;
+    	if (this.rotVel < -.1)
+    		this.rotVel = -.1;
     	
     	this.rot += this.rotVel;
 
 
     	bodySprite.updatePosition(this.posX, this.posY, this.rot);
 
-		this.velX *= .98;
-		this.velY *= .98;
-		this.rotVel *= .9;  
+		this.velX *= .99;
+		this.velY *= .99;
+		this.rotVel *= .98;  
 
 	}
 

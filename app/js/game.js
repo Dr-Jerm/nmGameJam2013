@@ -9,8 +9,8 @@ var READY = false;
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
 
-gameWorldWidth = 1000;
-gameWorldHeight = 1000;
+gameWorldWidth = 1500;
+gameWorldHeight = 1500;
 
 //-------THREE.js variables ---------//
 var clock = new THREE.Clock();
