@@ -11,13 +11,13 @@ var HEIGHT = window.innerHeight;
 
 
 
-gameWorldWidth = 2500;
-gameWorldHeight = 2500;
+gameWorldWidth = 1500;
+gameWorldHeight = 1500;
 
-var eggSpawnX = 2000;
-var eggSpawnY = 0;
-var spermSpawnX = 0; 
-var spermSpawnY = 0; 
+var eggSpawnX = 900;
+var eggSpawnY = 900;
+var spermSpawnX = -900; 
+var spermSpawnY = -900; 
 
 var spriteZDepth = -10; 
 
