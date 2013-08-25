@@ -5,6 +5,7 @@ module.exports = function Player (name, socket, startingAttrs) {
     this.name = name;
     this.id = socket.id;
     this.socket = socket;
+    this.gameteType = "sperm";
 
     this.clientPlayer = function () {
         var clean = {
@@ -93,6 +94,9 @@ module.exports = function Player (name, socket, startingAttrs) {
         }
         if (attrs.scale) {
             this.scale.set(attrs.scale);
+        }
+        if (attrs.gameteType) {
+            this.gameteType = attrs.gameteType;
         }
     }.bind(this);
 

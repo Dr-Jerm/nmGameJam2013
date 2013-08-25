@@ -1,9 +1,23 @@
+var Player = require('./Player');
 
 var PlayerManager = function PlayerManager () {
 
     var self = this;
 
     self.players = {};
+    self.egg = null;
+
+    this.generatePlayer = function(user, manager, attrs) {
+        var player = null;
+        if (self.egg == null) {
+          attrs.gameteType = "egg";
+          player = new Player(user, manager, attrs);
+          self.egg = player;
+        } else {
+          player = new Player(user, manager, attrs);
+        }
+        return player;
+    }
 
     this.addPlayer = function (player) {
         if (process.env.DEBUG) {console.log("PlayerManager.addPlayer"); }

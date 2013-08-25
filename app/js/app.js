@@ -13,11 +13,12 @@
 
     socket.on('acceptedUser', function(data) {
       game.reset();
+      console.log(data);
       game.setPlayer(data.id);
-    })
+    });
 
     socket.on('poll', function(data) {
       game.networkUpdate(data);
-    })
+    });
 
 })();
