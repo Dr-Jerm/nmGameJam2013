@@ -32,7 +32,7 @@ function Egg(_posX, _posY, _rot)
 		return {
 			x: this.posX, 
 			y: this.posY, 
-			z: this.posZ
+			z: posZ
 		};
 	}
 
