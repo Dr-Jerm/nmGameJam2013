@@ -110,7 +110,7 @@ module.exports = function Player (name, socket, startingAttrs) {
     }
 
     this.socket.on('response', function (data) {
-        if (process.env.DEBUG) {console.log('Player.'+this.id+'.response')}
+        // if (process.env.DEBUG) {console.log('Player.'+this.id+'.response')}
         setAttrs(data);
     });
 

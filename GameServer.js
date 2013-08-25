@@ -3,20 +3,22 @@ var playerManager = require('./PlayerManager'),
     HighScores = require('./HighScores');
 
 var GameServer = function GameServer () {
+    var self = this;
 
     this.socketManager;
 
     var eggHealth = 0;
+    var resetPending = false;
 
     var tick = function() {
-        if (process.env.DEBUG) {console.log("GameServer.tick"); }
+        // if (process.env.DEBUG) {console.log("GameServer.tick"); }
         var isWin = this.checkCollide();
         var playerSnapshot = currentPlayerSnapshot();
         for (var key in playerManager.players) {
             playerManager.players[key].socket.emit('poll', {playerSnapshot:playerSnapshot});
         }
 
-        this.socketManager.emit('poll', {playerSnapshot:currentPlayerSnapshot()});
+        // this.socketManager.emit('poll', {playerSnapshot:currentPlayerSnapshot()});
     }.bind(this);
 
     this.run = function(clockSpeed) {
@@ -27,31 +29,35 @@ var GameServer = function GameServer () {
 
     this.reset = function() {
         if (process.env.DEBUG) {console.log("GameServer.reset"); }
-        eggHealth = 10 * Object.keys(playerManager.players).length;
-        
+        eggHealth = Math.max(10 * Object.keys(playerManager.players).length, 10);
+
         this.socketManager.emit("reset");
+        resetPending = false;
     }
 
     var gameWin = function (player) {
-
+        console.log("GameServer.gameWin."+player.id);
+        this.socketManager.emit("gameWin");
+        resetPending = true;
 
         setTimeout(function () {
-            this.reset();
-        }.bind(this), 5000);
+            self.reset();
+        }, 5000);
 
     }
 
     this.checkCollide = function() {
-      if (playerManager.egg == null) return false;
+      if (playerManager.egg == null || resetPending) return false;
       for (var key in playerManager.players) {
         var player = playerManager.players[key];
         if (player.gameteType != "egg"){
           var dx = Math.pow(playerManager.egg.position.x - player.position.x, 2);
           var dy = Math.pow(playerManager.egg.position.y - player.position.y, 2);
           if (Math.sqrt(dx + dy) < 100) {
-              egghealth--;
+              eggHealth--;
               if (eggHealth > 0) {
-                player.socket.emit('score', {score: ++player.score});      
+                player.socket.emit('score', {score: ++player.score});
+                console.log(eggHealth);
               } else {
                   gameWin(player);
               }
@@ -82,11 +88,8 @@ var GameServer = function GameServer () {
                 var newPlayer = playerManager.generatePlayer(data.user, this, {});
                 playerManager.addPlayer(newPlayer);
 
-                this.emit('acceptedUser', { 
-                    id: newPlayer.id, 
-                    name: data.user, 
-                    gameteType: newPlayer.gameteType
-                });
+                this.emit('acceptedUser', 
+                  {id: newPlayer.id, gameteType: newPlayer.gameteType});
             });
 
             socket.on("disconnect", function() {
