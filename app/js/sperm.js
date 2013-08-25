@@ -250,7 +250,7 @@ function Sperm(_posX, _posY, _rot)
   		}
   		if(game.netPlayers[p].gamete.type == "egg")
   		{
-
+  			//document.getElementById("bump1").cloneNode(true).play();
 
 
   		}
