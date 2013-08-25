@@ -9,8 +9,8 @@ var READY = false;
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
 
-gameWorldWidth = 2500;
-gameWorldHeight = 2500;
+var gameWorldWidth = 2500;
+var gameWorldHeight = 2500;
 
 var spriteZDepth = -10; 
 
@@ -89,9 +89,13 @@ function Game()
            this.netPlayers[playerId].killLabel();
            delete this.netPlayers[playerId];
        }.bind(this));
+
+       this.buildWorld(); 
       
+ 	}
 
-
+ 	this.buildWorld = function()
+ 	{
        //-----------
        this.newBackground = new Background(images["BGfull001.png"],0,0,0,12800,7200,-1200);
        this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
@@ -109,8 +113,8 @@ function Game()
        // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
        // }
        //-----------
-       
     }
+   
 
     var netUpdateLocalPlayer = function (localPlayer, netPlayer) {
         localPlayer.gamete.posX = netPlayer.position.x;
