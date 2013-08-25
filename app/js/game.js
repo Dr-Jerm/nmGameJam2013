@@ -121,13 +121,6 @@ function Game()
 			((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
 			500);
 
-        // camera animation
-        camera.position.set(
-            ((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
-            ((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
-            500);
-        console.log(gameWorldWidth);
-
     }
 }
 

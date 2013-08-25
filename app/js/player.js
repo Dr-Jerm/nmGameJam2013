@@ -25,7 +25,7 @@ function Player(id, _gamete)
     }
       this.getRotation = function() {
         return this.gamete.getRotation();
-      }
+    }
 
 
     this.update = function()
