@@ -11,7 +11,7 @@ function Egg(_posX, _posY, _rot)
 	var velY = 0;
 	var rotVel = 0;
 
-	bodySprite = new Sprite(images["Egg.png"], posX, posY, rot);
+	bodySprite = new Sprite(images["Egg.png"], posX, posY, rot, 0);
 
 
 	// movement

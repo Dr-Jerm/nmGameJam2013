@@ -24,7 +24,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 container.appendChild( renderer.domElement ); 
 
 // new camera
-var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 );
+var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 5000 );
 
 // new scene
 var scene = new THREE.Scene();
@@ -66,6 +66,8 @@ function Game()
 {
     this.init = function()
     {
+
+    	
      this.controller = new Controller();
      this.input = new Input();
      this.input.setController(this.controller);
@@ -74,6 +76,7 @@ function Game()
      this.netPlayers = {};
 
        console.log("Game Initialized");
+       this.newBackground = new Background();
        
     }
 
