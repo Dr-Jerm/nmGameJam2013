@@ -143,7 +143,7 @@ body {
         </ul>
       <% for(player in all_scores) {%>
         <ul class="score-block">
-          <li># 0</li>
+          <li># <%- ranks[player] %></li>
           <li><%- all_scores[player] %></li>
           <li><%- player %></li>
         </ul>
