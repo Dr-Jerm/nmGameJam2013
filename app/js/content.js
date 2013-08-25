@@ -33,6 +33,18 @@ imageSrcList.push("Egg.png");
 imageSrcList.push("BGsecondary001.png");
 imageSrcList.push("BGfull001.png");
 
+imageSrcList.push("particulate001.png");
+imageSrcList.push("particulate002.png");
+imageSrcList.push("particulate003.png");
+
+// imageSrcList.push("particulars002.png");
+// imageSrcList.push("particulars003.png");
+// imageSrcList.push("particulars004.png");
+// imageSrcList.push("particulars005.png");
+// imageSrcList.push("particulars006.png");
+// imageSrcList.push("particulars007.png");
+// imageSrcList.push("particulars008.png");
+
 for (imgsrc in imageSrcList)
 {
 	LoadImage(imageSrcList[imgsrc]);

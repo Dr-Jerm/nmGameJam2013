@@ -9,8 +9,8 @@ var READY = false;
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
 
-gameWorldWidth = 1500;
-gameWorldHeight = 1500;
+gameWorldWidth = 2500;
+gameWorldHeight = 2500;
 
 //-------THREE.js variables ---------//
 var clock = new THREE.Clock();
@@ -70,7 +70,7 @@ function Game()
     this.init = function()
     {
 
-    	
+     renderer.sortObjects = true;
      this.controller = new Controller();
      this.input = new Input();
      this.input.setController(this.controller);
@@ -87,8 +87,36 @@ function Game()
            delete this.netPlayers[playerId];
        }.bind(this));
        
+
+
+
        this.newBackground = new Background(images["BGfull001.png"],0,0,0,12800,7200,-1200);
        this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
+       this.particulateList = new Array();
+       for (var i = 0; i < 75; i++)
+       {
+       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate001.png"], 1,   Math.random()*800 - 400)); 
+       }
+       for (var i = 0; i < 75; i++)
+       {
+       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate002.png"], 1,   Math.random()*800 - 400)); 
+       }
+       for (var i = 0; i < 75; i++)
+       {
+       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
+       }
+
+
+       //this.particulateList.push( new Particulate(   500,  -500,   0.0003, images["particulars001.png"], 10, -300)); 
+       
+       // this.particulateList.push( new Particulate(  10,  10,  -0.01, images["particulate002.png"], 1,   150)); 
+       // this.particulateList.push( new Particulate(	10,   -10,  -0.01, images["particulate003.png"], 1,   300)); 
+
+    
+
+
+
+       
     }
 
     var netUpdateLocalPlayer = function (localPlayer, netPlayer) {
@@ -123,6 +151,16 @@ function Game()
               this.netPlayers[netPlayer.id] = newPlayer;
           }
       }.bind(this));
+    }
+
+    this.updateWorld = function()
+    {
+    	for(var p in this.particulateList)
+    	{
+    		this.particulateList[p].update();
+    	}
+
+
     }
 
     this.networkUpdate = function(data) {
@@ -179,6 +217,8 @@ function Game()
             ((this.player.getPosX()-camera.position.x) / 25) + camera.position.x, 
             ((this.player.getPosY()-camera.position.y) / 25) + camera.position.y, 
             500);
+
+        this.updateWorld(); 
     }
 }
 
