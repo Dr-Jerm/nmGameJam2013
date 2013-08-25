@@ -2,6 +2,118 @@
 
 <div class="user-new">
     <input id="user" name="user[name]" type="text" placeholder="Enter your name!"/>
+
+
+<style>
+@import url(http://fonts.googleapis.com/css?family=Rosario);
+body {
+  background:#000;
+}
+#leaderboard {
+  position:absolute;
+  left:32%;
+  top:40px;
+  text-align:center;
+  background:rgba(0,100,100, 0.4);
+  color:#fff;
+  border-radius:7px;
+  display: inline-block;
+  padding:8px;
+  border:1px solid rgba(0,0,0,0.3)
+}
+#leaderboard-display {
+  background:rgba(0,0,0,0.3);
+  border-radius:8px 8px 0 0;
+  padding:24px 0;
+  margin:4px;
+}
+#leaderboard ul li {
+  font-family: 'Rosario', sans-serif;
+  list-style:none;
+  display:inline-block;
+  padding:2px;
+  width:135px;
+  user-select:none;
+  padding:2px 1px;
+}
+#leaderboard-labels {
+  border-bottom:1px solid rgba(255,255,255,0.4);
+  background:rgba(25, 44, 44, 0.63);
+  padding:0;margin:0;
+  padding:2px 0;
+  border-radius:1px;
+  margin:2px;
+}
+.score-block {
+  padding:0;margin:0;
+  background:rgba(25, 44, 100, 0.58);
+  border-bottom:2px solid rgba(255,255,255,0.2);
+  padding:2px;
+  cursor:pointer;
+}
+.score-block:last-child {
+  border-radius:0 0 4px 4px;
+}
+.score-block:hover {
+  background:#4FFFFF;
+  background:rgba(25, 255, 255, 0.23);
+  /color:#000;
+  transition:background 0.222s linear;
+}
+.current_player {
+  font-weight:bold;
+}
+</style>
+    <div id="leaderboard">
+      <h1>
+        High Scores
+      </h1>
+      <div id="leaderboard-display">
+        Your Score is: 120382
+      </div>
+      <ul id="leaderboard-labels">
+        <li>Rank</li>
+        <li>Score</li>
+        <li>Player</li>
+      </ul>
+      <!-- REPEAT -->
+        <ul class="score-block">
+          <li>Rank</li>
+          <li>Score</li>
+          <li class="current_player">You</li>
+        </ul>
+      <% for(var i=0; i<15; i++) {%>
+        <ul class="score-block">
+          <li>Rank</li>
+          <li>Score</li>
+          <li>Player</li>
+        </ul>
+      <% } %>
+      <!-- /REPEAT -->
+    </div>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
+<script>
+
+  /* Key Triggers for High Scores: */
+  /* - Toggles Leaderboard when holding <TAB> key. */
+  $("#leaderboard").hide();
+  $('body').keydown(function(e){
+    if (e.which == 9){
+      e.preventDefault();
+      $("#leaderboard").show();
+    }
+  });
+  $('body').keyup(function(e){
+    if (e.which == 9){
+      e.preventDefault();
+      $("#leaderboard").hide();
+    }
+  });
+</script>
+
+
+
 </div>
 
 <div id="container"></div>

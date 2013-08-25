@@ -196,6 +196,7 @@ function Sperm(_posX, _posY, _rot)
   		if(dist < 15)
   		{
   			var collisionAngle = Math.atan2(xdist,ydist);
+  		
   			this.velX += Math.cos(collisionAngle)*15;
   			this.velY += Math.sin(collisionAngle)*15;
   			this.posX += Math.cos(collisionAngle)*15;
