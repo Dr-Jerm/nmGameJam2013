@@ -19,12 +19,30 @@ function Egg(_posX, _posY, _rot)
 
 	var spirmList = new Array(); 
 
+  this.clearSperm = function() {
+    for (key in spirmList) {
+      spirmList[key].remove();
+    }
+  }
+
+  this.remove = function() {
+    bodySprite.removeFromScene();
+    this.clearSperm();
+  }
+
+
 	this.addSperm = function(_sperm, _angle)
 	{
 		_sperm.STUCKMODE = true; 
 		_sperm.stuckRot = _angle; 
 		spirmList.push(_sperm); 
 	}
+
+  this.setPosition = function(x, y, z) {
+    this.posX = x;
+    this.posY = y;
+    posZ = z;
+  }
 
 	//XXXXXX TEST XXXXXX
 	var sperm = new Sperm(0,0,0);

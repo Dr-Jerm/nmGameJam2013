@@ -86,7 +86,8 @@ function Game()
            this.netPlayers[playerId].killLabel();
            delete this.netPlayers[playerId];
        }.bind(this));
-       
+      
+       this.poll = true;1       
 
 
        //-----------
@@ -154,11 +155,13 @@ function Game()
     }
 
     this.networkUpdate = function(data) {
+      if (!this.poll) { return; }
       socket.emit("response", { id: this.player.id,
                     velocity: this.player.gamete.getVelocity(),
                     position: this.player.gamete.getPosition(), 
                     rotation: this.player.gamete.getRotation(),
                   });
+      
       this.updatePlayers(data);
     }
 
@@ -177,17 +180,21 @@ function Game()
     }
 
     this.reset = function(data) {
-      this.updatePlayers(data);
+        console.log("reset happened");
+        this.poll = false;
+        for (key in this.netPlayers) {
+            this.netPlayers[key].killLabel();
+            this.netPlayers[key].gamete.remove();
+            delete this.netPlayers[key];
+            console.log(key);
+            console.log(this.netPlayers[key]);
+        }
+        this.player.gamete.remove();
+        this.player.killLabel();
     }
 
     this.end = function(data) {
       // Display a "you suck" to everyone except winner
-      if (this.player.id === data.playerId) {
-        this.player.gamete.remove();
-        var gamete = new Egg(0, 0, 80);
-        this.player.gamete = gamete;
-        console.log("You are now a freacking egg");
-      }
     }
 
     this.update = function() {
