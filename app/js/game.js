@@ -74,6 +74,12 @@ function Game()
      this.netPlayers = {};
 
        console.log("Game Initialized");
+
+       socket.on('playerDisconnect', function (data) {
+           var playerId = data.playerId;
+           this.netPlayers[playerId].gamete.remove();
+           delete this.netPlayers[playerId];
+       }.bind(this));
        
     }
 
@@ -113,7 +119,7 @@ function Game()
         var gamete;
 
         // TEMPORARY:
-        gameteType = "sperm";
+        // gameteType = "sperm";
         if (gameteType === "egg") {
             gamete = new Egg(0, 0, 80);    
         } else {
