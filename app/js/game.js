@@ -105,7 +105,7 @@ function Game()
        zIndex: "1000",
        fontSize: "40px",
        textAlign: "center",
-       fontFamily: "'Flavors', cursive",
+       fontFamily: "'Marcellus SC', serif",
        border: "solid 1px #ffe",
      });
      this.endscreen.hide();
