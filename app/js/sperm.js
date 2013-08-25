@@ -137,6 +137,12 @@ function Sperm(_posX, _posY, _rot)
     };
   }
 
+  this.setPosition = function(x, y, z) {
+    this.posX = x;
+    this.posY = y;
+    posZ = z;
+  }
+
   // gets
   this.getPosX = function(){
     return this.posX;
