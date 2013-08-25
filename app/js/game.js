@@ -104,8 +104,15 @@ function Game()
             this.netPlayers[netPlayer.id].gamete.posX = netPlayer.position.x;
             this.netPlayers[netPlayer.id].gamete.posY = netPlayer.position.y;
         } else {
-            var newSperm = new Sperm(0, 0, 80);
-            var newPlayer = new Player(netPlayer.id, newSperm);
+            var gamete = null;
+            console.log(netPlayer.gameteType);
+            if (netPlayer.gameteType === "egg") {
+              gamete = new Egg(0, 0, 80);
+            } else {
+              gamete = new Sperm(0, 0, 80);
+            }
+
+            var newPlayer = new Player(netPlayer.id, gamete);
             newPlayer.gamete.netPlayer = true;
             this.netPlayers[netPlayer.id] = newPlayer;
         }
@@ -116,7 +123,7 @@ function Game()
         var gamete;
 
         // TEMPORARY:
-        gameteType = "sperm";
+        // gameteType = "sperm";
         if (gameteType === "egg") {
             gamete = new Egg(0, 0, 80);    
         } else {
@@ -135,6 +142,7 @@ function Game()
         // loop through gameobjects update
         this.input.update();
         this.player.update();
+        console.log(this.player.gamete);
 
         for (var key in this.netPlayers) {
             var netPlayer = this.netPlayers[key];

@@ -1,6 +1,6 @@
 function Player(id, _gamete)
 {
-  this.id = id;
+    this.id = id;
     this.gamete = _gamete;
 
 

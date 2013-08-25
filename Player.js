@@ -11,6 +11,7 @@ module.exports = function Player (name, socket, startingAttrs) {
         var clean = {
             name: this.name,
             id: this.id,
+            gameteType: this.gameteType,
             position: this.position,
             velocity: this.velocity,
             rotation: this.rotation,
