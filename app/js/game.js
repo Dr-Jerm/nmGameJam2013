@@ -77,7 +77,7 @@ function Game()
 
        console.log("Game Initialized");
        this.newBackground = new Background(images["BGfull001.png"],0,0,0,12800,7200,-1000);
-       this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,2903,2007,100);
+       this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
     }
 
   var netUpdateLocalPlayer = function (localPlayer, netPlayer) {
