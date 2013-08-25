@@ -129,92 +129,6 @@ function Sperm(_posX, _posY, _rot)
     };
   }
 
-<<<<<<< HEAD
-	// gets
-	this.getPosX = function(){
-		return posX;
-	}
-	this.getPosY = function(){
-		return posY;
-	}
-	this.getRotVel = function(){
-	return rotVel;
-	}
-
-	// input from player params here. 
-	this.update = function()
-	{
-
-		if (posX > gameWorldWidth)
-			velX *= -1.5;
-		if (posX < -gameWorldWidth)
-			velX *= -1.5;
-		if (posY > gameWorldHeight)
-			velY *= -1.5;
-		if (posY < -gameWorldHeight)
-			velY *= -1.5;
-
-		
-		posX += velX;
-		posY += velY;
-		rot += rotVel;
-
-		
-
-		bodySprite.updatePosition(posX, posY, rot+tailRot);
-		//console.log("spermupdate");
-		this.updateTail();
-		// movement resistance
-		velX *= .9;
-		velY *= .9;
-		rotVel *= .8;
-		
-	}
-
-	this.updateTail = function()
-	{
-		var distX;
-		var distY;
-		var distX2;
-		var distY2;
-		
-		tailcycleSpeed  = 0.2 + (Math.pow(velX,2)+Math.pow(velY,2))/100;
-		tailcycleAmplitude = 0.1 + (Math.pow(velX,2)+Math.pow(velY,2))/200;
-		tailcycle = tailcycle + tailcycleSpeed; 
-		tailRot = Math.sin(tailcycle)*tailcycleAmplitude; 
-		
-		var tailpos = this.getTailPosition();
-		
-		var tailDeltaX = tailpos.x - tailLine.geometry.vertices[0].x;
-		var tailDeltaY = tailpos.y - tailLine.geometry.vertices[0].y;
-
-		tailVertexVelocities[0].setX(tailDeltaX);
-		tailVertexVelocities[0].setY(tailDeltaY);
-		tailLine.geometry.vertices[0].set(tailpos.x,tailpos.y,0);
-
-		var tempTailVertexVector = new THREE.Vector3(0,0,0);
-		var tempTailDotVector = new THREE.Vector3(0,0,0);
-
-		//var scalerVector3 = new THREE.Vector3(1,1,1);
-
-		for (var v3 = tailLine.geometry.vertices.length-1; v3 > 0; v3--)
-		{
-
-			tempTailVertexVector
-
-			tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3].x+tailVertexVelocities[v3].x);
-			tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3].y+tailVertexVelocities[v3].y);
-			tailVertexVelocities[v3].setX(tailVertexVelocities[v3-1].x);
-			tailVertexVelocities[v3].setY(tailVertexVelocities[v3-1].y);
-
-
-
-		}
-		//console.log("PVX:"+velX+" PVY"+velY+"  dx:"+tailDeltaX+"  dy:"+tailDeltaY+"  tx:"+tailVertexVelocities[3].y+"  tx:"+tailVertexVelocities[3].y)
-		tailLine.geometry.verticesNeedUpdate = true;
-
-	}
-=======
   // gets
   this.getPosX = function(){
     return this.posX;
@@ -292,6 +206,6 @@ function Sperm(_posX, _posY, _rot)
     tailLine.geometry.verticesNeedUpdate = true;
 
   }
->>>>>>> 047935f4d79293a04a51970496fb07115550ad66
+
 
 }
