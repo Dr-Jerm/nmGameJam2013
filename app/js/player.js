@@ -62,7 +62,8 @@ function Player(id, name, _gamete)
         var left = pos.x - this.label.width()/2;
         var top = pos.y - 15;
         if (this.gameteType == "egg") {
-          top = pos.y - 110;
+          console.log("is an egg");
+          top = pos.y - 170;
         }
         this.label.css({ 
           top: top + "px", 
