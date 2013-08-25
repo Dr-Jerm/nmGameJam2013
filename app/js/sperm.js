@@ -26,17 +26,17 @@ function Sperm(_posX, _posY, _rot)
   var tailGeometry = new THREE.Geometry();
   tailGeometry.vertices.push(new THREE.Vector3(this.posX, this.posY, 0));
   tailGeometry.vertices.push(new THREE.Vector3());
-    tailGeometry.vertices.push(new THREE.Vector3());
-    tailGeometry.vertices.push(new THREE.Vector3());
-    tailGeometry.vertices.push(new THREE.Vector3());
-    tailGeometry.vertices.push(new THREE.Vector3());
-    tailGeometry.vertices.push(new THREE.Vector3());
-    tailGeometry.vertices.push(new THREE.Vector3());
-    tailGeometry.vertices.push(new THREE.Vector3());
-    tailGeometry.vertices.push(new THREE.Vector3());
-    tailGeometry.vertices.push(new THREE.Vector3());
-    tailGeometry.vertices.push(new THREE.Vector3());
-    tailGeometry.vertices.push(new THREE.Vector3());
+  tailGeometry.vertices.push(new THREE.Vector3());
+  tailGeometry.vertices.push(new THREE.Vector3());
+  tailGeometry.vertices.push(new THREE.Vector3());
+  tailGeometry.vertices.push(new THREE.Vector3());
+  tailGeometry.vertices.push(new THREE.Vector3());
+  tailGeometry.vertices.push(new THREE.Vector3());
+  tailGeometry.vertices.push(new THREE.Vector3());
+  tailGeometry.vertices.push(new THREE.Vector3());
+  tailGeometry.vertices.push(new THREE.Vector3());
+  tailGeometry.vertices.push(new THREE.Vector3());
+  tailGeometry.vertices.push(new THREE.Vector3());
 
   //var tailMaterial = new THREE.LineBasicMaterial( { color: 0xCC9C66, opacity: 0.25} );
   var tailMaterial = new THREE.LineBasicMaterial( { color: 0xCC9C66} );
