@@ -1,5 +1,9 @@
 function Sperm(_posX, _posY, _rot)
 {
+  this.type = "sperm";
+  this.STUCKMODE = false; 
+  this.stuckRot = 0; 
+
   this.posX = _posX;
   this.posY = _posY;
 
@@ -149,35 +153,44 @@ function Sperm(_posX, _posY, _rot)
   // input from player params here. 
   this.update = function()
   {
+	    this.posX += this.velX;
+	    this.posY += this.velY;
+	    this.rot += this.rotVel;
 
-  
-  	
-    
-    this.posX += this.velX;
-    this.posY += this.velY;
-    this.rot += this.rotVel;
+	    
 
-    
+	    bodySprite.updatePosition(this.posX, this.posY, this.rot+tailRot);
+	    //console.log("spermupdate");
+	    this.updateTail();
+	    // movement resistance
+	    if(!this.netPlayer) {
+	      this.velX *= .9;
+	      this.velY *= .9;
+	      this.rotVel *= .8;
 
-    bodySprite.updatePosition(this.posX, this.posY, this.rot+tailRot);
-    //console.log("spermupdate");
-    this.updateTail();
-    // movement resistance
-    if(!this.netPlayer) {
-      this.velX *= .9;
-      this.velY *= .9;
-      this.rotVel *= .8;
+	      this.checkCollision();
 
-      this.checkCollision();
+	    }
 
-    }
-
-    
   }
+
+   this.updateStuck = function(_posX, _posY, _rot, _radius) //update by egg. 
+   {
+   		this.rot  = _rot+this.stuckRot+Math.PI; 
+   		this.posX = _posX+Math.cos(_rot+this.stuckRot)*_radius;
+    	this.posY = _posY+Math.sin(_rot+this.stuckRot)*_radius;
+
+    	
+    	bodySprite.updatePosition(this.posX, this.posY, this.rot+tailRot);
+    	this.updateTail();
+    	//console.log("spermStuckUpdate");
+   }
+
 
   this.checkCollision = function()
   {
-  	  if (this.posX > gameWorldWidth)
+  	
+  	if (this.posX > gameWorldWidth)
       this.velX *= -1.5;
     if (this.posX < -gameWorldWidth)
       this.velX *= -1.5;
@@ -186,31 +199,34 @@ function Sperm(_posX, _posY, _rot)
     if (this.posY < -gameWorldHeight)
       this.velY *= -1.5;
 
-
   	for(p in game.netPlayers)
   	{
-  		var xdist = game.netPlayers[p].getPosX()-this.posX;
-  		var ydist = game.netPlayers[p].getPosY()-this.posY;
-
-  		var dist =  Math.sqrt(Math.pow(ydist, 2) + Math.pow(xdist, 2))
-  		if(dist < 15)
+  		
+  		if(game.netPlayers[p].gamete.type == "sperm")
   		{
-  			var collisionAngle = Math.atan2(xdist,ydist);
-  		
-  			this.velX += Math.cos(collisionAngle)*15;
-  			this.velY += Math.sin(collisionAngle)*15;
-  			this.posX += Math.cos(collisionAngle)*15;
-  			this.posY += Math.sin(collisionAngle)*15;
+  			var xdist = game.netPlayers[p].getPosX()-this.posX;
+	  		var ydist = game.netPlayers[p].getPosY()-this.posY;
 
-
-  			
-  			console.log("collision "+collisionAngle); 
+	  		var dist =  Math.sqrt(Math.pow(ydist, 2) + Math.pow(xdist, 2))
+	  		if(dist < 15)
+	  		{
+	  			var collisionAngle = Math.atan2(xdist,ydist);
+	  		
+	  			this.velX += Math.cos(collisionAngle)*15;
+	  			this.velY += Math.sin(collisionAngle)*15;
+	  			this.posX += Math.cos(collisionAngle)*15;
+	  			this.posY += Math.sin(collisionAngle)*15;
+	  		}
+  			//console.log("collision "+collisionAngle); 
   		}
-  		
+  		if(game.netPlayers[p].gamete.type == "egg")
+  		{
+
+
+
+  		}
 
   	}
-
-
 
   }
 
@@ -218,13 +234,17 @@ function Sperm(_posX, _posY, _rot)
 
   this.updateTail = function()
   {
-    var distX;
-    var distY;
-    var distX2;
-    var distY2;
-    
-    tailcycleSpeed  = 0.2 + (Math.pow(this.velX,2)+Math.pow(this.velY,2))/100;
-    tailcycleAmplitude = 0.1 + (Math.pow(this.velX,2)+Math.pow(this.velY,2))/200;
+   
+   	if(!this.STUCKMODE)
+   	{
+   		tailcycleSpeed  = 0.2 + (Math.pow(this.velX,2)+Math.pow(this.velY,2))/100;
+    	tailcycleAmplitude = 0.1 + (Math.pow(this.velX,2)+Math.pow(this.velY,2))/200;
+   	} 
+   	else 
+   	{
+   		tailcycleSpeed  = 0.7;
+    	tailcycleAmplitude = 0.5;
+   	}
     tailcycle = tailcycle + tailcycleSpeed; 
     tailRot = Math.sin(tailcycle)*tailcycleAmplitude; 
     

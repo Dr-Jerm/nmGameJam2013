@@ -1,5 +1,7 @@
 function Egg(_posX, _posY, _rot)
 {
+	this.type = "egg";
+
 	this.posX = _posX;
 	this.posY = _posY;
 
@@ -11,8 +13,29 @@ function Egg(_posX, _posY, _rot)
 	this.velY = 0;
 	this.rotVel = 0;
 
+	this.radius = 130; 
+
 	bodySprite = new Sprite(images["Egg.png"], this.posX, this.posY, this.rot, 1);
 
+	var spirmList = new Array(); 
+
+	this.addSperm = function(_sperm, _angle)
+	{
+		_sperm.STUCKMODE = true; 
+		_sperm.stuckRot = _angle; 
+		spirmList.push(_sperm); 
+	}
+
+	//XXXXXX TEST XXXXXX
+	var sperm = new Sperm(0,0,0);
+	this.addSperm(sperm, 0.1);
+	var sperm = new Sperm(0,0,0);
+	this.addSperm(sperm, 2.3);
+	var sperm = new Sperm(0,0,0);
+	this.addSperm(sperm, 0.5);
+	var sperm = new Sperm(0,0,0);
+	this.addSperm(sperm, 1.33);
+	//XXXXXX TEST XXXXXX
 
 	// movement
 	this.moveForward = function(y) {
@@ -92,8 +115,21 @@ function Egg(_posX, _posY, _rot)
 		this.velY *= .99;
 		this.rotVel *= .98;  
 
+		this.UpdateAttachedSperm();
+
 	}
 
+	this.UpdateAttachedSperm = function()
+	{
+		
+		
+		for(s in spirmList)
+		{
+			//console.log("Sperm");
+			spirmList[s].updateStuck(this.posX, this.posY , this.rot, this.radius);
+		}
+
+	}
 	
 
 }
