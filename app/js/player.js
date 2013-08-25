@@ -11,7 +11,6 @@ function Player(id, name, _gamete)
     this.gamete = _gamete;
     this.name = name;
 
-    this.gameteType = "sperm";
     this.label = $("<div></div>", {class: "user_" + this.id, });
     this.label.css(
       { width: "auto", 
@@ -61,7 +60,7 @@ function Player(id, name, _gamete)
         var pos = this.toXYCoords(this.gamete.getPosition());
         var left = pos.x - this.label.width()/2;
         var top = pos.y - 15;
-        if (this.gameteType == "egg") {
+        if (this.gamete.type == "egg") {
           console.log("is an egg");
           top = pos.y - 170;
         }

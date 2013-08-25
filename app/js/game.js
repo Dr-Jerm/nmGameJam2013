@@ -114,7 +114,6 @@ function Game()
               if (netPlayer.gameteType === "egg") {
                 gamete = new Egg(0, 0, 80);
                 var newPlayer = new Player(netPlayer.id, netPlayer.name, gamete);
-                newPlayer.gameteType = "egg";
               } else {
                 gamete = new Sperm(0, 0, 80);
                 var newPlayer = new Player(netPlayer.id, netPlayer.name, gamete);
@@ -141,7 +140,6 @@ function Game()
         if (gameteType === "egg") {
             gamete = new Egg(0, 0, 80);    
             this.player = new Player(id, name, gamete);
-            this.player.gameteType = "egg";
         } else {
             gamete = new Sperm(0, 0, 80);
             this.player = new Player(id, name, gamete);
