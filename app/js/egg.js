@@ -68,8 +68,8 @@ function Egg(_posX, _posY, _rot)
 
 	// movement
 	this.moveForward = function(y) {
-		this.velY += Math.sin(this.rot) * (y*.2);
-		this.velX += Math.cos(this.rot) * (y*.2);
+		this.velY += Math.sin(this.rot) * (y*.1);
+		this.velX += Math.cos(this.rot) * (y*.1);
 	}
 	this.rotateLeft = function(y) {
 		this.rotVel += (y*.1);
