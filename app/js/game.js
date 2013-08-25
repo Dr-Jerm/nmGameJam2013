@@ -28,6 +28,7 @@ var elapsedTime;
 
 
 music = document.getElementById("music");
+music.volume = .025;
 music.play();
 underwater = document.getElementById("underwater");
 underwater.volume = .5;
@@ -35,6 +36,7 @@ underwater.play();
 swim = document.getElementById("swim"); 
 swim.volume = .5;
 win = document.getElementById("win"); 
+squish = document.getElementById("squish"); 
 
 var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
 
@@ -307,6 +309,7 @@ function Game()
 
     this.score = function(data)
     {
+    	squish.play();
         console.log("score: "+data.score+" id"+data.id+" angle"+data.angle);
         if(data.id == this.player.id &&  this.player.gamete.type == "sperm")
         {
