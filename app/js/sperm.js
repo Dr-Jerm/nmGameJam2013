@@ -161,6 +161,7 @@ function Sperm(_posX, _posY, _rot)
        tailVertexVelocities[v].setX(0);
        tailVertexVelocities[v].setY(0);
        tailVertexVelocities[v].setZ(0);
+       
     }
   }
 
