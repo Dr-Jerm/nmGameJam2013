@@ -77,7 +77,7 @@ function Game()
      this.input.setController(this.controller);
      this.input.start();
 
-     this.players = {};
+     this.netPlayers = {};
 
        console.log("Game Initialized");
        
@@ -91,23 +91,27 @@ function Game()
                   rotation: this.player.gamete.getRotation(),
                 });
     data.playerSnapshot.forEach(function (netPlayer) {
-        if (netPlayer.id in this.players) {
-            this.players[netPlayer.id].gamete.posX = netPlayer.position.x;
-            this.players[netPlayer.id].gamete.posY = netPlayer.position.y;
-            //netPlayer.position
-            //netPlayer.rotation
-            //netPlayer.velocity
+        if (netPlayer.id == this.player.id) { return }
+        if (netPlayer.id in this.netPlayers) {
+            this.netPlayers[netPlayer.id].gamete.posX = netPlayer.position.x;
+            this.netPlayers[netPlayer.id].gamete.posY = netPlayer.position.y;
         } else {
             var newSperm = new Sperm(0, 0, 80);
             var newPlayer = new Player(netPlayer.id, newSperm);
-            this.players[netPlayer.id] = newPlayer;
+            this.netPlayers[netPlayer.id] = newPlayer;
         }
     }.bind(this));
   }
 
-    this.setPlayer = function(id) {
-        this.sperm = new Sperm(0, 0, 80);
-        this.player = new Player(id, this.sperm);
+    this.setPlayer = function(id, gameteType) {
+        var gamete;
+        if (gameteType === "egg") {
+            gamete = new Egg(0, 0, 80);    
+        } else {
+            gamete = new Sperm(0, 0, 80);
+        }
+        
+        this.player = new Player(id, gamete);
         animate();
     }
 
@@ -120,12 +124,17 @@ function Game()
         this.input.update();
         this.player.update();
 
+        for (var key in this.netPlayers) {
+            var netPlayer = this.netPlayers[key];
+            netPlayer.update();
+        }
+
+
         // camera animation
         camera.position.set(
             ((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
             ((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
             500);
-        console.log(gameWorldWidth);
 
     }
 }
