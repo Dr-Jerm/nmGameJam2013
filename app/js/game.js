@@ -129,8 +129,6 @@ function Game()
     this.setPlayer = function(id, gameteType) {
         var gamete;
 
-        // TEMPORARY:
-        // gameteType = "sperm";
         if (gameteType === "egg") {
             gamete = new Egg(0, 0, 80);    
         } else {

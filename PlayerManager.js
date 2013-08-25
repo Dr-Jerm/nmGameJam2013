@@ -1,5 +1,7 @@
 var Player = require('./Player');
 
+var util = require('util');
+
 var PlayerManager = function PlayerManager () {
 
     var self = this;
@@ -39,13 +41,12 @@ var PlayerManager = function PlayerManager () {
 
     this.checkWin = function() {
       if (self.egg == null) return false;
-      for (key in self.players) {
+      for (var key in self.players) {
         var player = self.players[key];
-        var dx = Math.pow(self.egg.position.x - player.position.x, 2);
-        var dy = Math.pow(self.egg.position.y - player.position.y, 2);
-        var dz = Math.pow(self.egg.position.z - player.position.z, 2);
-        if (Math.sqrt(dx + dy + dz) < 20) {
-          if (player.gameteType != "egg") {
+        if (player.gameteType != "egg"){
+          var dx = Math.pow(self.egg.position.x - player.position.x, 2);
+          var dy = Math.pow(self.egg.position.y - player.position.y, 2);
+          if (Math.sqrt(dx + dy) < 100) {
             console.log("winner is: " + player.name);
           }
         }
