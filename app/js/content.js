@@ -33,6 +33,8 @@ imageSrcList.push("Egg.png");
 imageSrcList.push("newEggMain.png");
 imageSrcList.push("newEggOuterRing1.png");
 imageSrcList.push("newEggInsidePartBig.png");
+imageSrcList.push("newEggInsidePartSml.png");
+imageSrcList.push("newEggInsidePartSml2.png");
 imageSrcList.push("BGsecondary001.png");
 imageSrcList.push("BGfull001.png");
 
