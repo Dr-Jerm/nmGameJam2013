@@ -62,12 +62,6 @@ if(DEBUG){
     container.appendChild( stats.domElement );
 }
 
-var testImage = new Image();
-testImage.width = 256;
-testImage.height = 200;
-testImage.src = "images/Grumpy-Cat.jpg";
-testImage.map = THREE.ImageUtils.loadTexture( this.testImage.src);
-
 function Game()
 {
     this.init = function()
@@ -84,12 +78,13 @@ function Game()
     }
 
   this.networkUpdate = function(data) {
-    console.log(data);
+    //console.log(data);
     socket.emit("response", { id: this.player.id,
                   velocity: this.player.gamete.getVelocity(),
                   position: this.player.gamete.getPosition(), 
                   rotation: this.player.gamete.getRotation(),
                 });
+
     data.playerSnapshot.forEach(function (netPlayer) {
         if (netPlayer.id == this.player.id) { return }
         if (netPlayer.id in this.netPlayers) {
@@ -107,7 +102,7 @@ function Game()
         var gamete;
 
         // TEMPORARY:
-        gameType = "sperm";
+        gameteType = "sperm";
         if (gameteType === "egg") {
             gamete = new Egg(0, 0, 80);    
         } else {
@@ -131,13 +126,6 @@ function Game()
             var netPlayer = this.netPlayers[key];
             netPlayer.update();
         }
-
-
-        // camera animation
-        camera.position.set(
-            ((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
-            ((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
-            500);
 
 
         // camera animation
