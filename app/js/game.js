@@ -29,6 +29,8 @@ var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 5000 );
 // new scene
 var scene = new THREE.Scene();
     
+// new projector
+var projector = new THREE.Projector();
 
 camera.position.set(0,0,100);
 
@@ -38,6 +40,7 @@ scene.add(camera);
 var ambientLight = new THREE.AmbientLight( 0xffffff);
 ambientLight.position.set(0,100,0);
 scene.add(ambientLight);
+
 
 //-------- animation frame
 window.requestAnimFrame = (function(callback){
@@ -80,6 +83,7 @@ function Game()
        socket.on('playerDisconnect', function (data) {
            var playerId = data.playerId;
            this.netPlayers[playerId].gamete.remove();
+           this.netPlayers[playerId].killLabel();
            delete this.netPlayers[playerId];
        }.bind(this));
        
@@ -112,30 +116,35 @@ function Game()
             this.netPlayers[netPlayer.id].gamete.posY = netPlayer.position.y;
         } else {
             var gamete = null;
+            var newPlayer = null;
             console.log(netPlayer.gameteType);
             if (netPlayer.gameteType === "egg") {
               gamete = new Egg(0, 0, 80);
+              var newPlayer = new Player(netPlayer.id, netPlayer.name, gamete);
+              newPlayer.gameteType = "egg";
             } else {
               gamete = new Sperm(0, 0, 80);
+              var newPlayer = new Player(netPlayer.id, netPlayer.name, gamete);
             }
 
-            var newPlayer = new Player(netPlayer.id, gamete);
             newPlayer.gamete.netPlayer = true;
             this.netPlayers[netPlayer.id] = newPlayer;
         }
     }.bind(this));
   }
 
-    this.setPlayer = function(id, gameteType) {
+    this.setPlayer = function(id, name, gameteType) {
         var gamete;
 
         if (gameteType === "egg") {
             gamete = new Egg(0, 0, 80);    
+            this.player = new Player(id, name, gamete);
+            this.player.gameteType = "egg";
         } else {
             gamete = new Sperm(0, 0, 80);
+            this.player = new Player(id, name, gamete);
         }
         //egg = new Egg(0,0,0);
-        this.player = new Player(id, gamete);
         animate();
     }
 

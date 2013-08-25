@@ -10,22 +10,41 @@ body {
   background:#000;
 }
 #leaderboard {
-  position:absolute;
-  left:32%;
-  top:40px;
-  text-align:center;
-  background:rgba(0,100,100, 0.4);
-  color:#fff;
-  border-radius:7px;
+  position: absolute;
+  left: 32%;
+  top: 40px;
+  text-align: center;
+  background: rgba(101, 139, 139, 0.22);
+  color: rgba(255, 255, 255, 0.87);
+  border-radius: 16px;
   display: inline-block;
-  padding:8px;
-  border:1px solid rgba(0,0,0,0.3)
+  padding: 15px;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: border 0.1s linear;
+}
+#leaderboard:hover {
+  border: 1px solid rgba(255,255,255,0.5);
+  transition: border 0.1s linear;
+}
+#leaderboard-title {
+  margin:0;
+  background:rgba(255, 255, 255, 0.13);
+  padding:4px;
+  border-radius:2px;
+  border-radius:8px 8px 0 0;
 }
 #leaderboard-display {
   background:rgba(0,0,0,0.3);
-  border-radius:8px 8px 0 0;
-  padding:24px 0;
+  /border-radius:8px 8px 0 0;
+  padding:14px 0;
   margin:4px;
+  border-bottom:4px solid rgba(0,0,0,0.4);
+  transition: background 0.125s linear;
+}
+#leaderboard-display:hover {
+  background:rgba(255, 255, 255, 0.13);
+  transition: background 0.125s linear;
+  border-bottom:4px solid rgba(0,0,0,0.8);
 }
 #leaderboard ul li {
   font-family: 'Rosario', sans-serif;
@@ -37,39 +56,49 @@ body {
   padding:2px 1px;
 }
 #leaderboard-labels {
-  border-bottom:1px solid rgba(255,255,255,0.4);
   background:rgba(25, 44, 44, 0.63);
   padding:0;margin:0;
   padding:2px 0;
   border-radius:1px;
+  border-left: 2px solid rgba(255, 255, 255, 0.41);
+  border-right: 2px solid rgba(255, 255, 255, 0.41);
+  border-top: 2px solid rgba(255, 255, 255, 0.41);
+  padding-bottom:4px;
   margin:2px;
+  background:rgba(255,255,255,0.2);
 }
 .score-block {
   padding:0;margin:0;
-  background:rgba(25, 44, 100, 0.58);
+  background: rgba(5, 5, 5, 0.58);
   border-bottom:2px solid rgba(255,255,255,0.2);
   padding:2px;
   cursor:pointer;
+  border-left: 2px solid rgba(255, 255, 255, 0.51);
+  border-right: 2px solid rgba(255, 255, 255, 0.51);
+  transition:background 0.022s linear;
 }
 .score-block:last-child {
   border-radius:0 0 4px 4px;
 }
 .score-block:hover {
+  border-left: 2px solid rgba(255, 255, 255, 0.81);
+  border-right: 2px solid rgba(255, 255, 255, 0.81);
   background:#4FFFFF;
   background:rgba(25, 255, 255, 0.23);
-  /color:#000;
-  transition:background 0.222s linear;
+  transition:background 0.212s linear;
+  border-top:2px solid rgba(255,255,255,0.3);
+  border-bottom:0px solid transparent;
 }
 .current_player {
   font-weight:bold;
 }
 </style>
     <div id="leaderboard">
-      <h1>
+      <h1 id="leaderboard-title">
         High Scores
       </h1>
       <div id="leaderboard-display">
-        Your Score is: 120382
+        Your Score is: 1203820200001
       </div>
       <ul id="leaderboard-labels">
         <li>Rank</li>
@@ -84,7 +113,7 @@ body {
         </ul>
       <% for(var i=0; i<15; i++) {%>
         <ul class="score-block">
-          <li>Rank</li>
+          <li>i</li>
           <li>Score</li>
           <li>Player</li>
         </ul>
@@ -94,6 +123,8 @@ body {
 
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
 <script>
+
+  $("input#user").focus();
 
   /* Key Triggers for High Scores: */
   /* - Toggles Leaderboard when holding <TAB> key. */

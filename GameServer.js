@@ -82,8 +82,11 @@ var GameServer = function GameServer () {
                 var newPlayer = playerManager.generatePlayer(data.user, this, {});
                 playerManager.addPlayer(newPlayer);
 
-                this.emit('acceptedUser', 
-                  {id: newPlayer.id, gameteType: newPlayer.gameteType});
+                this.emit('acceptedUser', { 
+                    id: newPlayer.id, 
+                    name: data.user, 
+                    gameteType: newPlayer.gameteType
+                });
             });
 
             socket.on("disconnect", function() {
