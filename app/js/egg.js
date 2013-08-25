@@ -87,9 +87,9 @@ function Egg(_posX, _posY, _rot)
 
     	bodySprite.updatePosition(this.posX, this.posY, this.rot);
 
-		this.velX *= .99;
-		this.velY *= .99;
-		this.rotVel *= .98;  
+		this.velX *= .98;
+		this.velY *= .98;
+		this.rotVel *= .9;  
 
 	}
 
