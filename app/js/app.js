@@ -13,8 +13,7 @@
 
     socket.on('acceptedUser', function(data) {
       game.reset();
-      console.log(data);
-      game.setPlayer(data.id);
+      game.setPlayer(data.id, data.gameteType);
     });
 
     socket.on('poll', function(data) {
@@ -22,3 +21,4 @@
     });
 
 })();
+
