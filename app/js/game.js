@@ -24,7 +24,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 container.appendChild( renderer.domElement ); 
 
 // new camera
-var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 1000 );
+var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 5000 );
 
 // new scene
 var scene = new THREE.Scene();
@@ -66,6 +66,8 @@ function Game()
 {
     this.init = function()
     {
+
+    	
      this.controller = new Controller();
      this.input = new Input();
      this.input.setController(this.controller);
@@ -81,6 +83,8 @@ function Game()
            delete this.netPlayers[playerId];
        }.bind(this));
        
+       this.newBackground = new Background(images["BGfull001.png"],0,0,0,12800,7200,-1200);
+       this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
     }
 
   var netUpdateLocalPlayer = function (localPlayer, netPlayer) {
@@ -147,8 +151,8 @@ function Game()
 
         // camera animation
         camera.position.set(
-            ((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
-            ((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
+            ((this.player.getPosX()-camera.position.x) / 25) + camera.position.x, 
+            ((this.player.getPosY()-camera.position.y) / 25) + camera.position.y, 
             500);
     }
 }

@@ -9,10 +9,10 @@ function Player(id, _gamete)
         this.gamete.moveForward(1);
     }
     this.rotateLeft = function() {
-        this.gamete.rotateLeft(.01 + (this.gamete.getRotVel()*.25));
+        this.gamete.rotateLeft(.01 + (this.gamete.getRotVel()*.5));
     }
     this.rotateRight = function() {
-        this.gamete.rotateRight(.01 - (this.gamete.getRotVel()*.25));
+        this.gamete.rotateRight(.01 - (this.gamete.getRotVel()*.5));
     }
 
 

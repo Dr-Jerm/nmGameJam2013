@@ -1,9 +1,11 @@
-function Sprite(_img, _posX, _posY, _rot)
+function Sprite(_img, _posX, _posY, _rot, _zDepth)
 {
 	
 	this.posX = _posX; 
 	this.posY = _posY; 
 	this.rot = _rot;
+
+	this.zDepth = _zDepth;
 
 	this.img = _img;
 	
@@ -25,7 +27,7 @@ function Sprite(_img, _posX, _posY, _rot)
 	this.mesh.sprite = this;
 	this.mesh.position.x = this.posX;	
 	this.mesh.position.y = this.posY;
-	this.mesh.position.z = 0;
+	this.mesh.position.z = this.zDepth;
 	this.mesh.rotation.z = this.rot;
 
 
