@@ -19,7 +19,7 @@ function Egg(_posX, _posY, _rot)
 	this.ringRotVel = 0;
 	this.insideRotVel = 0;
 
-	this.radius = 130; 
+	this.radius = 110; 
 
 
 	bodySprite = new Sprite(images["newEggMain.png"], this.posX, this.posY, this.rot, 1);
