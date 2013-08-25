@@ -191,15 +191,22 @@ function Sperm(_posX, _posY, _rot)
 		tailVertexVelocities[0].setY(tailDeltaY);
 		tailLine.geometry.vertices[0].set(tailpos.x,tailpos.y,0);
 
-		var scalerVector3 = new THREE.Vector3(1,1,1);
+		var tempTailVertexVector = new THREE.Vector3(0,0,0);
+		var tempTailDotVector = new THREE.Vector3(0,0,0);
+
+		//var scalerVector3 = new THREE.Vector3(1,1,1);
 
 		for (var v3 = tailLine.geometry.vertices.length-1; v3 > 0; v3--)
 		{
+
+			tempTailVertexVector
 
 			tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3].x+tailVertexVelocities[v3].x);
 			tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3].y+tailVertexVelocities[v3].y);
 			tailVertexVelocities[v3].setX(tailVertexVelocities[v3-1].x);
 			tailVertexVelocities[v3].setY(tailVertexVelocities[v3-1].y);
+
+
 
 		}
 		//console.log("PVX:"+velX+" PVY"+velY+"  dx:"+tailDeltaX+"  dy:"+tailDeltaY+"  tx:"+tailVertexVelocities[3].y+"  tx:"+tailVertexVelocities[3].y)
