@@ -97,4 +97,16 @@ var GameServer = function GameServer () {
                    gameteType: newPlayer.gameteType});
             });
 
+            socket.on("disconnect", function() {
+                if (process.env.DEBUG) {console.log("Networking.disconnect:"+this.id)}
+                playerManager.removePlayer(this.id);
+                socketManager.emit("playerDisconnect", {playerId: this.id});
+            });
+        });
+    }
+
+}
+
+module.exports = new GameServer(); // singleton game server
+
  
