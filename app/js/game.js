@@ -285,6 +285,7 @@ function Game()
 
     this.end = function(data) {
       // Display a "you suck" to everyone except winner
+      //document.getElementById("bump1").cloneNode(true).play();
     }
 
     this.update = function() {
