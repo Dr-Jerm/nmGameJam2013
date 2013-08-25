@@ -116,6 +116,10 @@ function Sperm(_posX, _posY, _rot)
   this.moveForward = function(y) {
     this.velY += Math.sin(this.rot+tailRot) * y;
     this.velX += Math.cos(this.rot+tailRot) * y;
+
+    swim.play();
+    if (swim.volume < .9)
+	    swim.volume += .1;
   }
   this.rotateLeft = function(y) {
     this.rotVel += y;
@@ -177,6 +181,14 @@ function Sperm(_posX, _posY, _rot)
 	      this.checkCollision();
 
 	    }
+
+
+	    
+    	if (swim.volume > .05)
+			swim.volume -= .05;
+			
+	    
+	    console.log(this.velX);
 
   }
 

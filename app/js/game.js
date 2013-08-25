@@ -19,7 +19,10 @@ var clock = new THREE.Clock();
 var delta;
 var elapsedTime;
 
-
+underwater = document.getElementById("underwater");
+underwater.volume = .5;
+swim = document.getElementById("swim");
+//bump1 
 
 var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -67,10 +70,16 @@ if(DEBUG){
     container.appendChild( stats.domElement );
 }
 
+
 function Game()
 {
     this.init = function()
     {
+
+    	//var snd = new Audio("sound/soundTest.wav");
+		//snd.play();
+		//document.getElementById("underwater").cloneNode(true).play()
+		underwater.play();
 
      renderer.sortObjects = true;
      this.controller = new Controller();
