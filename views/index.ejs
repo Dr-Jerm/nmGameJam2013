@@ -103,14 +103,15 @@ body {
 #leaderboard-score {
   /* color:rgba(255,215,0,0.96);*/
   /* color:rgba(0,215,255,0.96);*/
-  /* color:rgba(200,200,255,0.99);*/
   color:rgba(255,255,0,0.96);
+   color:rgba(200,200,255,0.99);
   letter-spacing: 2px;
   font-weight:bold;
 }
 .current_player {
   /color: rgba(0, 155, 255, 0.87);
   color: rgba(200, 255, 0, 0.87);
+  background: rgba(5, 5, 5, 0.66);
   font-weight:bold;
 }
 #leaderboard-footer {
@@ -133,10 +134,10 @@ body {
         <li>Player</li>
       </ul>
       <!-- REPEAT -->
-        <ul class="score-block">
+        <ul class="score-block current_player">
           <li>#0</li>
           <li>11568</li>
-          <li class="current_player">You</li>
+          <li>You</li>
         </ul>
       <% for(var i=0; i<scores.length; i++) {%>
         <ul class="score-block">
