@@ -91,8 +91,8 @@ function Game()
        padding: "20px", 
        color: "#fff",
        position: "fixed",
-       width: "600px",
-       height: "50px",
+       width: "800px",
+       height: "100px",
        left: "50%",
        top: "50%",
        marginTop: "-25px",
@@ -302,6 +302,7 @@ function Game()
         // this.wasReset = true;
     }
 
+
     this.score = function(data)
     {
         console.log("score: "+data.score+" id"+data.id+" angle"+data.angle);
@@ -330,14 +331,54 @@ function Game()
 
     }
 
+
+    this.fertilizedMessages = [
+      "This ain’t no chick flick",
+      "Whoever wins...we lose",
+      "You have been fertilized",
+      "Suddenly, life was more than French fries, gravy, and girls",
+      "The first casualty of war is innocence",
+      "I changed my sex!",
+      "This is the weekend they didn't play golf",
+      "You just got fertilized",
+      ];
+    this.winMessages = [
+      "Great swimming, Phelps!",
+      "You fertilized the egg!",
+      "Free Willy!",
+      "An epic of miniature proportions",
+      "I changed my sex!",
+      "There is no gene for the human spirit",
+      "It's a boy!",
+      "It's a girl!",
+      ];
+    this.loseMessages = [
+      "No mitosis for you!",
+      "You failed to fertilize the egg!",
+      "Don't worry, you all look the same anyways",
+      "Just when you thought it was safe to go back in the water",
+      "Size does matter",
+      "There are 3.7 trillion fish in the ocean. They’re looking for one",
+      "It can be Hell getting into Heaven",
+      "There's always next time...well, maybe not",
+      ];
+
     this.end = function(data) {
       // Display a "you suck" to everyone except winner
-
+      var rand = Math.floor((Math.random() * 8));
       win.play();
+      if (data.playerId == this.player.id) {
+        // win
+        this.endscreen.html(this.winMessages[rand]);
+      } else if (this.player.gamete.type == "egg") {
+        // fertilized
+        this.endscreen.html(this.fertilizedMessages[rand]);
+
       if (data.playerId === this.player.id) {
         this.endscreen.html("You fertilized the egg!");
       } else {
-        this.endscreen.html("You failed to fertilize the egg!");
+        // lost
+        this.endscreen.html(this.loseMessages[rand]);
       }
       this.endscreen.show();
       
