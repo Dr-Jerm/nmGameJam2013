@@ -9,8 +9,15 @@ var READY = false;
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
 
+
+
 gameWorldWidth = 2500;
 gameWorldHeight = 2500;
+
+var eggSpawnX = 2000;
+var eggSpawnY = 0;
+var spermSpawnX = 0; 
+var spermSpawnY = 0; 
 
 var spriteZDepth = -10; 
 
@@ -19,32 +26,31 @@ var clock = new THREE.Clock();
 var delta;
 var elapsedTime;
 
+
 underwater = document.getElementById("underwater");
 underwater.volume = .5;
 swim = document.getElementById("swim");
 //bump1 
 
 var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
+
+var renderer = null;
+renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
+
 renderer.setSize( window.innerWidth, window.innerHeight );
+//renderer.sortObjects = true;
 container.appendChild( renderer.domElement ); 
 
 // new camera
-var camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 5000 );
+var camera = null;
 
 // new scene
-var scene = new THREE.Scene();
+var scene = null; 
     
 // new projector
-var projector = new THREE.Projector();
+var projector = null;
 
-camera.position.set(0,0,100);
-
-camera.position.z = 400;
-scene.add(camera);
-
-var ambientLight = new THREE.AmbientLight( 0xffffff);
-ambientLight.position.set(0,100,0);
-scene.add(ambientLight);
+var ambientLight = null; 
 
 
 //-------- animation frame
@@ -75,13 +81,19 @@ function Game()
 {
     this.init = function()
     {
+     this.setUpRenderer();
+     this.buildWorldGeo(); 
 
+
+<<<<<<< HEAD
     	//var snd = new Audio("sound/soundTest.wav");
 		//snd.play();
 		//document.getElementById("underwater").cloneNode(true).play()
 		underwater.play();
 
      renderer.sortObjects = true;
+=======
+>>>>>>> dea11891d54b31acdf4b50f46ecf14463d79fb4e
      this.controller = new Controller();
      this.input = new Input();
      this.input.setController(this.controller);
@@ -102,27 +114,66 @@ function Game()
 
 
        //-----------
+      
+    }
+
+    this.setUpRenderer = function()
+    {
+    	clock = new THREE.Clock();
+		
+		
+		// new camera
+		camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 1, 5000 );
+
+		// new scene
+		scene = new THREE.Scene();
+		    
+		// new projector
+		projector = new THREE.Projector();
+
+		camera.position.set(0,0,100);
+
+		camera.position.z = 400;
+		scene.add(camera);
+
+		ambientLight = new THREE.AmbientLight( 0xffffff);
+		ambientLight.position.set(0,100,0);
+		scene.add(ambientLight);
+    }
+
+
+    this.buildWorldGeo = function()
+    {
        this.newBackground = new Background(images["BGfull001.png"],0,0,0,12800,7200,-1200);
        this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
        this.particulateList = new Array();
+       // for (var i = 0; i < 75; i++)
+       // {
+       // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate001.png"], 1,   Math.random()*800 - 400)); 
+       // }
+       // for (var i = 0; i < 75; i++)
+       // {
+       // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate002.png"], 1,   Math.random()*800 - 400)); 
+       // }
+       // for (var i = 0; i < 75; i++)
+       // {
+       // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
+       // }
 
-       /*
-       for (var i = 0; i < 75; i++)
-       {
-       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate001.png"], 1,   Math.random()*800 - 400)); 
-       }
-       for (var i = 0; i < 75; i++)
-       {
-       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate002.png"], 1,   Math.random()*800 - 400)); 
-       }
-       for (var i = 0; i < 75; i++)
-       {
-       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
-       }
-       */
-       
     }
 
+    this.updateWorld = function()
+    {
+    	for(var p in this.particulateList)
+    	{
+    		this.particulateList[p].update();
+    	}
+
+
+    }
+
+
+    //------- Network functions -------
     var netUpdateLocalPlayer = function (localPlayer, netPlayer) {
         localPlayer.gamete.posX = netPlayer.position.x;
         localPlayer.gamete.posY = netPlayer.position.y;
@@ -135,24 +186,8 @@ function Game()
 
     this.updatePlayers = function(data) {
       data.playerSnapshot.forEach(function (netPlayer) {
-          if (netPlayer.id == this.player.id && !this.wasReset) { return }
-          if (netPlayer.id == this.player.id && this.wasReset) {
-              this.wasReset = false;
-              var gamete = this.player.gamete;
-              var newGamete = null;
-              if (netPlayer.gameteType === "egg") {
-                newGamete = new Egg(this.player.getPosX(),
-                                    this.player.getPosY(),
-                                    80);
-              } else {
-                newGamete = new Sperm(this.player.getPosX(),
-                                      this.player.getPosY(),
-                                      80);
-              }
-              this.player.gamete.remove();
-              this.player.gamete = newGamete;
-          }
-          if (netPlayer.id in this.netPlayers) {
+          if (netPlayer.id == this.player.id) { return }
+          else if (netPlayer.id in this.netPlayers) {
               netUpdateLocalPlayer(this.netPlayers[netPlayer.id], netPlayer);
               this.netPlayers[netPlayer.id].gamete.posX = netPlayer.position.x;
               this.netPlayers[netPlayer.id].gamete.posY = netPlayer.position.y;
@@ -160,10 +195,10 @@ function Game()
               var gamete = null;
               var newPlayer = null;
               if (netPlayer.gameteType === "egg") {
-                gamete = new Egg(0, 0, 80);
+                gamete = new Egg(eggSpawnX, eggSpawnY, 80);
                 var newPlayer = new Player(netPlayer.id, netPlayer.name, gamete);
               } else {
-                gamete = new Sperm(0, 0, 80);
+                gamete = new Sperm(spermSpawnX, spermSpawnY, 80);
                 var newPlayer = new Player(netPlayer.id, netPlayer.name, gamete);
               }
 
@@ -173,15 +208,7 @@ function Game()
       }.bind(this));
     }
 
-    this.updateWorld = function()
-    {
-    	for(var p in this.particulateList)
-    	{
-    		this.particulateList[p].update();
-    	}
 
-
-    }
 
     this.networkUpdate = function(data) {
       socket.emit("response", { id: this.player.id,
@@ -196,26 +223,69 @@ function Game()
     this.setPlayer = function(id, name, gameteType) {
         var gamete;
 
-        if (gameteType == "egg") {
-            gamete = new Egg(0, 0, 80);    
+        if (gameteType === "egg") {
+            gamete = new Egg(eggSpawnX, eggSpawnY, 80);    
             this.player = new Player(id, name, gamete);
         } else {
-            gamete = new Sperm(0, 0, 80);
+            gamete = new Sperm(spermSpawnX, spermSpawnY, 80);
             this.player = new Player(id, name, gamete);
         }
         //egg = new Egg(0,0,0);
         animate();
     }
 
-    this.reset = function(data) {
-        for (key in this.netPlayers) {
-            this.netPlayers[key].killLabel();
-            this.netPlayers[key].gamete.remove();
-            delete this.netPlayers[key];
-            console.log(key);
-            console.log(this.netPlayers[key]);
-        }
-        this.wasReset = true;
+    this.reset = function(data) 
+    {
+    	this.setUpRenderer();
+    	this.buildWorldGeo(); 
+ 		var myPlayerID = this.player.id;
+
+ 		this.player = null; 
+ 		this.netPlayers = {};
+
+ 		data.playerSnapshot.forEach(function (netPlayer) 
+ 		{
+	 		if (netPlayer.id == myPlayerID)
+	 		{
+	 			if (netPlayer.gameteType === "egg") 
+	 			{
+	             	this.player = new Player( netPlayer.id, netPlayer.name, new Egg(eggSpawnX, eggSpawnY, 80));
+	            } 
+	            else 
+	            {
+	                this.player = new Player( netPlayer.id, netPlayer.name, new Sperm(spermSpawnX, spermSpawnY, 80));    
+	            }
+	 		}
+	 		else
+	 		{
+              if (netPlayer.gameteType === "egg") 
+              {
+                var gamete = new Egg(eggSpawnX, eggSpawnY, 80);
+                gamete.netPlayer = true;
+                this.netPlayers[netPlayer.id] = new Player(netPlayer.id, netPlayer.name, gamete);
+              } 
+              else 
+              {
+                var gamete = new Sperm(spermSpawnX, spermSpawnY, 80);
+                gamete.netPlayer = true;
+                this.netPlayers[netPlayer.id] = new Player(netPlayer.id, netPlayer.name, gamete);
+              }
+            }
+
+
+
+ 		}.bind(this));
+       	// for (key in this.netPlayers) {
+        //     this.netPlayers[key].killLabel();
+        //     this.netPlayers[key].gamete.remove();
+        //     delete this.netPlayers[key];
+            
+
+
+        //     console.log(key);
+        //     console.log(this.netPlayers[key]);
+        // }
+        // this.wasReset = true;
     }
 
     this.end = function(data) {

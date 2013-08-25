@@ -31,7 +31,7 @@ var GameServer = function GameServer () {
         if (process.env.DEBUG) {console.log("GameServer.reset"); }
         eggHealth = Math.max(10 * Object.keys(playerManager.players).length, 10);
 
-        this.socketManager.emit("reset");
+        this.socketManager.emit("reset", {playerSnapshot:currentPlayerSnapshot()});
         resetPending = false;
     }
 
