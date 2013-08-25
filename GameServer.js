@@ -39,9 +39,15 @@ var GameServer = function GameServer () {
         if (!winningPlayer) {
             winningPlayer = pickRandomPlayer();
         } 
-        playerManager.egg.gameteType = "sperm";
-        playerManager.egg = winningPlayer;
-        winningPlayer.gameteType = "egg";
+
+        if (playerManager.egg) {
+            playerManager.egg.gameteType = "sperm";
+            playerManager.egg = winningPlayer;    
+        }
+        
+        if (winningPlayer) {
+            winningPlayer.gameteType = "egg";    
+        }
     }
 
     var gameWin = function (player) {

@@ -32,6 +32,7 @@ underwater.volume = .5;
 underwater.play();
 swim = document.getElementById("swim"); 
 swim.volume = .5;
+win = document.getElementById("win"); 
 
 var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
 
@@ -334,18 +335,22 @@ function Game()
     this.end = function(data) {
       // Display a "you suck" to everyone except winner
       var rand = Math.floor((Math.random() * 8));
+      win.play();
       if (data.playerId == this.player.id) {
         // win
         this.endscreen.html(this.winMessages[rand]);
       } else if (this.player.gamete.type == "egg") {
         // fertilized
         this.endscreen.html(this.fertilizedMessages[rand]);
+
+      if (data.playerId === this.player.id) {
+        this.endscreen.html("You fertilized the egg!");
       } else {
         // lost
         this.endscreen.html(this.loseMessages[rand]);
       }
       this.endscreen.show();
-      //document.getElementById("bump1").cloneNode(true).play();
+      
     }
 
     this.update = function() {
