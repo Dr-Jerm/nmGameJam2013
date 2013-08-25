@@ -56,14 +56,14 @@ function Egg(_posX, _posY, _rot)
   }
 
 	//XXXXXX TEST XXXXXX
-	var sperm = new Sperm(0,0,0);
-	this.addSperm(sperm, 0.1);
-	var sperm = new Sperm(0,0,0);
-	this.addSperm(sperm, 2.3);
-	var sperm = new Sperm(0,0,0);
-	this.addSperm(sperm, 0.5);
-	var sperm = new Sperm(0,0,0);
-	this.addSperm(sperm, 1.33);
+	// var sperm = new Sperm(0,0,0);
+	// this.addSperm(sperm, 0.1);
+	// var sperm = new Sperm(0,0,0);
+	// this.addSperm(sperm, 2.3);
+	// var sperm = new Sperm(0,0,0);
+	// this.addSperm(sperm, 0.5);
+	// var sperm = new Sperm(0,0,0);
+	// this.addSperm(sperm, 1.33);
 	//XXXXXX TEST XXXXXX
 
 	// movement

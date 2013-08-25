@@ -70,14 +70,17 @@ var GameServer = function GameServer () {
       for (var key in playerManager.players) {
         var player = playerManager.players[key];
         if (player.gameteType != "egg"){
-          var dx = Math.pow(playerManager.egg.position.x - player.position.x, 2);
-          var dy = Math.pow(playerManager.egg.position.y - player.position.y, 2);
-          if (Math.sqrt(dx + dy) < 100) {
+          var dx = playerManager.egg.position.x - player.position.x;
+          var dy = playerManager.egg.position.y - player.position.y;
+          
+          if (Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2)) < 100) {
               eggHealth--;
+              var angle = Math.atan2(dx, dy); 
               if (eggHealth > 0) {
-                player.socket.emit('score', {score: ++player.score});
+                self.socketManager.emit('score', {score: ++player.score, id:player.id , angle: angle});
                 console.log(eggHealth);
               } else {
+                    self.socketManager.emit('score', {score: ++player.score, id:player.id , angle: angle});
                   gameWin(player);
               }
           }

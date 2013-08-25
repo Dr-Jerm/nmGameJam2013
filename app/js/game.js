@@ -302,6 +302,34 @@ function Game()
         // this.wasReset = true;
     }
 
+    this.score = function(data)
+    {
+        console.log("score: "+data.score+" id"+data.id+" angle"+data.angle);
+        if(data.id == this.player.id &&  this.player.gamete.type == "sperm")
+        {
+          this.player.gamete.posX = spermSpawnX;
+          this.player.gamete.posY = spermSpawnY;
+        }
+        else if(this.player.gamete.type == "egg")
+        {
+          this.player.gamete.addSperm(new Sperm(this.player.getPosX(), this.player.getPosY(), data.angle), data.angle);
+
+        }
+        for(var p in this.netPlayers)
+        {
+          if (this.netPlayers[p].gamete.type == "egg"); 
+          {
+            this.netPlayers[p].gamete.addSperm(new Sperm(this.netPlayers[p].getPosX(), this.netPlayers[p].getPosY(), data.angle), data.angle);
+
+          }
+
+        }
+
+
+
+
+    }
+
     this.end = function(data) {
       // Display a "you suck" to everyone except winner
 

@@ -19,6 +19,10 @@
       game.end();
     });
 
+    socket.on('score', function(data) {
+      game.score(data);
+    });
+
     socket.on('acceptedUser', function(data) {
       game.setPlayer(data.id, data.name, data.gameteType);
     });
