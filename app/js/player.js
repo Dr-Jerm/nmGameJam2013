@@ -41,6 +41,10 @@ function Player(id, name, _gamete)
         this.gamete.rotateRight(.01 - (this.gamete.getRotVel()*.3));
     }
 
+    this.setPosition = function(x, y, z) {
+        this.gamete.setPosition(x, y, z);
+    }
+
 
     // gets
     this.getPosX = function() {

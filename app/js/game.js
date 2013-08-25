@@ -12,6 +12,8 @@ var HEIGHT = window.innerHeight;
 gameWorldWidth = 2500;
 gameWorldHeight = 2500;
 
+var spriteZDepth = -10; 
+
 //-------THREE.js variables ---------//
 var clock = new THREE.Clock();
 var delta;
@@ -75,6 +77,7 @@ function Game()
      this.input = new Input();
      this.input.setController(this.controller);
      this.input.start();
+     this.wasReset = false;
 
      this.netPlayers = {};
 
@@ -86,13 +89,14 @@ function Game()
            this.netPlayers[playerId].killLabel();
            delete this.netPlayers[playerId];
        }.bind(this));
-       
+      
 
 
        //-----------
        this.newBackground = new Background(images["BGfull001.png"],0,0,0,12800,7200,-1200);
        this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
        this.particulateList = new Array();
+<<<<<<< HEAD
        
        for (var i = 0; i < 75; i++)
        {
@@ -107,6 +111,20 @@ function Game()
        		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
        }
 
+=======
+       // for (var i = 0; i < 75; i++)
+       // {
+       // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate001.png"], 1,   Math.random()*800 - 400)); 
+       // }
+       // for (var i = 0; i < 75; i++)
+       // {
+       // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate002.png"], 1,   Math.random()*800 - 400)); 
+       // }
+       // for (var i = 0; i < 75; i++)
+       // {
+       // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
+       // }
+>>>>>>> ef9e4fb0cf6e43a611e387da8c41ae7b74ecf1ff
        //-----------
        
     }
@@ -123,7 +141,23 @@ function Game()
 
     this.updatePlayers = function(data) {
       data.playerSnapshot.forEach(function (netPlayer) {
-          if (netPlayer.id == this.player.id) { return }
+          if (netPlayer.id == this.player.id && !this.wasReset) { return }
+          if (netPlayer.id == this.player.id && this.wasReset) {
+              this.wasReset = false;
+              var gamete = this.player.gamete;
+              var newGamete = null;
+              if (netPlayer.gameteType === "egg") {
+                newGamete = new Egg(this.player.getPosX(),
+                                    this.player.getPosY(),
+                                    80);
+              } else {
+                newGamete = new Sperm(this.player.getPosX(),
+                                      this.player.getPosY(),
+                                      80);
+              }
+              this.player.gamete.remove();
+              this.player.gamete = newGamete;
+          }
           if (netPlayer.id in this.netPlayers) {
               netUpdateLocalPlayer(this.netPlayers[netPlayer.id], netPlayer);
               this.netPlayers[netPlayer.id].gamete.posX = netPlayer.position.x;
@@ -161,6 +195,7 @@ function Game()
                     position: this.player.gamete.getPosition(), 
                     rotation: this.player.gamete.getRotation(),
                   });
+      
       this.updatePlayers(data);
     }
 
@@ -179,17 +214,18 @@ function Game()
     }
 
     this.reset = function(data) {
-      this.updatePlayers(data);
+        for (key in this.netPlayers) {
+            this.netPlayers[key].killLabel();
+            this.netPlayers[key].gamete.remove();
+            delete this.netPlayers[key];
+            console.log(key);
+            console.log(this.netPlayers[key]);
+        }
+        this.wasReset = true;
     }
 
     this.end = function(data) {
       // Display a "you suck" to everyone except winner
-      if (this.player.id === data.playerId) {
-        this.player.gamete.remove();
-        var gamete = new Egg(0, 0, 80);
-        this.player.gamete = gamete;
-        console.log("You are now a freacking egg");
-      }
     }
 
     this.update = function() {

@@ -5,7 +5,8 @@ function Sprite(_img, _posX, _posY, _rot, _zDepth)
 	this.posY = _posY; 
 	this.rot = _rot;
 
-	this.zDepth = _zDepth;
+	spriteZDepth += 0.01;
+	this.zDepth = _zDepth+spriteZDepth;
 
 	this.img = _img;
 	

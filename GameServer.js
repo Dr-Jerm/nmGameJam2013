@@ -35,6 +35,15 @@ var GameServer = function GameServer () {
         resetPending = false;
     }
 
+    var shuffleEgg = function (winningPlayer) {
+        if (!winningPlayer) {
+            winningPlayer = pickRandomPlayer();
+        } 
+        playerManager.egg.gameteType = "sperm";
+        playerManager.egg = winningPlayer;
+        winningPlayer.gameteType = "egg";
+    }
+
     var gameWin = function (player) {
         console.log("GameServer.gameWin."+player.id);
         self.socketManager.emit("gameWin", {playerId: player.id});
@@ -42,9 +51,7 @@ var GameServer = function GameServer () {
         resetPending = true;
 
         setTimeout(function () {
-            playerManager.egg.gameteType = "sperm";
-            playerManager.egg = player;
-            player.gameteType = "egg";
+            shuffleEgg(player);
 
             self.reset();
         }, 5000);
@@ -103,6 +110,20 @@ var GameServer = function GameServer () {
                 socketManager.emit("playerDisconnect", {playerId: this.id});
             });
         });
+    }
+
+    var pickRandomPlayer = function (players) {
+        var player;
+
+        var randIndex = Math.floor(Math.random()*Object.keys(playerManager.players).length);
+        var count = 0;
+
+        for (var key in playerManager.players) {
+            if (count == randIndex) {
+                return playerManager.players[key];
+            }
+        }
+
     }
 
 }

@@ -19,11 +19,26 @@ function Egg(_posX, _posY, _rot)
 
 	this.radius = 130; 
 
+
 	bodySprite = new Sprite(images["newEggMain.png"], this.posX, this.posY, this.rot, 1);
 	bodyRingSprite = new Sprite(images["newEggOuterRing1.png"], this.posX, this.posY, this.rot, 1);
 	bodyInside1Sprite = new Sprite(images["newEggInsidePartBig.png"], this.posX, this.posY, this.rot, 1);
 
+	bodySprite = new Sprite(images["Egg.png"], _posX, _posY, this.rot, 1);
+
 	var spirmList = new Array(); 
+
+  this.clearSperm = function() {
+    for (key in spirmList) {
+      spirmList[key].remove();
+    }
+  }
+
+  this.remove = function() {
+    bodySprite.removeFromScene();
+    this.clearSperm();
+  }
+
 
 	this.addSperm = function(_sperm, _angle)
 	{
@@ -31,6 +46,12 @@ function Egg(_posX, _posY, _rot)
 		_sperm.stuckRot = _angle; 
 		spirmList.push(_sperm); 
 	}
+
+  this.setPosition = function(x, y, z) {
+    this.posX = x;
+    this.posY = y;
+    posZ = z;
+  }
 
 	//XXXXXX TEST XXXXXX
 	var sperm = new Sperm(0,0,0);
