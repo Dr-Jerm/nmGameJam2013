@@ -35,14 +35,17 @@ var GameServer = function GameServer () {
         resetPending = false;
     }
 
-    this.gameWin = function (player) {
+    var gameWin = function (player) {
         console.log("GameServer.gameWin."+player.id);
-        this.socketManager.emit("gameWin", {playerId: player.id});
-        HighScores.insertScore(player);
+        self.socketManager.emit("gameWin", {playerId: player.id});
 
         resetPending = true;
 
         setTimeout(function () {
+            playerManager.egg.gameteType = "sperm";
+            playerManager.egg = player;
+            player.gameteType = "egg";
+
             self.reset();
         }, 5000);
 
@@ -61,7 +64,7 @@ var GameServer = function GameServer () {
                 player.socket.emit('score', {score: ++player.score});
                 console.log(eggHealth);
               } else {
-                  this.gameWin(player);
+                  gameWin(player);
               }
 
             
@@ -91,7 +94,6 @@ var GameServer = function GameServer () {
                 playerManager.addPlayer(newPlayer);
 
                 this.emit('acceptedUser', {id: newPlayer.id, gameteType: newPlayer.gameteType});
-                self.reset();
             });
 
             socket.on("disconnect", function() {
