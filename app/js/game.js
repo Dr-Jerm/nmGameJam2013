@@ -313,23 +313,27 @@ function Game()
         console.log("score: "+data.score+" id"+data.id+" angle"+data.angle);
         if(data.id == this.player.id &&  this.player.gamete.type == "sperm")
         {
-          this.player.gamete.posX = spermSpawnX;
-          this.player.gamete.posY = spermSpawnY;
+          this.player.gamete.setPosition(spermSpawnX, spermSpawnY, 0);
         }
-        else if(this.player.gamete.type == "egg")
+        
+        if(this.player.gamete.type == "egg")
         {
           this.player.gamete.addSperm(new Sperm(this.player.getPosX(), this.player.getPosY(), data.angle), data.angle);
 
         }
-        for(var p in this.netPlayers)
+        else 
         {
-          if (this.netPlayers[p].gamete.type == "egg"); 
+          for(var p in this.netPlayers)
           {
-            this.netPlayers[p].gamete.addSperm(new Sperm(this.netPlayers[p].getPosX(), this.netPlayers[p].getPosY(), data.angle), data.angle);
+            if (this.netPlayers[p].gamete.type == "egg"); 
+            {
+              this.netPlayers[p].gamete.addSperm(new Sperm(this.netPlayers[p].getPosX(), this.netPlayers[p].getPosY(), data.angle), data.angle);
+
+            }
 
           }
-
         }
+        
 
 
 

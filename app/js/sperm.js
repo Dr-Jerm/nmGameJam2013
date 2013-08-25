@@ -149,6 +149,19 @@ function Sperm(_posX, _posY, _rot)
     this.posX = x;
     this.posY = y;
     posZ = z;
+
+    for (var v in tailLine.geometry.vertices)
+    {
+      tailLine.geometry.vertices[v].setX(x);
+      tailLine.geometry.vertices[v].setY(y);
+      tailLine.geometry.vertices[v].setZ(z);
+    }
+     for (var v in  tailVertexVelocities)
+    {
+       tailVertexVelocities[v].setX(0);
+       tailVertexVelocities[v].setY(0);
+       tailVertexVelocities[v].setZ(0);
+    }
   }
 
   // gets
