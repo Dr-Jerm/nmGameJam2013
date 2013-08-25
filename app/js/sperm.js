@@ -198,18 +198,57 @@ function Sperm(_posX, _posY, _rot)
     tailVertexVelocities[0].setY(tailDeltaY);
     tailLine.geometry.vertices[0].set(tailpos.x,tailpos.y,0);
 
-    var scalerVector3 = new THREE.Vector3(1,1,1);
+    
+    // var dot;
+    var distVector3 = new THREE.Vector3(0,0,0);
+    var dist; 
+    // var distVector3Normalized  = new THREE.Vector3(0,0,0); 
+    // var pointVelocityVector = new THREE.Vector3(0,0,0); 
+    
+    //var distVector3Normalized;
 
     for (var v3 = tailLine.geometry.vertices.length-1; v3 > 0; v3--)
     {
 
+      
+      
+      //distVector3Normalized = distVector3.normalize();
+      // dot = distVector3.dot(tailVertexVelocities[v3])//distVector3.length; 
+
+      // distVector3Normalized = distVector3.normalize();//.multiplyScalar(  dot/distVector3.length );
+      //dotVector3 = distVector3.multiplyScaler(dot/distVector3.length);
+	  // dotVector3.setX(distVector3Normalized.x*(dot/distVector3.length()));
+	  // dotVector3.setY(distVector3Normalized.y*(dot/distVector3.length()));
+
       tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3].x+tailVertexVelocities[v3].x);
       tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3].y+tailVertexVelocities[v3].y);
-      tailVertexVelocities[v3].setX(tailVertexVelocities[v3-1].x);
-      tailVertexVelocities[v3].setY(tailVertexVelocities[v3-1].y);
+      
+      distVector3.setX(tailLine.geometry.vertices[v3-1].x-tailLine.geometry.vertices[v3].x);
+      distVector3.setY(tailLine.geometry.vertices[v3-1].y-tailLine.geometry.vertices[v3].y);
 
+      dist = distVector3.length();
+
+     // if(dist < tailsegmentdistence)
+     // {
+     // 	var errorRatio = dist/(tailsegmentdistence+1); 
+     // 	tailLine.geometry.vertices[v3].setX(errorRatio*distVector3.x + tailLine.geometry.vertices[v3-1].x);
+     // 	tailLine.geometry.vertices[v3].setY(errorRatio*distVector3.y + tailLine.geometry.vertices[v3-1].y);
+     // 	console.log("ping");
+     // }
+
+
+      // if(distVector3.length() < 5)
+      // {
+      // 	tailVertexVelocities[v3].setX(tailVertexVelocities[v3-1].x);
+      // 	tailVertexVelocities[v3].setY(tailVertexVelocities[v3-1].y);
+      // }
+      // else
+      // {
+      	tailVertexVelocities[v3].setX(tailVertexVelocities[v3-1].x);
+      	tailVertexVelocities[v3].setY(tailVertexVelocities[v3-1].y);
+      // }
     }
-    //console.log("PVX:"+this.velX+" PVY"+this.velY+"  dx:"+tailDeltaX+"  dy:"+tailDeltaY+"  tx:"+tailVertexVelocities[3].y+"  tx:"+tailVertexVelocities[3].y)
+    //console.log("DistX:"+distVector3.x+" DistY:"+distVector3.y+"  dotx:"+dotVector3.x+"  doty:"+dotVector3.y+"  tx:"+tailVertexVelocities[3].y+"  tx:"+tailVertexVelocities[3].y)
     tailLine.geometry.verticesNeedUpdate = true;
 
   }

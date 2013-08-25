@@ -1,68 +1,86 @@
 function Egg(_posX, _posY, _rot)
 {
-	var posX = _posX;
-	var posY = _posY;
+	this.posX = _posX;
+	this.posY = _posY;
 
 	var posZ = 0
 
-	var rot = _rot;
+	this.rot = _rot;
 
-	var velX = 0;
-	var velY = 0;
-	var rotVel = 0;
+	this.velX = 0;
+	this.velY = 0;
+	this.rotVel = 0;
 
-	bodySprite = new Sprite(images["Egg.png"], posX, posY, rot, 0);
+	bodySprite = new Sprite(images["Egg.png"], this.posX, this.posY, this.rot, 1);
 
 
 	// movement
 	this.moveForward = function(y) {
-		velY += Math.sin(rot) * y;
-		velX += Math.cos(rot) * y;
+		this.velY += Math.sin(this.rot) * (y*2);
+		this.velX += Math.cos(this.rot) * (y*2);
 	}
 	this.rotateLeft = function(y) {
-		rotVel += y;
+		this.rotVel += y;
 	}
 	this.rotateRight = function(y) {
-		rotVel -= y;
+		this.rotVel -= y;
 	}
 
 
 	// gets
 	this.getPosition = function() {
 		return {
-			x: posX, 
-			y: posY, 
-			z: posZ
+			x: this.posX, 
+			y: this.posY, 
+			z: this.posZ
 		};
 	}
 
 	this.getVelocity = function() {
 		return {
-			x: velX,
-			y: velY,
+			x: this.velX,
+			y: this.velY,
 			z: 0,
 		};
 	}
 
   	this.getRotation = function() {
-    	return rot;
+    	return this.rot;
   	}
 
 
 	this.getPosX = function(){
-		return posX;
+		return this.posX;
 	}
 	this.getPosY = function(){
-		return posY;
+		return this.posY;
 	}
 	this.getRotVel = function(){
-		return rotVel;
+		return this.rotVel;
 	}
 
 	this.update = function()
 	{
 		//console.log("eggupdate");
+		if (this.posX > gameWorldWidth)
+      		this.velX *= -1;
+    	if (this.posX < -gameWorldWidth)
+      		this.velX *= -1;
+    	if (this.posY > gameWorldHeight)
+      		this.velY *= -1;
+    	if (this.posY < -gameWorldHeight)
+      		this.velY *= -1;
 
+    
+    	this.posX += this.velX;
+    	this.posY += this.velY;
+    	this.rot += this.rotVel;
+
+    	bodySprite.updatePosition(this.posX, this.posY, this.rot);
+
+		this.velX *= .9;
+		this.velY *= .9;
+		this.rotVel *= .8;  
 
 	}
 
