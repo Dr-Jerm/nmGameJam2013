@@ -149,7 +149,7 @@ function Game()
 		// new projector
 		projector = new THREE.Projector();
 
-		camera.position.set(0,0,100);
+		camera.position.set(0,0,300);
 
 		camera.position.z = 400;
 		scene.add(camera);
@@ -175,7 +175,8 @@ function Game()
        }
        for (var i = 0; i < 75; i++)
        {
-       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
+       		console.log("making floaties");
+          this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
        }
        
 
