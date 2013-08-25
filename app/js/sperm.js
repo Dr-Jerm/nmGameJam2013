@@ -98,6 +98,7 @@ function Sperm(_posX, _posY, _rot)
       x: velX,
       y: velY,
       z: 0,
+      r: rotVel
     };
   }
 
@@ -206,6 +207,5 @@ function Sperm(_posX, _posY, _rot)
     tailLine.geometry.verticesNeedUpdate = true;
 
   }
-
 
 }

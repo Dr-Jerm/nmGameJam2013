@@ -41,16 +41,19 @@ module.exports = function Player (name, socket, startingAttrs) {
         x: 0,
         y: 0,
         z: 0,
+        r: 0,
 
-        set: function(x, y, z) {
+        set: function(x, y, z, r) {
             if (y) {
                 this.velocity.x = x;
                 this.velocity.y = y;
                 this.velocity.z = z;
+                this.velocity.r = r;
             } else {
                 this.velocity.x = x.x;
                 this.velocity.y = x.y;
                 this.velocity.z = x.z;
+                this.velocity.r = x.r;
             }
         }.bind(this)
     }
