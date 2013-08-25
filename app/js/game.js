@@ -163,7 +163,7 @@ function Game()
     this.buildWorldGeo = function()
     {
        this.newBackground = new Background(images["BGfull001.png"],0,0,0,12800,7200,-1200);
-       this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
+       //this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
        this.particulateList = new Array();
        for (var i = 0; i < 75; i++)
        {
