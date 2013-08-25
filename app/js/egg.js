@@ -16,14 +16,16 @@ function Egg(_posX, _posY, _rot)
 
 	// movement
 	this.moveForward = function(y) {
-		this.velY += Math.sin(this.rot) * (y*2);
-		this.velX += Math.cos(this.rot) * (y*2);
+		this.velY += Math.sin(this.rot) * (y*.4);
+		this.velX += Math.cos(this.rot) * (y*.4);
 	}
 	this.rotateLeft = function(y) {
-		this.rotVel += y;
+		//if (this.rotVel < .1)
+		this.rotVel = this.rotVel + (y*.2);
 	}
 	this.rotateRight = function(y) {
-		this.rotVel -= y;
+		//if (this.rotVel > -.1)
+		this.rotVel = this.rotVel - (y*.2);
 	}
 
 
@@ -63,24 +65,31 @@ function Egg(_posX, _posY, _rot)
 	{
 		//console.log("eggupdate");
 		if (this.posX > gameWorldWidth)
-      		this.velX *= -1;
+      		this.velX *= -.75;
     	if (this.posX < -gameWorldWidth)
-      		this.velX *= -1;
+      		this.velX *= -.75;
     	if (this.posY > gameWorldHeight)
-      		this.velY *= -1;
+      		this.velY *= -.75;
     	if (this.posY < -gameWorldHeight)
-      		this.velY *= -1;
+      		this.velY *= -.75;
 
     
     	this.posX += this.velX;
     	this.posY += this.velY;
+    	
+    	//if (this.rotVel > .1)
+    	//	this.rotVel = .1;
+    	//if (this.rotVel < -.1)
+    	//	this.rotVel = -.1;
+    	
     	this.rot += this.rotVel;
+
 
     	bodySprite.updatePosition(this.posX, this.posY, this.rot);
 
-		this.velX *= .9;
-		this.velY *= .9;
-		this.rotVel *= .8;  
+		this.velX *= .99;
+		this.velY *= .99;
+		this.rotVel *= .98;  
 
 	}
 
