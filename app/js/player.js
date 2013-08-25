@@ -16,8 +16,8 @@ function Player(id, name, _gamete)
       { width: "auto", 
         position: "fixed", 
         zIndex: "1000",
-        fontSize: "20px",
-        fontFamily: "'Flavors', cursive", 
+        fontSize: "25px",
+        fontFamily: "'Marcellus SC', serif", 
         color: "#eee",
         left: "0px",
         top: "0px" }
@@ -67,10 +67,10 @@ function Player(id, name, _gamete)
         this.gamete.update();
         var pos = this.toXYCoords(this.gamete.getPosition());
         var left = pos.x - this.label.width()/2;
-        var top = pos.y - 15;
+        var top = pos.y - 30;
         if (this.gamete.type == "egg") {
           console.log("is an egg");
-          top = pos.y - 170;
+          top = pos.y - 140;
         }
         this.label.css({ 
           top: top + "px", 
