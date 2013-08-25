@@ -11,7 +11,7 @@ var express = require('express'),
     path = require('path');
 
 var util = require('util');
-process.env.DEBUG = true;
+// process.env.DEBUG = true;
 
 var app = module.exports = express();
 
@@ -68,4 +68,4 @@ server.listen(app.get('port'), function () {
 io.set('log level', 1);
 
 gameServer.setSocketManager(io.sockets);
-gameServer.run(1000);
+gameServer.run(16);

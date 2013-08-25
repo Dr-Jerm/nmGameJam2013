@@ -162,9 +162,12 @@ function Sperm(_posX, _posY, _rot)
     //console.log("spermupdate");
     this.updateTail();
     // movement resistance
-    this.velX *= .9;
-    this.velY *= .9;
-    this.rotVel *= .8;
+    if(!this.netPlayer) {
+      this.velX *= .9;
+      this.velY *= .9;
+      this.rotVel *= .8;      
+    }
+
     
   }
 
