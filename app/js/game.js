@@ -80,8 +80,17 @@ function Game()
        
     }
 
+  var netUpdateLocalPlayer = function (localPlayer, netPlayer) {
+      localPlayer.gamete.posX = netPlayer.position.x;
+      localPlayer.gamete.posY = netPlayer.position.y;
+
+      localPlayer.gamete.rot = netPlayer.rotation.r;
+
+      localPlayer.gamete.velX = netPlayer.velocity.x;
+      localPlayer.gamete.velY = netPlayer.velocity.y;
+  }
+
   this.networkUpdate = function(data) {
-    //console.log(data);
     socket.emit("response", { id: this.player.id,
                   velocity: this.player.gamete.getVelocity(),
                   position: this.player.gamete.getPosition(), 
@@ -91,11 +100,13 @@ function Game()
     data.playerSnapshot.forEach(function (netPlayer) {
         if (netPlayer.id == this.player.id) { return }
         if (netPlayer.id in this.netPlayers) {
+            netUpdateLocalPlayer(this.netPlayers[netPlayer.id], netPlayer);
             this.netPlayers[netPlayer.id].gamete.posX = netPlayer.position.x;
             this.netPlayers[netPlayer.id].gamete.posY = netPlayer.position.y;
         } else {
             var newSperm = new Sperm(0, 0, 80);
             var newPlayer = new Player(netPlayer.id, newSperm);
+            newPlayer.gamete.netPlayer = true;
             this.netPlayers[netPlayer.id] = newPlayer;
         }
     }.bind(this));
