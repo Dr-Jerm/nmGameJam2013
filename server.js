@@ -7,6 +7,7 @@ var express = require('express'),
     io = require('socket.io'),
     engine = require('ejs-locals'),
     gameServer = require('./GameServer'),
+    highscores = require('./HighScores'),
     http = require('http'),
     path = require('path');
 
@@ -45,7 +46,11 @@ if (process.env.PORT) {
 var indexRoute = function(req, res){
     var options = {
         serverIp: serverIp,
-        clientIp: req.connection.remoteAddress
+        clientIp: req.connection.remoteAddress,
+        page_length: highscores.PAGE_LENGTH,
+        scores: highscores.scores,
+        players: highscores.players,
+        ranks: highscores.ranks,
     }
 
     res.render('index', options);
