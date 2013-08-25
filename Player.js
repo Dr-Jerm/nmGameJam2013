@@ -12,6 +12,7 @@ module.exports = function Player (name, socket, startingAttrs) {
         var clean = {
             name: this.name,
             id: this.id,
+            score: this.score,
             gameteType: this.gameteType,
             position: this.position,
             velocity: this.velocity,
