@@ -7,6 +7,19 @@
         }
     });
 
+    var splashImg = $('<div></div>');
+    splashImg.css({
+      background: "url('/images/TitleCardLIC.png')",
+      backgroundSize: "100% auto",
+      width: "100%",
+      position: "fixed",
+      top: "30px",
+      left: "0",
+      zIndex: "1000",
+      height: ($(document).height() - 20) + "px",
+    });
+    $('body').append(splashImg);
+
     //INIT here
     game = new Game();
     game.init();
@@ -25,6 +38,7 @@
 
     socket.on('acceptedUser', function(data) {
       game.setPlayer(data.id, data.name, data.gameteType);
+      splashImg.remove();
     });
 
     socket.on('reset', function(data) {
