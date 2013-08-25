@@ -15,7 +15,7 @@ function Egg(_posX, _posY, _rot)
 
 	this.radius = 130; 
 
-	bodySprite = new Sprite(images["Egg.png"], this.posX, this.posY, this.rot, 1);
+	bodySprite = new Sprite(images["Egg.png"], _posX, _posY, this.rot, 1);
 
 	var spirmList = new Array(); 
 
