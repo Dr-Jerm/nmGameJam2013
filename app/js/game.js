@@ -136,8 +136,8 @@ function Game()
         } else {
             gamete = new Sperm(0, 0, 80);
         }
-        egg = new Egg(0,0,0);
-        this.player = new Player(id, egg);
+        //egg = new Egg(0,0,0);
+        this.player = new Player(id, gamete);
         animate();
     }
 
