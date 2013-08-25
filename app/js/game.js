@@ -84,25 +84,25 @@ function Game()
     }
 
   this.networkUpdate = function(data) {
-    console.log(data);
+    //console.log(data);
     socket.emit("response", { id: this.player.id,
                   velocity: this.player.gamete.getVelocity(),
                   position: this.player.gamete.getPosition(), 
                   rotation: this.player.gamete.getRotation(),
                 });
-    data.playerSnapshot.forEach(function (netPlayer) {
-        if (netPlayer.id in this.players) {
-            this.players[netPlayer.id].gamete.posX = netPlayer.position.x;
-            this.players[netPlayer.id].gamete.posY = netPlayer.position.y;
-            //netPlayer.position
-            //netPlayer.rotation
-            //netPlayer.velocity
-        } else {
-            var newSperm = new Sperm(0, 0, 80);
-            var newPlayer = new Player(netPlayer.id, newSperm);
-            this.players[netPlayer.id] = newPlayer;
-        }
-    }.bind(this));
+    // //data.playerSnapshot.forEach(function (netPlayer) {
+    //     if (netPlayer.id in this.players) {
+    //         this.players[netPlayer.id].gamete.posX = netPlayer.position.x;
+    //         this.players[netPlayer.id].gamete.posY = netPlayer.position.y;
+    //         //netPlayer.position
+    //         //netPlayer.rotation
+    //         //netPlayer.velocity
+    //     } else {
+    //         var newSperm = new Sperm(0, 0, 80);
+    //         var newPlayer = new Player(netPlayer.id, newSperm);
+    //         this.players[netPlayer.id] = newPlayer;
+    //     }
+    // }.bind(this));
   }
 
     this.setPlayer = function(id) {
@@ -125,7 +125,7 @@ function Game()
             ((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
             ((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
             500);
-        console.log(gameWorldWidth);
+        //console.log(gameWorldWidth);
 
     }
 }

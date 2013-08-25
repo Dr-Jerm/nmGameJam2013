@@ -177,60 +177,31 @@ function Sperm(_posX, _posY, _rot)
 		var distY2;
 		
 		tailcycleSpeed  = 0.2 + (Math.pow(velX,2)+Math.pow(velY,2))/100;
+		tailcycleAmplitude = 0.1 + (Math.pow(velX,2)+Math.pow(velY,2))/200;
 		tailcycle = tailcycle + tailcycleSpeed; 
 		tailRot = Math.sin(tailcycle)*tailcycleAmplitude; 
 		
 		var tailpos = this.getTailPosition();
 		
-		var tailVelX = posX - tailpos.x;
-		var tailVelY = posY - tailpos.y;
+		var tailDeltaX = tailpos.x - tailLine.geometry.vertices[0].x;
+		var tailDeltaY = tailpos.y - tailLine.geometry.vertices[0].y;
 
-		tailVertexVelocities[0].setX(tailVelX);
-		tailVertexVelocities[0].setY(tailVelY);
+		tailVertexVelocities[0].setX(tailDeltaX);
+		tailVertexVelocities[0].setY(tailDeltaY);
 		tailLine.geometry.vertices[0].set(tailpos.x,tailpos.y,0);
 
-
+		var scalerVector3 = new THREE.Vector3(1,1,1);
 
 		for (var v3 = tailLine.geometry.vertices.length-1; v3 > 0; v3--)
 		{
-			// distX = tailLine.geometry.vertices[v3].x - tailLine.geometry.vertices[v3-1].x;
-			// distY = tailLine.geometry.vertices[v3].y - tailLine.geometry.vertices[v3-1].y;
-			// distX2 = Math.pow(distX, 2);
-			// distY2 = Math.pow(distY, 2); 
-			tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3].x+tailVertexVelocities[v3-1].x);
-			tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3].y+tailVertexVelocities[v3-1].y);
 
+			tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3].x+tailVertexVelocities[v3].x);
+			tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3].y+tailVertexVelocities[v3].y);
 			tailVertexVelocities[v3].setX(tailVertexVelocities[v3-1].x);
 			tailVertexVelocities[v3].setY(tailVertexVelocities[v3-1].y);
-			// if(distX2 > 50)
-			// {
-			// 	tailLine.geometry.vertices[v3].setX( tailLine.geometry.vertices[v3-1].x + distX / 3);
-			// }
-			// if(distY2 > 50)
-			// {
-			// 	tailLine.geometry.vertices[v3].setY( tailLine.geometry.vertices[v3-1].y + distY / 3);
-			// }
-
-			// if(distX2 > 100)
-			// {
-			// 	tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3-1].x);
-			// }
-			// if(distX2 < 25)
-			// {
-			// 	tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3-1].x);
-			// }
-			// if(distY2 < 100)
-			// {
-			// 	tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3-1].y);
-			// }
-			
-			
 
 		}
-		
-	
-		
-		
+		//console.log("PVX:"+velX+" PVY"+velY+"  dx:"+tailDeltaX+"  dy:"+tailDeltaY+"  tx:"+tailVertexVelocities[3].y+"  tx:"+tailVertexVelocities[3].y)
 		tailLine.geometry.verticesNeedUpdate = true;
 
 	}
