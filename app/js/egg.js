@@ -13,6 +13,8 @@ function Egg(_posX, _posY, _rot)
 
 	this.velX = 0;
 	this.velY = 0;
+	this.insideVelX = 0;
+	this.insideVelY = 0;
 	this.rotVel = 0;
 	this.ringRotVel = 0;
 	this.insideRotVel = 0;
@@ -22,9 +24,9 @@ function Egg(_posX, _posY, _rot)
 
 	bodySprite = new Sprite(images["newEggMain.png"], this.posX, this.posY, this.rot, 1);
 	bodyRingSprite = new Sprite(images["newEggOuterRing1.png"], this.posX, this.posY, this.rot, 1);
-	bodyInside1Sprite = new Sprite(images["newEggInsidePartBig.png"], this.posX, this.posY, this.rot, 1);
+	bodyInside1Sprite = new Sprite(images["newEggInsidePartBig.png"], this.posX+20, this.posY+20, this.rot, 1);
 
-	bodySprite = new Sprite(images["Egg.png"], _posX, _posY, this.rot, 1);
+	//bodySprite = new Sprite(images["Egg.png"], _posX, _posY, this.rot, 1);
 
 	var spirmList = new Array(); 
 
@@ -141,16 +143,22 @@ function Egg(_posX, _posY, _rot)
     	this.ringRot += this.ringRotVel;
     	this.insideRot += this.insideRotVel;
 
+    	this.insideVelX += this.velX;
+    	this.insideVelY += this.velY;
+
     	bodySprite.updatePosition(this.posX, this.posY, this.ringRot);
     	bodyRingSprite.updatePosition(this.posX, this.posY, this.rot);
-    	bodyInside1Sprite.updatePosition(this.posX+(-this.velX * .75), this.posY+(-this.velY * .75), this.insideRot);
+    	bodyInside1Sprite.updatePosition(this.posX+20+(-this.insideVelX * .25), this.posY+20+(-this.insideVelY * .25), this.insideRot);
 
 		this.velX *= .99;
 		this.velY *= .99;
 		this.rotVel *= .98;  
 
-		this.ringRotVel *= .987;
-		this.insideRotVel *= .99;
+		this.ringRotVel *= .9825;
+		this.insideRotVel *= .95;
+
+		this.insideVelX *= .9;
+		this.insideVelY *= .9;
 
 		this.UpdateAttachedSperm();
 
