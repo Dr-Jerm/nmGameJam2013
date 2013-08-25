@@ -75,6 +75,7 @@ function Game()
      this.input = new Input();
      this.input.setController(this.controller);
      this.input.start();
+     this.wasReset = false;
 
      this.netPlayers = {};
 
@@ -87,7 +88,6 @@ function Game()
            delete this.netPlayers[playerId];
        }.bind(this));
       
-       this.poll = true;1       
 
 
        //-----------
@@ -122,7 +122,23 @@ function Game()
 
     this.updatePlayers = function(data) {
       data.playerSnapshot.forEach(function (netPlayer) {
-          if (netPlayer.id == this.player.id) { return }
+          if (netPlayer.id == this.player.id && !this.wasReset) { return }
+          if (netPlayer.id == this.player.id && this.wasReset) {
+              this.wasReset = false;
+              var gamete = this.player.gamete;
+              var newGamete = null;
+              if (netPlayer.gameteType === "egg") {
+                newGamete = new Egg(this.player.getPosX(),
+                                    this.player.getPosY(),
+                                    80);
+              } else {
+                newGamete = new Sperm(this.player.getPosX(),
+                                      this.player.getPosY(),
+                                      80);
+              }
+              this.player.gamete.remove();
+              this.player.gamete = newGamete;
+          }
           if (netPlayer.id in this.netPlayers) {
               netUpdateLocalPlayer(this.netPlayers[netPlayer.id], netPlayer);
               this.netPlayers[netPlayer.id].gamete.posX = netPlayer.position.x;
@@ -155,7 +171,6 @@ function Game()
     }
 
     this.networkUpdate = function(data) {
-      if (!this.poll) { return; }
       socket.emit("response", { id: this.player.id,
                     velocity: this.player.gamete.getVelocity(),
                     position: this.player.gamete.getPosition(), 
@@ -180,8 +195,6 @@ function Game()
     }
 
     this.reset = function(data) {
-        console.log("reset happened");
-        this.poll = false;
         for (key in this.netPlayers) {
             this.netPlayers[key].killLabel();
             this.netPlayers[key].gamete.remove();
@@ -189,8 +202,7 @@ function Game()
             console.log(key);
             console.log(this.netPlayers[key]);
         }
-        this.player.gamete.remove();
-        this.player.killLabel();
+        this.wasReset = true;
     }
 
     this.end = function(data) {
