@@ -373,15 +373,11 @@ function Game()
       } else if (this.player.gamete.type == "egg") {
         // fertilized
         this.endscreen.html(this.fertilizedMessages[rand]);
-
-      if (data.playerId === this.player.id) {
-        this.endscreen.html("You fertilized the egg!");
       } else {
         // lost
         this.endscreen.html(this.loseMessages[rand]);
       }
       this.endscreen.show();
-      
     }
 
     this.update = function() {
