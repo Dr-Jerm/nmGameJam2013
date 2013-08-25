@@ -89,7 +89,7 @@ function Game()
        
 
 
-
+       //-----------
        this.newBackground = new Background(images["BGfull001.png"],0,0,0,12800,7200,-1200);
        this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
        this.particulateList = new Array();
@@ -105,17 +105,7 @@ function Game()
        {
        		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
        }
-
-
-       //this.particulateList.push( new Particulate(   500,  -500,   0.0003, images["particulars001.png"], 10, -300)); 
-       
-       // this.particulateList.push( new Particulate(  10,  10,  -0.01, images["particulate002.png"], 1,   150)); 
-       // this.particulateList.push( new Particulate(	10,   -10,  -0.01, images["particulate003.png"], 1,   300)); 
-
-    
-
-
-
+       //-----------
        
     }
 
