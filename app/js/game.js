@@ -28,6 +28,7 @@ var elapsedTime;
 
 
 music = document.getElementById("music");
+music.volume = .025;
 music.play();
 underwater = document.getElementById("underwater");
 underwater.volume = .5;
@@ -35,6 +36,8 @@ underwater.play();
 swim = document.getElementById("swim"); 
 swim.volume = .5;
 win = document.getElementById("win"); 
+win.volume = .5;
+squish = document.getElementById("squish"); 
 
 var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
 
@@ -162,18 +165,18 @@ function Game()
        this.newBackground = new Background(images["BGfull001.png"],0,0,0,12800,7200,-1200);
        this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
        this.particulateList = new Array();
-       // for (var i = 0; i < 75; i++)
-       // {
-       // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate001.png"], 1,   Math.random()*800 - 400)); 
-       // }
-       // for (var i = 0; i < 75; i++)
-       // {
-       // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate002.png"], 1,   Math.random()*800 - 400)); 
-       // }
-       // for (var i = 0; i < 75; i++)
-       // {
-       // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
-       // }
+       for (var i = 0; i < 75; i++)
+       {
+       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate001.png"], 1,   Math.random()*800 - 400)); 
+       }
+       for (var i = 0; i < 75; i++)
+       {
+       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate002.png"], 1,   Math.random()*800 - 400)); 
+       }
+       for (var i = 0; i < 75; i++)
+       {
+       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
+       }
 
     }
 
@@ -307,26 +310,31 @@ function Game()
 
     this.score = function(data)
     {
+    	squish.play();
         console.log("score: "+data.score+" id"+data.id+" angle"+data.angle);
         if(data.id == this.player.id &&  this.player.gamete.type == "sperm")
         {
-          this.player.gamete.posX = spermSpawnX;
-          this.player.gamete.posY = spermSpawnY;
+          this.player.gamete.setPosition(spermSpawnX, spermSpawnY, 0);
         }
-        else if(this.player.gamete.type == "egg")
+        
+        if(this.player.gamete.type == "egg")
         {
-          this.player.gamete.addSperm(new Sperm(this.player.getPosX(), this.player.getPosY(), data.angle), data.angle);
+          this.player.gamete.addSperm(new Sperm(this.player.getPosX(), this.player.getPosY(), data.angle), data.angle-this.player.getRotation());
 
         }
-        for(var p in this.netPlayers)
+        else 
         {
-          if (this.netPlayers[p].gamete.type == "egg"); 
+          for(var p in this.netPlayers)
           {
-            this.netPlayers[p].gamete.addSperm(new Sperm(this.netPlayers[p].getPosX(), this.netPlayers[p].getPosY(), data.angle), data.angle);
+            if (this.netPlayers[p].gamete.type == "egg"); 
+            {
+              this.netPlayers[p].gamete.addSperm(new Sperm(this.netPlayers[p].getPosX(), this.netPlayers[p].getPosY(), data.angle), data.angle-this.netPlayers[p].getRotation());
+
+            }
 
           }
-
         }
+        
 
 
 
