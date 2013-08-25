@@ -122,56 +122,13 @@ body {
   background:rgba(0,0,0,0.8);
 }
 </style>
-    <div id="leaderboard">
-      <h1 id="leaderboard-title">
-        High Scores
-      </h1>
-      <div id="leaderboard-display">
-        Your Score is: 
-        <span id="leaderboard-score">1203820200001</span>
-      </div>
-      <ul id="leaderboard-labels">
-        <li>Rank</li>
-        <li>Score</li>
-        <li>Player</li>
-      </ul>
-      <!-- REPEAT -->
-        <ul class="score-block current_player">
-          <li># 0</li>
-          <li>11568</li>
-          <li>You</li>
-        </ul>
-      <% for(player in all_scores) {%>
-        <ul class="score-block">
-          <li># <%- ranks[player] %></li>
-          <li><%- all_scores[player] %></li>
-          <li><%- player %></li>
-        </ul>
-      <% } %>
-      <!-- /REPEAT -->
-      <div id="leaderboard-footer"></div>
-    </div>
+   
 
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
 <script>
 
   $("input#user").focus();
 
-  /* Key Triggers for High Scores: */
-  /* - Toggles Leaderboard when holding <TAB> key. */
-  $("#leaderboard").hide();
-  $('body').keydown(function(e){
-    if (e.which == 9){
-      e.preventDefault();
-      $("#leaderboard").show();
-    }
-  });
-  $('body').keyup(function(e){
-    if (e.which == 9){
-      e.preventDefault();
-      $("#leaderboard").hide();
-    }
-  });
 </script>
 
 
