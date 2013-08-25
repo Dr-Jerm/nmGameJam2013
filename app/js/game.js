@@ -165,18 +165,18 @@ function Game()
        this.newBackground = new Background(images["BGfull001.png"],0,0,0,12800,7200,-1200);
        this.newBackground = new Background(images["BGsecondary001.png"],0,0,0,11612,8028,-500);
        this.particulateList = new Array();
-       // for (var i = 0; i < 75; i++)
-       // {
-       // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate001.png"], 1,   Math.random()*800 - 400)); 
-       // }
-       // for (var i = 0; i < 75; i++)
-       // {
-       // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate002.png"], 1,   Math.random()*800 - 400)); 
-       // }
-       // for (var i = 0; i < 75; i++)
-       // {
-       // 		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
-       // }
+       for (var i = 0; i < 75; i++)
+       {
+       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate001.png"], 1,   Math.random()*800 - 400)); 
+       }
+       for (var i = 0; i < 75; i++)
+       {
+       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate002.png"], 1,   Math.random()*800 - 400)); 
+       }
+       for (var i = 0; i < 75; i++)
+       {
+       		this.particulateList.push( new Particulate( Math.random()*gameWorldWidth*2-gameWorldWidth, Math.random()*gameWorldHeight*2-gameWorldHeight,  (Math.random()-0.5)/30, images["particulate003.png"], 1,   Math.random()*800 - 400)); 
+       }
 
     }
 
@@ -319,7 +319,7 @@ function Game()
         
         if(this.player.gamete.type == "egg")
         {
-          this.player.gamete.addSperm(new Sperm(this.player.getPosX(), this.player.getPosY(), data.angle), data.angle);
+          this.player.gamete.addSperm(new Sperm(this.player.getPosX(), this.player.getPosY(), data.angle), data.angle-this.player.getRotation());
 
         }
         else 
@@ -328,7 +328,7 @@ function Game()
           {
             if (this.netPlayers[p].gamete.type == "egg"); 
             {
-              this.netPlayers[p].gamete.addSperm(new Sperm(this.netPlayers[p].getPosX(), this.netPlayers[p].getPosY(), data.angle), data.angle);
+              this.netPlayers[p].gamete.addSperm(new Sperm(this.netPlayers[p].getPosX(), this.netPlayers[p].getPosY(), data.angle), data.angle-this.netPlayers[p].getRotation());
 
             }
 
