@@ -32,7 +32,7 @@ imageSrcList.push("particulate002.png");
 imageSrcList.push("particulate003.png");
 //imageSrcList.push("Grumpy-Cat.jpg");
 imageSrcList.push("sperm.png");
-//imageSrcList.push("Egg.png");
+imageSrcList.push("Egg.png");
 imageSrcList.push("newEggMain.png");
 imageSrcList.push("newEggOuterRing1.png");
 imageSrcList.push("newEggInsidePartBig.png");
