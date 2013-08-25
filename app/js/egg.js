@@ -62,21 +62,17 @@ function Egg(_posX, _posY, _rot)
 	this.update = function()
 	{
 		//console.log("eggupdate");
-		if (this.posX > gameWorldWidth)
-			//this.posX = gameWorldWidth;
-      		this.velX *= -.65;
+		if (this.posX+(images["Egg.png"].width/2) > gameWorldWidth)
+      		this.velX *= -.75;
 
-    	if (this.posX < -gameWorldWidth)
-    		//this.posX = -gameWorldWidth;
-      		this.velX *= -.65;
+    	if (this.posX-(images["Egg.png"].width/2) < -gameWorldWidth)
+      		this.velX *= -.75;
 
-    	if (this.posY > gameWorldHeight)
-    		//this.posY = gameWorldHeight;
-      		this.velY *= -.65;
+    	if (this.posY-(images["Egg.png"].height/2) > gameWorldHeight)
+      		this.velY *= -.75;
 
-    	if (this.posY < -gameWorldHeight)
-    		//this.posY = -gameWorldHeight;
-      		this.velY *= -.65;
+    	if (this.posY+(images["Egg.png"].height/2) < -gameWorldHeight)
+      		this.velY *= -.75;
 
     
     	this.posX += this.velX;
