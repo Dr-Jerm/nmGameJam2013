@@ -1,7 +1,7 @@
 function Sperm(_posX, _posY, _rot)
 {
-  var posX = _posX;
-  var posY = _posY;
+  this.posX = _posX;
+  this.posY = _posY;
 
   var posZ = 0
 
@@ -16,13 +16,14 @@ function Sperm(_posX, _posY, _rot)
   var tailcycle = 0;
   var tailcycleSpeed = 1; 
   var tailcycleAmplitude = 0.25; 
+  var tailsegmentdistence = 5;
 
-  var bodySprite = new Sprite(images["sperm.png"], posX, posY, rot);
+  var bodySprite = new Sprite(images["sperm.png"], this.posX, this.posY, rot);
 
 
 
   var tailGeometry = new THREE.Geometry();
-  tailGeometry.vertices.push(new THREE.Vector3(posX, posY, 0));
+  tailGeometry.vertices.push(new THREE.Vector3(this.posX, this.posY, 0));
   tailGeometry.vertices.push(new THREE.Vector3());
     tailGeometry.vertices.push(new THREE.Vector3());
     tailGeometry.vertices.push(new THREE.Vector3());
@@ -43,6 +44,11 @@ function Sperm(_posX, _posY, _rot)
   
   scene.add(tailLine);
 
+  tailVertexVelocities = new Array(); 
+  for(p in tailLine.geometry.vertices)
+  {
+    tailVertexVelocities.push(new THREE.Vector3(0,0,0));
+  }
 
     // movement
   this.moveForward = function(y) {
@@ -61,8 +67,8 @@ function Sperm(_posX, _posY, _rot)
   // gets
   this.getPosition = function() {
       return {
-          x: posX, 
-          y: posY, 
+          x: this.posX, 
+          y: this.posY, 
           z: posZ
       };
     }
@@ -80,8 +86,8 @@ function Sperm(_posX, _posY, _rot)
 
   this.getPosition = function() {
     return {
-      x: posX, 
-      y: posY, 
+      x: this.posX, 
+      y: this.posY, 
       z: posZ
     };
   }
@@ -117,17 +123,17 @@ function Sperm(_posX, _posY, _rot)
   this.getTailPosition = function()
   {
     return {
-      x: Math.cos(rot+tailRot) * tailoffset+posX,
-      y: Math.sin(rot+tailRot) * tailoffset+posY,
+      x: Math.cos(rot+tailRot) * tailoffset+this.posX,
+      y: Math.sin(rot+tailRot) * tailoffset+this.posY,
     };
   }
 
   // gets
   this.getPosX = function(){
-    return posX;
+    return this.posX;
   }
   this.getPosY = function(){
-    return posY;
+    return this.posY;
   }
   this.getRotVel = function(){
   return rotVel;
@@ -137,23 +143,23 @@ function Sperm(_posX, _posY, _rot)
   this.update = function()
   {
 
-    if (posX > gameWorldWidth)
+    if (this.posX > gameWorldWidth)
       velX *= -1.5;
-    if (posX < -gameWorldWidth)
+    if (this.posX < -gameWorldWidth)
       velX *= -1.5;
-    if (posY > gameWorldHeight)
+    if (this.posY > gameWorldHeight)
       velY *= -1.5;
-    if (posY < -gameWorldHeight)
+    if (this.posY < -gameWorldHeight)
       velY *= -1.5;
 
     
-    posX += velX;
-    posY += velY;
+    this.posX += velX;
+    this.posY += velY;
     rot += rotVel;
 
     
 
-    bodySprite.updatePosition(posX, posY, rot+tailRot);
+    bodySprite.updatePosition(this.posX, this.posY, rot+tailRot);
     //console.log("spermupdate");
     this.updateTail();
     // movement resistance
@@ -170,23 +176,40 @@ function Sperm(_posX, _posY, _rot)
     var distX2;
     var distY2;
     
+    tailcycleSpeed  = 0.2 + (Math.pow(velX,2)+Math.pow(velY,2))/100;
+    tailcycle = tailcycle + tailcycleSpeed; 
+    tailRot = Math.sin(tailcycle)*tailcycleAmplitude; 
+    
+    var tailpos = this.getTailPosition();
+    
+    var tailVelX = this.posX - tailpos.x;
+    var tailVelY = this.posY - tailpos.y;
+
+    tailVertexVelocities[0].setX(tailVelX);
+    tailVertexVelocities[0].setY(tailVelY);
+    tailLine.geometry.vertices[0].set(tailpos.x,tailpos.y,0);
+
 
 
     for (var v3 = tailLine.geometry.vertices.length-1; v3 > 0; v3--)
     {
-      distX = tailLine.geometry.vertices[v3].x - tailLine.geometry.vertices[v3-1].x;
-      distY = tailLine.geometry.vertices[v3].y - tailLine.geometry.vertices[v3-1].y;
-      distX2 = Math.pow(distX, 2);
-      distY2 = Math.pow(distY, 2); 
-      
-      if(distX2 > 50)
-      {
-        tailLine.geometry.vertices[v3].setX( tailLine.geometry.vertices[v3-1].x + distX / 3);
-      }
-      if(distY2 > 50)
-      {
-        tailLine.geometry.vertices[v3].setY( tailLine.geometry.vertices[v3-1].y + distY / 3);
-      }
+      // distX = tailLine.geometry.vertices[v3].x - tailLine.geometry.vertices[v3-1].x;
+      // distY = tailLine.geometry.vertices[v3].y - tailLine.geometry.vertices[v3-1].y;
+      // distX2 = Math.pow(distX, 2);
+      // distY2 = Math.pow(distY, 2); 
+      tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3].x+tailVertexVelocities[v3-1].x);
+      tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3].y+tailVertexVelocities[v3-1].y);
+
+      tailVertexVelocities[v3].setX(tailVertexVelocities[v3-1].x);
+      tailVertexVelocities[v3].setY(tailVertexVelocities[v3-1].y);
+      // if(distX2 > 50)
+      // {
+      //   tailLine.geometry.vertices[v3].setX( tailLine.geometry.vertices[v3-1].x + distX / 3);
+      // }
+      // if(distY2 > 50)
+      // {
+      //   tailLine.geometry.vertices[v3].setY( tailLine.geometry.vertices[v3-1].y + distY / 3);
+      // }
 
       // if(distX2 > 100)
       // {
@@ -200,17 +223,14 @@ function Sperm(_posX, _posY, _rot)
       // {
       //   tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3-1].y);
       // }
-      //tailLine.geometry.vertices[v3].setX(tailLine.geometry.vertices[v3-1].x);
-      //tailLine.geometry.vertices[v3].setY(tailLine.geometry.vertices[v3-1].y);
-
+      
+      
 
     }
     
-    tailcycleSpeed  = 0.2 + (Math.pow(velX,2)+Math.pow(velY,2))/100;
-    tailcycle = tailcycle + tailcycleSpeed ; 
-    tailRot = Math.sin(tailcycle)*tailcycleAmplitude; 
-    var tailpos = this.getTailPosition();
-    tailLine.geometry.vertices[0].set(tailpos.x,tailpos.y,0);
+  
+    
+    
     tailLine.geometry.verticesNeedUpdate = true;
 
   }

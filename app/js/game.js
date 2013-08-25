@@ -105,6 +105,9 @@ function Game()
 
     this.setPlayer = function(id, gameteType) {
         var gamete;
+
+        // TEMPORARY:
+        gameType = "sperm";
         if (gameteType === "egg") {
             gamete = new Egg(0, 0, 80);    
         } else {
@@ -136,6 +139,12 @@ function Game()
             ((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
             500);
 
+
+        // camera animation
+        camera.position.set(
+            ((this.player.getPosX()-camera.position.x) / 10) + camera.position.x, 
+            ((this.player.getPosY()-camera.position.y) / 10) + camera.position.y, 
+            500);
     }
 }
 
@@ -173,8 +182,3 @@ function onWindowResize() {
     renderer.setSize( WIDTH, HEIGHT );
 
 }
-
-
-
-
-       

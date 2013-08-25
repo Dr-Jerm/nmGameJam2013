@@ -14,10 +14,11 @@
     socket.on('acceptedUser', function(data) {
       game.reset();
       game.setPlayer(data.id, data.gameteType);
-    })
+    });
 
     socket.on('poll', function(data) {
       game.networkUpdate(data);
-    })
+    });
 
 })();
+
