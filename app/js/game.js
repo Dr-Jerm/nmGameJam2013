@@ -62,12 +62,6 @@ if(DEBUG){
     container.appendChild( stats.domElement );
 }
 
-var testImage = new Image();
-testImage.width = 256;
-testImage.height = 200;
-testImage.src = "images/Grumpy-Cat.jpg";
-testImage.map = THREE.ImageUtils.loadTexture( this.testImage.src);
-
 function Game()
 {
     this.init = function()

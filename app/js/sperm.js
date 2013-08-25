@@ -37,7 +37,8 @@ function Sperm(_posX, _posY, _rot)
     tailGeometry.vertices.push(new THREE.Vector3());
     tailGeometry.vertices.push(new THREE.Vector3());
 
-	var tailMaterial = new THREE.LineBasicMaterial( { color: 0xCC9C66, opacity: 0.25} );
+	//var tailMaterial = new THREE.LineBasicMaterial( { color: 0xCC9C66, opacity: 0.25} );
+	var tailMaterial = new THREE.LineBasicMaterial( { color: 0xCC9C66} );
 
 	var tailLine = new THREE.Line(tailGeometry, tailMaterial);
 	tailLine.geometry.dynamic = true;
