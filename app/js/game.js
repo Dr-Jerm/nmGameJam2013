@@ -27,6 +27,8 @@ var delta;
 var elapsedTime;
 
 
+music = document.getElementById("music");
+music.play();
 underwater = document.getElementById("underwater");
 underwater.volume = .5;
 underwater.play();
