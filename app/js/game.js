@@ -29,8 +29,9 @@ var elapsedTime;
 
 underwater = document.getElementById("underwater");
 underwater.volume = .5;
-swim = document.getElementById("swim");
-//bump1 
+underwater.play();
+swim = document.getElementById("swim"); 
+swim.volume = .5;
 
 var renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
 
@@ -83,12 +84,7 @@ function Game()
     {
      this.setUpRenderer();
      this.buildWorldGeo(); 
-
-
-    	//var snd = new Audio("sound/soundTest.wav");
-		//snd.play();
-		//document.getElementById("underwater").cloneNode(true).play()
-		underwater.play();
+		
 
      renderer.sortObjects = true;
      this.controller = new Controller();
@@ -233,6 +229,8 @@ function Game()
 
     this.reset = function(data) 
     {
+      $('body .label').remove();
+
     	this.setUpRenderer();
     	this.buildWorldGeo(); 
  		var myPlayerID = this.player.id;

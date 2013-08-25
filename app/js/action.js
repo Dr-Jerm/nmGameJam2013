@@ -13,11 +13,6 @@ Up.prototype.constructor = Up;
 
 Up.prototype.execute = function() {
   game.player.moveForward();
-  //document.getElementById("swim").play();
-  //document.getElementById('underwater').pause();
-  //swim.play();
-  //if (swim.volume < .9)
-  //	swim.volume += .1;
 }
 
 function Left() { Action.call(this); }
@@ -27,9 +22,6 @@ Left.prototype.constructor = Left;
 Left.prototype.execute = function() {
   //socket.emit("left", {"uid": config.uid})
   game.player.rotateLeft();
-  //document.getElementById("swim").pause();
-  // if (swim.volume > .1)
-  // 	swim.volume -= .1;
 }
 
 function Down() { Action.call(this); }

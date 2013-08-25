@@ -19,7 +19,7 @@ function Egg(_posX, _posY, _rot)
 	this.ringRotVel = 0;
 	this.insideRotVel = 0;
 
-	this.radius = 130; 
+	this.radius = 110; 
 
 
 	bodySprite = new Sprite(images["newEggMain.png"], this.posX, this.posY, this.rot, 1);
@@ -68,8 +68,8 @@ function Egg(_posX, _posY, _rot)
 
 	// movement
 	this.moveForward = function(y) {
-		this.velY += Math.sin(this.rot) * (y*.2);
-		this.velX += Math.cos(this.rot) * (y*.2);
+		this.velY += Math.sin(this.rot) * (y*.1);
+		this.velX += Math.cos(this.rot) * (y*.1);
 	}
 	this.rotateLeft = function(y) {
 		this.rotVel += (y*.1);

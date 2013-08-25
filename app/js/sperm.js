@@ -206,14 +206,23 @@ function Sperm(_posX, _posY, _rot)
   this.checkCollision = function()
   {
   	
-  	if (this.posX > gameWorldWidth)
-      this.velX *= -1.5;
-    if (this.posX < -gameWorldWidth)
-      this.velX *= -1.5;
-    if (this.posY > gameWorldHeight)
-      this.velY *= -1.5;
-    if (this.posY < -gameWorldHeight)
-      this.velY *= -1.5;
+  	if (this.posX > gameWorldWidth) {
+  		document.getElementById("bump1").play();
+      	this.velX *= -1.5;
+    }
+  		
+    if (this.posX < -gameWorldWidth) {
+      	this.velX *= -1.5;
+  		document.getElementById("bump1").cloneNode(true).play();
+  	}
+    if (this.posY > gameWorldHeight) {
+      	this.velY *= -1.5;
+      	document.getElementById("bump1").cloneNode(true).play();
+    }
+    if (this.posY < -gameWorldHeight) {
+      	this.velY *= -1.5;
+      	document.getElementById("bump1").cloneNode(true).play();
+    }
 
   	for(p in game.netPlayers)
   	{
@@ -232,12 +241,13 @@ function Sperm(_posX, _posY, _rot)
 	  			this.velY += Math.sin(collisionAngle)*15;
 	  			this.posX += Math.cos(collisionAngle)*15;
 	  			this.posY += Math.sin(collisionAngle)*15;
+	  			document.getElementById("bump1").cloneNode(true).play();
 	  		}
   			//console.log("collision "+collisionAngle); 
   		}
   		if(game.netPlayers[p].gamete.type == "egg")
   		{
-
+  			//document.getElementById("bump1").cloneNode(true).play();
 
 
   		}
