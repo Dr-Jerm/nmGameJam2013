@@ -1,5 +1,8 @@
 Check out the live server at: http://54.221.239.154/
 
+GameJam release:
+https://github.com/Dr-Jerm/nmGameJam2013/releases/tag/1.0.0
+
 To install locally:
 
 clone this repository!
